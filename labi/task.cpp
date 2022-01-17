@@ -1,4 +1,16 @@
 #include "task.h"
+#include "FileHtml.h"
+#include "FileTxt.h"
+#include "FileXml.h"
+#include "FileAll.h"
+
+using std::cin;
+using std::cout;
+using std::string;
+using std::stringstream;
+using std::vector;
+using std::ifstream;
+using std::ofstream;
 
 vector<string> getDirectoryFiles(const fs::path& dir, const vector<string>& ext) {
 	vector<string> files;
@@ -156,21 +168,7 @@ void displayNotAllHtmlFiles() {
 	cin.ignore(); cin.get();
 }
 
-// поиск слов в html с учетом всех дерикторий и без
-void find3Words() {
-	FileHtml* fhtml = new FileHtml();
-	fhtml->findNotAll3LefRightWords();
-	delete fhtml;
-
-	cin.ignore(); cin.get();
-}
-void findNotAll3Words() {
-	FileHtml* fhtml = new FileHtml();
-	fhtml->findNotAll3LefRightWords();
-	delete fhtml;
-
-	cin.ignore(); cin.get();
-}
+// TODO: сделать поиск чего-то в штмл
 
 //////////////////////////////////////////////////////
 //
@@ -206,68 +204,6 @@ void findNotAllWordAll() {
 	FileAll* fAll = new FileAll();
 	fAll->findWordNotAll();
 	delete fAll;
-
-	cin.ignore(); cin.get();
-}
-
-//////////////////////////////////////////////////////
-//
-// ДЛЯ ПОЛЬЗОВАТЕЛЬСКИХ ТИПОВ ФАЙЛОВ
-//  
-//////////////////////////////////////////////////////
-
-// отображение всех пользовательских типов файлов с учетом всех дерикторий и без
-void displayAllUserFiles() {
-	system("cls");
-	FileUserType* fuft = new FileUserType();
-	string fileType;
-
-	cout << "Введите тип файла(Пример: .txt): "; cin >> fileType;
-	fuft->setFileType(fileType);
-
-	fuft->displayFiles();
-	delete fuft;
-	
-	cin.ignore(); cin.get();
-}
-void displayNotAllUserFiles() {
-	system("cls");
-	FileUserType* fuft = new FileUserType();
-	string fileType;
-
-	cout << "Введите тип файла(Пример: .txt):: "; cin >> fileType;
-	fuft->setFileType(fileType);
-	fuft->displayNotAllFiles();
-
-	delete fuft;
-
-	cin.ignore(); cin.get();
-}
-
-// поиск слов в введном типе файла с учетом всех дерикторий и без
-void findUserWord() {
-	system("cls");
-	FileUserType* fuft = new FileUserType();
-	string fileType;
-
-	cout << "Введите тип файла(Пример: .txt):: "; cin >> fileType;
-	fuft->setFileType(fileType);
-	fuft->findWord();
-
-	delete fuft;
-
-	cin.ignore(); cin.get();
-}
-void findNotAllUserWord() {
-	system("cls");
-	FileUserType* fuft = new FileUserType();
-	string fileType;
-
-	cout << "Введите тип файла(Пример: .txt):: "; cin >> fileType;
-	fuft->setFileType(fileType);
-	fuft->findWordNotAll();
-
-	delete fuft;
 
 	cin.ignore(); cin.get();
 }
@@ -348,43 +284,17 @@ void userInterfaceHtml() {
 		system("cls");
 		printf("01. Отобразить все файлы .html с учетом вложеных каталогов\n");
 		printf("02. Отобразить все файлы .html без учета вложеных каталогов\n");
-		printf("03. Поиск 3-ех слов слева и справа c учетом вложеных каталогов\n");
-		printf("04. Поиск 3-ех слов слева и справа без учета вложеных каталогов\n");
-		printf("05. Выход\n");
-		printf("Пожалуйста, введите число (1-5): "); cin >> ch;
+		printf("03. Выход\n");
+		printf("Пожалуйста, введите число (1-3): "); cin >> ch;
 
 		switch (ch) {
 		case '1': displayHtmlFiles(); break;
 		case '2': displayNotAllHtmlFiles(); break;
-		case '3': find3Words(); break;
-		case '4': findNotAll3Words(); break;
-		case '5': break;
+		case '3': break;
 
 		default: printf("\a"); break;
 		}
-	} while (ch != '5');
-}
-void userInterfaceUserFileType() {
-	char ch;
-	do {
-		system("cls");
-		printf("01. Отобразить все файлы с веденным типом с учетом вложеных каталогов\n");
-		printf("02. Отобразить все файлы с веденным типом без учета вложеных каталогов\n");
-		printf("03. Поиск слова c учетом вложеных каталогов\n");
-		printf("04. Поиск слова без учета вложеных каталогов\n");
-		printf("05. Выход\n");
-		printf("Пожалуйста, введите число (1-5): "); cin >> ch;
-
-		switch (ch) {
-		case '1': displayAllUserFiles(); break;
-		case '2': displayNotAllUserFiles(); break;
-		case '3': findUserWord(); break;
-		case '4': findNotAllUserWord(); break;
-		case '5': break;
-
-		default: printf("\a"); break;
-		}
-	} while (ch != '5');
+	} while (ch != '3');
 }
 
 // стартовый интерфейс
@@ -393,24 +303,22 @@ void userInterface() {
 	char ch;
 	do{
 		system("cls");
-		printf("01. Работа со всеми типами файлов (которые читает ofstream)\n");
+		printf("01. Работа со всеми типами файлов\n");
 		printf("02. Работа с .txt\n");
 		printf("03. Работа с .xml\n");
 		printf("04. Работа с .html\n");
-		printf("05. Работа с выбраным типом файлов\n");
-		printf("06. Выход\n");
-		printf("Пожалуйста, введите число (1-6): "); cin >> ch;
+		printf("05. Выход\n");
+		printf("Пожалуйста, введите число (1-5): "); cin >> ch;
 
 		switch (ch){
 		case '1': userInterfaceAll(); break;
 		case '2': userInterfaceTxt(); break;
 		case '3': userInterfaceXml(); break;
 		case '4': userInterfaceHtml(); break;
-		case '5': userInterfaceUserFileType(); break;
-		case '6': break;
+		case '5': break;
 		default: printf("\a"); break;
 		}
-	} while (ch != '6');
+	} while (ch != '5');
 }
 
 void task() {

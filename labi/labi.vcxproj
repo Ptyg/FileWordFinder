@@ -118,6 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,6 +158,8 @@
     <ClInclude Include="FileTxt.h" />
     <ClInclude Include="FileUserType.h" />
     <ClInclude Include="FileXml.h" />
+    <ClInclude Include="getDirectoryFiles.h" />
+    <ClInclude Include="getNotAllDirectoryFiles.h" />
     <ClInclude Include="task.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

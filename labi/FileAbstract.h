@@ -1,11 +1,15 @@
-#pragma once
+#ifndef STRING
+#define STRING
 #include <string>
+#endif
+
+#ifndef VECTOR
+#define VECTOR
 #include <vector>
+#endif
 
-using std::string;
-using std::vector;
-
-
+#ifndef FILE_ABSTRACT_H
+#define FILE_ABSTRACT_H
 class FileAbstract {
 public:
 	virtual ~FileAbstract() {};
@@ -14,9 +18,11 @@ public:
 	virtual void displayNotAllFiles() = 0;
 
 	struct SaveFile {
-		string _fileName;
-		static void saveInfo(string word, string path, int& lineNum, string& line, FileAbstract::SaveFile obj);
-		static void saveInfo2(vector<string> word, string path, int& lineNum, string& line, FileAbstract::SaveFile obj);
-		static void saveInfo3(string tag, string path, int& lineNum, string& line, FileAbstract::SaveFile obj);
+		std::string _fileName;
+		static void saveInfo(std::string word, std::string path, int& lineNum, std::string& line, FileAbstract::SaveFile obj);
+		static void saveInfo2(std::vector<std::string> word, std::string path, int& lineNum, std::string& line, FileAbstract::SaveFile obj);
+		static void saveInfo3(std::string tag, std::string path, int& lineNum, std::string& line, FileAbstract::SaveFile obj);
 	};
 };
+
+#endif

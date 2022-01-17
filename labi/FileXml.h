@@ -1,11 +1,16 @@
-#pragma once
-#include <filesystem>
-#include <chrono>
+#ifndef STRING
+#define STRING
+#include <string>
+#endif
+
+#ifndef FILE_XML_H
+#define FILE_XML_H
+
 #include "FileAbstract.h"
-#include "task.h"
 
 class FileXml : public FileAbstract {
-	string _word, _fileType = ".xml";
+	std::string _word;
+	const std::string _fileType = ".xml";
 public:
 	// функции override
 	void displayFiles() override;
@@ -15,6 +20,10 @@ public:
 	void findWordAll();
 	void findWordNotAll();
 
-	void setFindWord(string& word);
-	string getFindWord();
+	const std::string& getFileType() const;
+
+	void setFindWord(std::string& word);
+	std::string getFindWord();
 };
+
+#endif

@@ -1,10 +1,15 @@
-#pragma once
-#include "task.h"
+#ifndef STRING
+#define STRING
+#include <string>
+#endif
 
-namespace fs = std::filesystem;
+#ifndef FILE_ALL_H
+#define FILE_ALL_H
+
+#include "FileAbstract.h"
 
 class FileAll : public FileAbstract{
-	string _word;
+	std::string _word;
 public:
 	void displayFiles() override;
 	void displayNotAllFiles() override;
@@ -12,3 +17,5 @@ public:
 	void findWordAll();
 	void findWordNotAll();
 };
+
+#endif

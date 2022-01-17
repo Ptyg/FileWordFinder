@@ -1,19 +1,25 @@
-#pragma once
-#include <filesystem>
-#include <chrono>
-#include "task.h"
+#ifndef STRING
+#define STRING
+#include <string>
+#endif
+
+#ifndef FILE_HTML_H
+#define FILE_HTML_H
+
+#include "FileAbstract.h"
 
 class FileHtml : public FileAbstract {
-	string _word, _fileType = ".html";
+	std::string _word;
+	const std::string _fileType = ".html";
 public:
 	// функции override
 	void displayFiles() override;
 	void displayNotAllFiles() override;
 
-	// функции НЕ override
-	void find3LefRightWords();
-	void findNotAll3LefRightWords();
+	const std::string& getFileType() const;
 
-	void setFindWord(string& word);
-	string getFindWord();
+	void setFindWord(std::string& word);
+	std::string getFindWord();
 };
+
+#endif

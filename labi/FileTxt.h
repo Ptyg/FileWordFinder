@@ -1,14 +1,16 @@
-#pragma once
-#include <filesystem>
-#include <chrono>
-#include "FileAbstract.h"
-#include "task.h"
+#ifndef STRING
+#define STRING
+#include <string>
+#endif
 
-namespace fs = std::filesystem;
+#ifndef FILE_TXT_H
+#define FILE_TXT_H
+
+#include "FileAbstract.h"
 
 class FileTxt : public FileAbstract {
-	string _word;
-	const string _fileType = ".txt";
+	std::string _word;
+	const std::string _fileType = ".txt";
 public:
 	// функции override
 	void displayFiles() override;
@@ -18,6 +20,10 @@ public:
 	void findWordAll();
 	void findWordNotAll();
 
-	void setFindWord(string& word);
-	string getFindWord();
+	const std::string& getFileType() const;
+
+	void setFindWord(std::string& word);
+	std::string getFindWord();
 };
+
+#endif
