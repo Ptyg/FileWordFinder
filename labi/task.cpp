@@ -7,10 +7,7 @@
 using std::cin;
 using std::cout;
 using std::string;
-using std::stringstream;
 using std::vector;
-using std::ifstream;
-using std::ofstream;
 
 vector<string> getDirectoryFiles(const fs::path& dir, const vector<string>& ext) {
 	vector<string> files;

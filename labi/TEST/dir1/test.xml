@@ -1,9 +1,0 @@
-<xml version="1.0" >
-<person>
-    <name>John</name>
-    <roll>16370</roll>
-    <sex>male</sex>
-    <student>Engg</student>
-    <Branch>CSE</Branch>
-    <number>123</number>
-</person>    
