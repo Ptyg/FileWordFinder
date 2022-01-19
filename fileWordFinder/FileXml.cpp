@@ -95,7 +95,23 @@ void FileXml::findWordAll() {
 		line.erase(0, spaceBarCounter);
 	};
 
-	auto print_result = [&spaceBarEraserFromFront](const auto& aVector, const std::string& fWord, int& counterFile, const FileAbstract::SaveFile& obj) {
+	auto deleteExtraObjects = [](std::vector<std::string>& obj) {
+		const char SLASH = '/';
+
+		// i - obj with slash, j - without slash
+		for (int i = 0; i < obj.size(); i++) {
+			if (obj[i][1] == SLASH) {
+				std::string tmp = obj[i];
+				tmp.erase(remove(tmp.begin(), tmp.end(), SLASH), tmp.end());
+				for (int j = i - 1; j >= 0; j--) {
+					if (obj[j] == tmp) { obj.erase(obj.begin() + i); obj.erase(obj.begin() + j); }
+					break;
+				}
+			}
+		}
+	};
+
+	auto print_result = [&spaceBarEraserFromFront, &deleteExtraObjects](const auto& aVector, const std::string& fWord, int& counterFile, const FileAbstract::SaveFile& obj) {
 		for (auto& f : aVector) {
 			std::ifstream file;
 			std::string line;
@@ -107,7 +123,6 @@ void FileXml::findWordAll() {
 				file.open(f);
 				while (getline(file, line)) {
 
-					// TODO: добавить поиск реально в объектах, а не в самих тэгах
 					int forstObjectBracketPos = line.find(FIRST_BRACKET);
 					int secondObjectBracketPos = line.find(SECOND_BRACKET);
 					int objectWordLengthWithBracket = secondObjectBracketPos - forstObjectBracketPos;
@@ -130,8 +145,10 @@ void FileXml::findWordAll() {
 								}
 							}
 
+							deleteExtraObjects(objects);
+
 							std::cout << "\nПуть объектов: "; 
-							for (int i = 1; i < objects.size(); i++) { std::cout << objects[i] << ' '; }
+							for (auto& obj : objects) { std::cout << obj << ' '; }
 							std::cout << "\nТэг слова: " << tag;
 							for (size_t i = 0; i < tag.size(); i++) {
 								if (tag[i] == '<') { tag.insert(i + 1, std::string("/")); break; }
@@ -176,7 +193,7 @@ void FileXml::findWordNotAll() {
 	FileAbstract::SaveFile obj;
 	std::string catalog, saveFileName;
 	int counterFile = 0;
-	auto path = fs::current_path(); //path = path / "TEST";
+	auto path = fs::current_path();
 
 	std::cout << "\nНаходимся в каталоге: " << path;
 
@@ -185,46 +202,81 @@ void FileXml::findWordNotAll() {
 	std::cout << "\nВведите слово для поиска: "; std::cin >> _word;
 	std::cout << "\nВведите файл (пример: C:\\somePath\\result.txt), где будет сохранен результат\n(Если не нужно сохранять - N): "; std::cin >> saveFileName; obj._fileName = saveFileName;
 
-	auto print_result = [](const auto& aVector, const std::string& fWord, int& counterFile, const FileAbstract::SaveFile& obj) {
+	auto spaceBarEraserFromFront = [](std::string& line) {
+		int spaceBarCounter = 0, coun = 0;
+		while (line[coun] == ' ' && coun < line.size()) { spaceBarCounter++; coun++; }
+		line.erase(0, spaceBarCounter);
+	};
+
+	auto deleteExtraObjects = [](std::vector<std::string>& obj) {
+		const char SLASH = '/';
+
+		// i - obj with slash, j - without slash
+		for (int i = 0; i < obj.size(); i++) {
+			if (obj[i][1] == SLASH) {
+				std::string tmp = obj[i];
+				tmp.erase(remove(tmp.begin(), tmp.end(), SLASH), tmp.end());
+				for (int j = i - 1; j >= 0; j--) {
+					if (obj[j] == tmp) { obj.erase(obj.begin() + i); obj.erase(obj.begin() + j); }
+					break;
+				}
+			}
+		}
+	};
+
+	auto print_result = [&spaceBarEraserFromFront, &deleteExtraObjects](const auto& aVector, const std::string& fWord, int& counterFile, const FileAbstract::SaveFile& obj) {
 		for (auto& f : aVector) {
 			std::ifstream file;
 			std::string line;
+			std::vector <std::string> objects;
+			const char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
 			int counter = 1;
 
 			try {
 				file.open(f);
 				while (getline(file, line)) {
-					if (line.find(fWord) != std::string::npos) {
-						std::string tag;
 
-						int spaceBarCounter = 0, coun = 0;
-						while (line[coun] == ' ') { spaceBarCounter++; coun++; }
-						line.erase(0, spaceBarCounter);
+					int forstObjectBracketPos = line.find(FIRST_BRACKET);
+					int secondObjectBracketPos = line.find(SECOND_BRACKET);
+					int objectWordLengthWithBracket = secondObjectBracketPos - forstObjectBracketPos;
+					spaceBarEraserFromFront(line);
 
-						for (int i = 0; i < line.size(); i++) {
-							if (line[i] == ' ') { continue; }
-							else {
-								if (line[i] == '>') {
+					if (objectWordLengthWithBracket < line.size() - 1) {
+						if (line.find(fWord) != std::string::npos) {
+							std::string tag;
+
+							spaceBarEraserFromFront(line);
+
+							for (int i = 0; i < line.size(); i++) {
+								if (line[i] == ' ') { continue; }
+								else {
+									if (line[i] == '>') {
+										tag.push_back(line[i]);
+										break;
+									}
 									tag.push_back(line[i]);
-									break;
 								}
-								tag.push_back(line[i]);
 							}
-						}
-						std::string tagTemp = tag;
-						std::cout << "\nИскомый объект: " << tag;
-						for (int i = 0; i < tag.size(); i++) {
-							if (tag[i] == '<') { tag.insert(i + 1, std::string("/")); break; }
-						}
-						std::cout << tag;
-						std::cout << "\nПуть: " << f;
-						std::cout << "\nНомер строки: " << counter;
-						std::cout << "\nСтрока: " << line;
-						counterFile++;
-						printf("\n\n");
 
-						if (obj._fileName != "N") { obj.saveInfo3(tagTemp, f, counter, line, obj); }
+							deleteExtraObjects(objects);
+
+							std::cout << "\nПуть объектов: ";
+							for (auto& obj : objects) { std::cout << obj << ' '; }
+							std::cout << "\nТэг слова: " << tag;
+							for (size_t i = 0; i < tag.size(); i++) {
+								if (tag[i] == '<') { tag.insert(i + 1, std::string("/")); break; }
+							}
+							std::cout << tag;
+							std::cout << "\nПуть к файлу: " << f;
+							std::cout << "\nНомер строки: " << counter;
+							std::cout << "\nСтрока: " << line;
+							counterFile++;
+							printf("\n\n");
+
+							if (obj._fileName != "N") { obj.saveInfo3(tag, f, counter, line, obj); }
+						}
 					}
+					else { objects.push_back(line); }
 					counter++;
 				}
 			}
