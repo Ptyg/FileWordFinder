@@ -19,9 +19,9 @@ public:
 
 	struct SaveFile {
 		std::string _fileName;
-		static void saveInfo(std::string word, std::string path, int& lineNum, std::string& line, FileAbstract::SaveFile obj);
-		static void saveInfo2(std::vector<std::string> word, std::string path, int& lineNum, std::string& line, FileAbstract::SaveFile obj);
-		static void saveInfo3(std::string tag, std::string path, int& lineNum, std::string& line, FileAbstract::SaveFile obj);
+		static void saveInfoTxt(std::string, std::string, int&, std::string&, FileAbstract::SaveFile);
+		static void saveInfoHtml(std::vector<std::string>, std::string, int&, std::string&, FileAbstract::SaveFile);
+		static void saveInfoXml(std::string, std::string, int&, std::string&, FileAbstract::SaveFile, std::vector<std::string>&);
 	};
 };
 

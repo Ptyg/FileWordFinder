@@ -18,7 +18,7 @@ std::string FileHtml::getFindWord() { return _word; }
 void FileHtml::displayFiles() {
 	system("cls");
 	std::string catalog;
-	auto path = fs::current_path(); //path = path / "TEST";
+	auto path = fs::current_path();
 
 	std::cout << "\nНаходимся в каталоге: " << path;
 	printf("\nВведите путь к каталогу\n(Внимание! Путь должен написан без использования символов кириллицы)\n(Если оставить как есть - D): "); std::cin >> catalog;
@@ -42,7 +42,7 @@ void FileHtml::displayFiles() {
 void FileHtml::displayNotAllFiles() {
 	system("cls");
 	std::string catalog;
-	auto path = fs::current_path(); //path = path / "TEST";
+	auto path = fs::current_path();
 
 	std::cout << "\nНаходимся в каталоге: " << path;
 	printf("\nВведите путь к каталогу\n(Внимание! Путь должен написан без использования символов кириллицы)\n(Если оставить как есть - D): "); std::cin >> catalog;
@@ -145,7 +145,7 @@ void FileHtml::displayNotAllFiles() {
 //						printf("\n\n");
 //
 //						
-//						if (obj._fileName != "N") { obj.saveInfo2(words, f, counter, line, obj); }
+//						if (obj._fileName != "N") { obj.saveInfoHtml(words, f, counter, line, obj); }
 //					}
 //					counter++;
 //				}
@@ -255,7 +255,7 @@ void FileHtml::displayNotAllFiles() {
 //						printf("\n\n");
 //
 //
-//						if (obj._fileName != "N") { obj.saveInfo2(words, f, counter, line, obj); }
+//						if (obj._fileName != "N") { obj.saveInfoHtml(words, f, counter, line, obj); }
 //					}
 //					counter++;
 //				}

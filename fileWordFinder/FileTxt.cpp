@@ -29,7 +29,7 @@ std::string FileTxt::getFindWord() { return _word; }
 void FileTxt::displayFiles() {
 	system("cls");
 	std::string catalog;
-	auto path = fs::current_path(); //path = path / "TEST";
+	auto path = fs::current_path();
 
 	std::cout << "\nНаходимся в каталоге: " << path;
 	printf("\nВведите путь к каталогу\n(Внимание! Путь должен написан без использования символов кириллицы)\n(Если оставить как есть - D): "); std::cin >> catalog;
@@ -53,7 +53,7 @@ void FileTxt::displayFiles() {
 void FileTxt::displayNotAllFiles() {
 	system("cls");
 	std::string catalog;
-	auto path = fs::current_path(); //path = path / "TEST";
+	auto path = fs::current_path();
 
 	std::cout << "\nНаходимся в каталоге: " << path;
 	printf("\nВведите путь к каталогу\n(Внимание! Путь должен написан без использования символов кириллицы)\n(Если оставить как есть - D): "); std::cin >> catalog;
@@ -74,7 +74,7 @@ void FileTxt::findWordAll() {
 	FileAbstract::SaveFile obj;
 	std::string catalog, saveFileName;
 	int counterFile = 0;
-	auto path = fs::current_path(); //path = path / "TEST";
+	auto path = fs::current_path();
 
 	std::cout << "\nНаходимся в каталоге: " << path;
 	
@@ -105,7 +105,7 @@ void FileTxt::findWordAll() {
 						counterFile++;
 						printf("\n\n");
 						
-						if (obj._fileName != "N") { obj.saveInfo(fWord, f, counter, line, obj); }
+						if (obj._fileName != "N") { obj.saveInfoTxt(fWord, f, counter, line, obj); }
 					}
 					counter++;
 				}
@@ -134,7 +134,7 @@ void FileTxt::findWordNotAll() {
 	FileAbstract::SaveFile obj;
 	std::string catalog, saveFileName;
 	int counterFile = 0;
-	auto path = fs::current_path(); //path = path / "TEST";
+	auto path = fs::current_path();
 
 	std::cout << "\nНаходимся в каталоге: " << path;
 

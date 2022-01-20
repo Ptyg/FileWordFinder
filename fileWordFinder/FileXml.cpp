@@ -160,7 +160,7 @@ void FileXml::findWordAll() {
 							counterFile++;
 							printf("\n\n");
 
-							if (obj._fileName != "N") { obj.saveInfo3(tag, f, counter, line, obj); }
+							if (obj._fileName != "N") { obj.saveInfoXml(tag, f, counter, line, obj); }
 						}
 					}
 					else { objects.push_back(line); }
@@ -273,7 +273,7 @@ void FileXml::findWordNotAll() {
 							counterFile++;
 							printf("\n\n");
 
-							if (obj._fileName != "N") { obj.saveInfo3(tag, f, counter, line, obj); }
+							if (obj._fileName != "N") { obj.saveInfoXml(tag, f, counter, line, obj); }
 						}
 					}
 					else { objects.push_back(line); }
