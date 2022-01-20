@@ -1,3 +1,34 @@
+#ifndef IOSTREAM
+#define IOSTREAM
+#include <iostream>
+#endif
+
+#ifndef STRING
+#define STRING
+#include <string>
+#endif
+
+#ifndef VECTOR
+#define VECTOR
+#include <vector>
+#endif
+
+#ifndef FILESYSTEM
+#define FILESYSTEM
+#include <filesystem>
+namespace fs = std::filesystem;
+#endif
+
+#ifndef CHRONO
+#define CHRONO
+#include <chrono>
+#endif
+
+#ifndef MEMORY
+#define MEMORY
+#include <memory>
+#endif
+
 #include "task.h"
 #include "FileHtml.h"
 #include "FileTxt.h"
@@ -75,33 +106,25 @@ vector<string> getDirectoryNotAllFilesNames(const fs::path& dir, const vector<st
 
 // отображение всех txt с учетом всех дерикторий и без
 void displayTxtFiles() {
-	FileTxt* ftxt = new FileTxt();
+	std::unique_ptr<FileTxt> ftxt = std::make_unique<FileTxt>();
 	ftxt->displayFiles();
-	delete ftxt;
-
 	cin.ignore(); cin.get();
 }
 void displayNotAllTxtFiles() {
-	FileTxt* ftxt = new FileTxt();
+	std::unique_ptr<FileTxt> ftxt = std::make_unique<FileTxt>();
 	ftxt->displayNotAllFiles();
-	delete ftxt;
-
 	cin.ignore(); cin.get();
 }
 
 // поиск слов в txt с учетом всех дерикторий и без
 void findWord() {
-	FileTxt* ftxt = new FileTxt();
+	std::unique_ptr<FileTxt> ftxt = std::make_unique<FileTxt>();
 	ftxt->findWordAll();
-	delete ftxt;
-
 	cin.ignore(); cin.get();
 }
 void findNotAllWord() {
-	FileTxt* ftxt = new FileTxt();
+	std::unique_ptr<FileTxt> ftxt = std::make_unique<FileTxt>();
 	ftxt->findWordNotAll();
-	delete ftxt;
-
 	cin.ignore(); cin.get();
 }
 
@@ -113,33 +136,25 @@ void findNotAllWord() {
 
 // отображение всех xml с учетом всех дерикторий и без
 void displayXmlFiles() {
-	FileXml* fxml = new FileXml();
+	std::unique_ptr<FileXml> fxml = std::make_unique<FileXml>();
 	fxml->displayFiles();
-	delete fxml;
-
 	cin.ignore(); cin.get();
 }
 void displayNotAllXmlFiles() {
-	FileXml* fxml = new FileXml();
+	std::unique_ptr<FileXml> fxml = std::make_unique<FileXml>();
 	fxml->displayNotAllFiles();
-	delete fxml;
-
 	cin.ignore(); cin.get();
 }
 
 // поиск объектов в xml с учетом всех дерикторий и без
 void findObject() {
-	FileXml* fxmp = new FileXml();
+	std::unique_ptr<FileXml> fxml = std::make_unique<FileXml>();
 	fxmp->findWordAll();
-	delete fxmp;
-
 	cin.ignore(); cin.get();
 }
 void findNotAllObject(){
-	FileXml* fxmp = new FileXml();
+	std::unique_ptr<FileXml> fxml = std::make_unique<FileXml>();
 	fxmp->findWordNotAll();
-	delete fxmp;
-
 	cin.ignore(); cin.get();
 }
 
@@ -151,17 +166,13 @@ void findNotAllObject(){
 
 // отображение всех html с учетом всех дерикторий и без
 void displayHtmlFiles() {
-	FileHtml* fhtml = new FileHtml();
+	std::unique_ptr<FileHtml> fhtml = std::make_unique<FileHtml>();
 	fhtml->displayFiles();
-	delete fhtml;
-
 	cin.ignore(); cin.get();
 }
 void displayNotAllHtmlFiles() {
-	FileHtml* fhtml = new FileHtml();
+	std::unique_ptr<FileHtml> fhtml = std::make_unique<FileHtml>();
 	fhtml->displayNotAllFiles();
-	delete fhtml;
-
 	cin.ignore(); cin.get();
 }
 
@@ -175,33 +186,25 @@ void displayNotAllHtmlFiles() {
 
 // отображение всех типов файлов с учетом всех дерикторий и без
 void displayAllFiles() {
-	FileAll* fAll = new FileAll();
+	std::unique_ptr<FileAll> fAll = std::make_unique<FileAll>();
 	fAll->displayFiles();
-	delete fAll;
-
 	cin.ignore(); cin.get();
 }
 void displayNotAllFiles() {
-	FileAll* fAll = new FileAll();
+	std::unique_ptr<FileAll> fAll = std::make_unique<FileAll>();
 	fAll->displayNotAllFiles();
-	delete fAll;
-
 	cin.ignore(); cin.get();
 }
 
 // поиск слов во всех файлах с учетом всех дерикторий и без
 void findWordAll() {
-	FileAll* fAll = new FileAll();
+	std::unique_ptr<FileAll> fAll = std::make_unique<FileAll>();
 	fAll->findWordAll();
-	delete fAll;
-
 	cin.ignore(); cin.get();
 }
 void findNotAllWordAll() {
-	FileAll* fAll = new FileAll();
+	std::unique_ptr<FileAll> fAll = std::make_unique<FileAll>();
 	fAll->findWordNotAll();
-	delete fAll;
-
 	cin.ignore(); cin.get();
 }
 
