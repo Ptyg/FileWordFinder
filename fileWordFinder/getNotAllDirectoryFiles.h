@@ -1,13 +1,18 @@
-#ifndef INCLUDES_FOR_FILESEARCHING
-#define INCLUDES_FOR_FILESEARCHING
-
+#ifndef VECTOR
+#define	VECTOR	
 #include <vector>
+#endif
+
+#ifndef STRING
+#define STRING
 #include <string>
+#endif
+
+#ifndef FILESYSTEM
+#define FILESYSTEM
 #include <filesystem>
-
 namespace fs = std::filesystem;
-
-#endif 
+#endif
 
 
 #ifndef GET_NOT_DIR_FILES_H

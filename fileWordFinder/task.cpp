@@ -149,12 +149,12 @@ void displayNotAllXmlFiles() {
 // поиск объектов в xml с учетом всех дерикторий и без
 void findObject() {
 	std::unique_ptr<FileXml> fxml = std::make_unique<FileXml>();
-	fxmp->findWordAll();
+	fxml->findWordAll();
 	cin.ignore(); cin.get();
 }
 void findNotAllObject(){
 	std::unique_ptr<FileXml> fxml = std::make_unique<FileXml>();
-	fxmp->findWordNotAll();
+	fxml->findWordNotAll();
 	cin.ignore(); cin.get();
 }
 
