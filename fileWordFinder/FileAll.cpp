@@ -108,7 +108,7 @@ void FileAll::findWordAll() {
 						counterFile++;
 						printf("\n\n");
 
-						if (obj._fileName != "N") { obj.saveInfo(fWord, f, counter, line, obj); }
+						if (obj._fileName != "N") { obj.saveInfoTxt(fWord, f, counter, line, obj); }
 					}
 					counter++;
 				}
@@ -137,7 +137,7 @@ void FileAll::findWordNotAll() {
 	FileAbstract::SaveFile obj;
 	std::string catalog, saveFileName;
 	int counterFile = 0;
-	auto path = fs::current_path(); //path = path / "TEST";
+	auto path = fs::current_path();
 
 	std::cout << "\nНаходимся в каталоге: " << path;
 
@@ -168,7 +168,7 @@ void FileAll::findWordNotAll() {
 						counterFile++;
 						printf("\n\n");
 
-						if (obj._fileName != "N") { obj.saveInfo(fWord, f, counter, line, obj); }
+						if (obj._fileName != "N") { obj.saveInfoTxt(fWord, f, counter, line, obj); }
 					}
 					counter++;
 				}

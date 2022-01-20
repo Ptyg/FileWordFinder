@@ -103,7 +103,7 @@ void FileUserType::findWord() {
 						counterFile++;
 						printf("\n\n");
 
-						if (obj._fileName != "N") { obj.saveInfo(fWord, f, counter, line, obj); }
+						if (obj._fileName != "N") { obj.saveInfoTxt(fWord, f, counter, line, obj); }
 					}
 					counter++;
 				}
@@ -163,7 +163,7 @@ void FileUserType::findWordNotAll() {
 						counterFile++;
 						printf("\n\n");
 
-						if (obj._fileName != "N") { obj.saveInfo(fWord, f, counter, line, obj); }
+						if (obj._fileName != "N") { obj.saveInfoTxt(fWord, f, counter, line, obj); }
 					}
 					counter++;
 				}
