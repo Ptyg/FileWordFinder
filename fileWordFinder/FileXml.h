@@ -12,11 +12,9 @@ class FileXml : public FileAbstract {
 	std::string _word;
 	const std::string _fileType = ".xml";
 public:
-	// функции override
 	void displayFiles() override;
 	void displayNotAllFiles() override;
 
-	// функции НЕ override
 	void findWordAll();
 	void findWordNotAll();
 

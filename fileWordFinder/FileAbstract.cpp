@@ -17,7 +17,7 @@ void FileAbstract::SaveFile::saveInfoTxt(std::string word, std::string path, int
 		fout << "Path: " << path << "\n";
 		fout << "Line number: " << lineNum << "\n";
 		fout << "Line: " << line << "\n\n";
-		std::cout << "Данные сохранены!\n";
+		std::cout << "Data has been saved\n";
 		fout.close();
 	}
 	catch (const std::exception& ex) { std::cout << ex.what() << "\n"; fout.close(); }
@@ -31,7 +31,7 @@ void FileAbstract::SaveFile::saveInfoHtml(std::vector<std::string> word, std::st
 		fout << "Path: " << path << "\n";
 		fout << "Line number: " << lineNum << "\n";
 		fout << "Line: " << line << "\n\n";
-		std::cout << "Данные сохранены!\n";
+		std::cout << "Data has been saved\n";
 		fout.close();
 	}
 	catch (const std::exception& ex) { std::cout << ex.what() << "\n"; fout.close(); }
@@ -48,7 +48,7 @@ void FileAbstract::SaveFile::saveInfoXml(std::string tag, std::string path, int&
 		fout << "Path: " << path << "\n";
 		fout << "Line number: " << lineNum << "\n";
 		fout << "Line: " << line << "\n\n";
-		std::cout << "Данные сохранены!\n";
+		std::cout << "Data has been saved\n";
 		fout.close();
 	}
 	catch (const std::exception& ex) { std::cout << ex.what() << "\n"; fout.close(); }

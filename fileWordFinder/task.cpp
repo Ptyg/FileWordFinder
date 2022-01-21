@@ -40,6 +40,11 @@ using std::cout;
 using std::string;
 using std::vector;
 
+/////////////////////////////////////////////////////
+//
+//	FUNCTIONS TO GET FILES NAME OR PATH FROM DIRS
+//
+/////////////////////////////////////////////////////
 vector<string> getDirectoryFiles(const fs::path& dir, const vector<string>& ext) {
 	vector<string> files;
 	try{
@@ -89,7 +94,7 @@ vector<string> getDirectoryFilesNames(const fs::path& dir, const vector<string>&
 
 vector<string> getDirectoryNotAllFilesNames(const fs::path& dir, const vector<string>& ext) {
 	vector<string> files;
-	for (auto& p : fs::directory_iterator(dir)) {
+	for (auto& p : fs::recursive_directory_iterator(dir)) {
 		if (fs::is_regular_file(p)) {
 			if (ext.empty() || find(ext.begin(), ext.end(), p.path().extension().string()) != ext.end())
 				files.push_back(p.path().filename().string());
@@ -100,11 +105,12 @@ vector<string> getDirectoryNotAllFilesNames(const fs::path& dir, const vector<st
 
 //////////////////////////////////////////////////////
 //
-// ДЛЯ ФАЙЛОВ .TXT
+// FOR .TXT
 //  
 //////////////////////////////////////////////////////
 
-// отображение всех txt с учетом всех дерикторий и без
+// Display .txt types of files, 
+// taking into account all directories and without
 void displayTxtFiles() {
 	std::unique_ptr<FileTxt> ftxt = std::make_unique<FileTxt>();
 	ftxt->displayFiles();
@@ -116,7 +122,8 @@ void displayNotAllTxtFiles() {
 	cin.ignore(); cin.get();
 }
 
-// поиск слов в txt с учетом всех дерикторий и без
+// Search for word in .txt, taking into account 
+// all directories and without
 void findWord() {
 	std::unique_ptr<FileTxt> ftxt = std::make_unique<FileTxt>();
 	ftxt->findWordAll();
@@ -130,11 +137,12 @@ void findNotAllWord() {
 
 //////////////////////////////////////////////////////
 //
-// ДЛЯ ФАЙЛОВ .XML
+// FOR .XML
 //  
 //////////////////////////////////////////////////////
 
-// отображение всех xml с учетом всех дерикторий и без
+// Display .xml types of files, 
+// taking into account all directories and without
 void displayXmlFiles() {
 	std::unique_ptr<FileXml> fxml = std::make_unique<FileXml>();
 	fxml->displayFiles();
@@ -146,7 +154,8 @@ void displayNotAllXmlFiles() {
 	cin.ignore(); cin.get();
 }
 
-// поиск объектов в xml с учетом всех дерикторий и без
+// Search for objects in xml, taking into account 
+// all directories and without
 void findObject() {
 	std::unique_ptr<FileXml> fxml = std::make_unique<FileXml>();
 	fxml->findWordAll();
@@ -160,11 +169,12 @@ void findNotAllObject(){
 
 //////////////////////////////////////////////////////
 //
-// ДЛЯ ФАЙЛОВ .HTML
+// FOR .HTML
 //  
 //////////////////////////////////////////////////////
 
-// отображение всех html с учетом всех дерикторий и без
+// Display .html types of files, 
+// taking into account all directories and without
 void displayHtmlFiles() {
 	std::unique_ptr<FileHtml> fhtml = std::make_unique<FileHtml>();
 	fhtml->displayFiles();
@@ -176,15 +186,16 @@ void displayNotAllHtmlFiles() {
 	cin.ignore(); cin.get();
 }
 
-// TODO: сделать поиск чего-то в штмл
+// TODO: MAKE FINDING FOR SMTH IN HTML
 
 //////////////////////////////////////////////////////
 //
-// ДЛЯ ВСЕХ ТИПОВ ФАЙЛОВ
+// FOR "ALL" FILE TYPE
 //  
 //////////////////////////////////////////////////////
 
-// отображение всех типов файлов с учетом всех дерикторий и без
+// display all types of files, 
+// taking into account all directories and without
 void displayAllFiles() {
 	std::unique_ptr<FileAll> fAll = std::make_unique<FileAll>();
 	fAll->displayFiles();
@@ -196,7 +207,8 @@ void displayNotAllFiles() {
 	cin.ignore(); cin.get();
 }
 
-// поиск слов во всех файлах с учетом всех дерикторий и без
+// Search for words in all files, taking into account 
+// all directories and without
 void findWordAll() {
 	std::unique_ptr<FileAll> fAll = std::make_unique<FileAll>();
 	fAll->findWordAll();
@@ -210,7 +222,7 @@ void findNotAllWordAll() {
 
 //////////////////////////////////////////////////////
 //
-// ИНТЕРФЕЙСЫ ДЛЯ КАЖДОГО ТИПА ФАЙЛА
+// INTERFAСES FOR EACH FILE TYPE
 //  
 //////////////////////////////////////////////////////
 
@@ -218,12 +230,12 @@ void userInterfaceAll() {
 	char ch;
 	do {
 		system("cls");
-		printf("01. Отобразить все файлы в каталоге с учетом вложеных каталогов\n");
-		printf("02. Отобразить все файлы в каталоге без учета вложеных каталогов\n");
-		printf("03. Поиск слова во всех файлах c учетом вложеных каталогов\n");
-		printf("04. Поиск слова во всех файлах без учета вложеных каталогов\n");
-		printf("05. Выход\n");
-		printf("Пожалуйста, введите число (1-5): "); cin >> ch;
+		printf("01. Show all files including subdirectories\n");
+		printf("02. Show all files without subdirectories\n");
+		printf("03. Word searching including subdirectories\n");
+		printf("04. Word searching without subdirectories\n");
+		printf("05. Exit\n");
+		printf("Please, enter your choice (1-5): "); cin >> ch;
 
 		switch (ch) {
 		case '1': displayAllFiles(); break;
@@ -240,12 +252,12 @@ void userInterfaceTxt() {
 	char ch;
 	do {
 		system("cls");
-		printf("01. Отобразить все файлы .txt с учетом вложеных каталогов\n");
-		printf("02. Отобразить все файлы .txt без учета вложеных каталогов\n");
-		printf("03. Поиск слова c учетом вложеных каталогов\n");
-		printf("04. Поиск слова без учета вложеных каталогов\n");
-		printf("05. Выход\n");
-		printf("Пожалуйста, введите число (1-5): "); cin >> ch;
+		printf("01. Show all .txt files including subdirectories\n");
+		printf("02. Show all .txt files without subdirectories\n");
+		printf("03. Word searching including subdirectories\n");
+		printf("04. Word searching without subdirectories\n");
+		printf("05. Exit\n");
+		printf("Please, enter your choice (1-5): "); cin >> ch;
 
 		switch (ch) {
 		case '1': displayTxtFiles(); break;
@@ -261,12 +273,12 @@ void userInterfaceXml() {
 	char ch;
 	do {
 		system("cls");
-		printf("01. Отобразить все файлы .xml с учетом вложеных каталогов\n");
-		printf("02. Отобразить все файлы .xml без учета вложеных каталогов\n");
-		printf("03. Поиск объекта c учетом вложеных каталогов\n");
-		printf("04. Поиск объекта без учета вложеных каталогов\n");
-		printf("05. Выход\n");
-		printf("Пожалуйста, введите число (1-5): "); cin >> ch;
+		printf("01. Show all .xml files including subdirectories\n");
+		printf("02. Show all .xml files without subdirectories\n");
+		printf("03. Object(-s) searching including subdirectories\n");
+		printf("04. Object(-s) searching without subdirectories\n");
+		printf("05. Exit\n");
+		printf("Please, enter your choice (1-5): "); cin >> ch;
 
 		switch (ch) {
 		case '1': displayXmlFiles(); break;
@@ -282,10 +294,10 @@ void userInterfaceHtml() {
 	char ch;
 	do {
 		system("cls");
-		printf("01. Отобразить все файлы .html с учетом вложеных каталогов\n");
-		printf("02. Отобразить все файлы .html без учета вложеных каталогов\n");
-		printf("03. Выход\n");
-		printf("Пожалуйста, введите число (1-3): "); cin >> ch;
+		printf("01. Show all .html files including subdirectories\n");
+		printf("02. Show all .html files without subdirectories\n");
+		printf("03. Exit\n");
+		printf("Please, enter your choice (1-3): "); cin >> ch;
 
 		switch (ch) {
 		case '1': displayHtmlFiles(); break;
@@ -297,21 +309,20 @@ void userInterfaceHtml() {
 	} while (ch != '3');
 }
 
-// стартовый интерфейс
+// Start interface
 void userInterface() {
-	setlocale(LC_ALL, "rus");
 	char ch;
 	do{
 		system("cls");
-		printf("01. Работа со всеми типами файлов\n");
-		printf("02. Работа с .txt\n");
-		printf("03. Работа с .xml\n");
-		printf("04. Работа с .html\n");
-		printf("05. Выход\n");
-		printf("Пожалуйста, введите число (1-5): "); cin >> ch;
+		printf("01. Work with chosen file type (in process...)\n");
+		printf("02. Work with .txt\n");
+		printf("03. Work with .xml\n");
+		printf("04. Work with .html (for now, only show files...)\n");
+		printf("05. Exit\n");
+		printf("Please, enter your choice (1-5): "); cin >> ch;
 
 		switch (ch){
-		case '1': userInterfaceAll(); break;
+		case '1': /*userInterfaceAll();*/ break;
 		case '2': userInterfaceTxt(); break;
 		case '3': userInterfaceXml(); break;
 		case '4': userInterfaceHtml(); break;
@@ -321,6 +332,4 @@ void userInterface() {
 	} while (ch != '5');
 }
 
-void task() {
-	userInterface();
-}
+void task() { userInterface(); }

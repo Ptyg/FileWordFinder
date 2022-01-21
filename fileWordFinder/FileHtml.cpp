@@ -14,20 +14,21 @@
 
 void FileHtml::setFindWord(std::string& word) { _word = word; }
 std::string FileHtml::getFindWord() { return _word; }
+const std::string& FileHtml::getFileType() const { return _fileType; }
 
 void FileHtml::displayFiles() {
 	system("cls");
 	std::string catalog;
 	auto path = fs::current_path();
 
-	std::cout << "\nНаходимся в каталоге: " << path;
-	printf("\nВведите путь к каталогу\n(Внимание! Путь должен написан без использования символов кириллицы)\n(Если оставить как есть - D): "); std::cin >> catalog;
+	std::cout << "\nCurrent path: " << path;
+	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): "); std::cin >> catalog;
 	if (catalog != "D") { path = fs::path(catalog); }
 
 	auto print_files = [](const auto& aVector) {
 		for (auto& f : aVector)
 			std::cout << f << "\n";
-		std::cout << "\nКол-во файлов: " << aVector.size();
+		std::cout << "\nAmount of files: " << aVector.size();
 	};
 
 	auto start = std::chrono::steady_clock::now();
@@ -37,25 +38,31 @@ void FileHtml::displayFiles() {
 
 	auto end = std::chrono::steady_clock::now();
 	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "\nВремя: " << finalTime.count();
+	std::cout << "\nTime: " << finalTime.count();
 }
 void FileHtml::displayNotAllFiles() {
 	system("cls");
 	std::string catalog;
 	auto path = fs::current_path();
 
-	std::cout << "\nНаходимся в каталоге: " << path;
-	printf("\nВведите путь к каталогу\n(Внимание! Путь должен написан без использования символов кириллицы)\n(Если оставить как есть - D): "); std::cin >> catalog;
+	std::cout << "\nCurrent path: " << path;
+	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): "); std::cin >> catalog;
 	if (catalog != "D") { path = fs::path(catalog); }
 
 	auto print_files = [](const auto& aVector) {
 		for (auto& f : aVector)
 			std::cout << f << "\n";
-		std::cout << "\nКол-во файлов: " << aVector.size();
+		std::cout << "\nAmount of files: " << aVector.size();
 	};
+
+	auto start = std::chrono::steady_clock::now();
 
 	auto files = getNotAllDirectoryFiles(path, { getFileType() });
 	print_files(files);
+
+	auto end = std::chrono::steady_clock::now();
+	std::chrono::duration<double> finalTime = end - start;
+	std::cout << "\nTime: " << finalTime.count();
 }
 
 // TODO: это только в идз. Нужно убрать и заменить на поиск обьекта(?)
@@ -280,4 +287,3 @@ void FileHtml::displayNotAllFiles() {
 //	cout << "\nВремя: " << finalTime.count();
 //}
 
-const std::string& FileHtml::getFileType() const { return _fileType; }

@@ -1,5 +1,3 @@
-
-
 #ifndef IOSTREAM
 #define IOSTREAM
 #include <iostream>
@@ -28,15 +26,15 @@ namespace fs = std::filesystem;
 void FileAll::displayFiles() {
 	system("cls");
 	std::string catalog;
-	auto path = fs::current_path(); //path = path / "TEST";
+	auto path = fs::current_path();
 
-	std::cout << "\nНаходимся в каталоге: " << path;
-	printf("\nВведите путь к каталогу\n(Внимание! Путь должен написан без использования символов кириллицы)\n(Если оставить как есть - D): "); std::cin >> catalog;
+	std::cout << "\nCurrent path: " << path;
+	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): "); std::cin >> catalog;
 	if (catalog != "D") { path = fs::path(catalog); }
 
 	auto print_files = [](const auto& aVector) {
 		for (auto& f : aVector) { std::cout << f << "\n"; }
-		std::cout << "\nКол-во файлов: " << aVector.size();
+		std::cout << "\nAmount of files: " << aVector.size();
 	};
 
 	auto start = std::chrono::steady_clock::now();
@@ -46,20 +44,20 @@ void FileAll::displayFiles() {
 
 	auto end = std::chrono::steady_clock::now();
 	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "\nВремя: " << finalTime.count();
+	std::cout << "\nTime: " << finalTime.count();
 }
 void FileAll::displayNotAllFiles() {
 	system("cls");
 	std::string catalog;
-	auto path = fs::current_path(); //path = path / "TEST";
-
-	std::cout << "\nНаходимся в каталоге: " << path;
-	printf("\nВведите путь к каталогу\n(Внимание! Путь должен написан без использования символов кириллицы)\n(Если оставить как есть - D): "); std::cin >> catalog;
+	auto path = fs::current_path();
+	
+	std::cout << "\nCurrent path: " << path;
+	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): "); std::cin >> catalog;
 	if (catalog != "D") { path = fs::path(catalog); }
 
 	auto print_files = [](const auto& aVector) {
 		for (auto& f : aVector) { std::cout << f << "\n"; }
-		std::cout << "\nКол-во файлов: " << aVector.size();
+		std::cout << "\nAmount of files: " << aVector.size();
 	};
 
 	auto start = std::chrono::steady_clock::now();
@@ -69,7 +67,7 @@ void FileAll::displayNotAllFiles() {
 
 	auto end = std::chrono::steady_clock::now();
 	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "\nВремя: " << finalTime.count();
+	std::cout << "\nTime: " << finalTime.count();
 }
 
 void FileAll::findWordAll() {
@@ -77,14 +75,14 @@ void FileAll::findWordAll() {
 	FileAbstract::SaveFile obj;
 	std::string catalog, saveFileName;
 	int counterFile = 0;
-	auto path = fs::current_path(); //path = path / "TEST";
+	auto path = fs::current_path();
 
-	std::cout << "\nНаходимся в каталоге: " << path;
+	std::cout << "\nCurrent path: " << path;
 
-	printf("\nВведите путь к каталогу\n(Внимание! Путь должен написан без использования символов кириллицы)\n(Если оставить как есть - D): "); std::cin >> catalog;
+	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): "); std::cin >> catalog;
 	if (catalog != "D") { path = fs::path(catalog); }
-	std::cout << "\nВведите слово для поиска: "; std::cin >> _word;
-	std::cout << "\nВведите файл (пример: C:\\somePath\\result.txt), где будет сохранен результат\n(Если не нужно сохранять - N): "; std::cin >> saveFileName; obj._fileName = saveFileName;
+	std::cout << "\nEnter a word to find: "; std::cin >> _word;
+	std::cout << "\nEnter the name of the file (example: C:\\somePath\\result.txt) where the result will be saved\n(No need to save the result - N): "; std::cin >> saveFileName; obj._fileName = saveFileName;
 
 	auto print_result = [](const auto& aVector, const std::string& fWord, int& counterFile, const FileAbstract::SaveFile& obj) {
 
@@ -101,10 +99,10 @@ void FileAll::findWordAll() {
 						while (line[coun] == ' ') { spaceBarCounter++; coun++; }
 						line.erase(0, spaceBarCounter);
 
-						std::cout << "\nИскомое слово: " << fWord;
-						std::cout << "\nПуть: " << f;
-						std::cout << "\nНомер строки: " << counter;
-						std::cout << "\nСтрока: " << line;
+						std::cout << "\nSearching word: " << fWord;
+						std::cout << "\nPath: " << f;
+						std::cout << "\nLine number: " << counter;
+						std::cout << "\nLine: " << line;
 						counterFile++;
 						printf("\n\n");
 
@@ -129,8 +127,8 @@ void FileAll::findWordAll() {
 
 	auto end = std::chrono::steady_clock::now();
 	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "Кол-во файлов со схожим результатом поиска: " << counterFile;
-	std::cout << "\nВремя: " << finalTime.count();
+	std::cout << "Number of files with a similar search result: " << counterFile;
+	std::cout << "\nTime: " << finalTime.count();
 }
 void FileAll::findWordNotAll() {
 	system("cls");
@@ -139,12 +137,12 @@ void FileAll::findWordNotAll() {
 	int counterFile = 0;
 	auto path = fs::current_path();
 
-	std::cout << "\nНаходимся в каталоге: " << path;
+	std::cout << "\nCurrent path: " << path;
 
-	printf("\nВведите путь к каталогу\n(Внимание! Путь должен написан без использования символов кириллицы)\n(Если оставить как есть - D): "); std::cin >> catalog;
+	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): "); std::cin >> catalog;
 	if (catalog != "D") { path = fs::path(catalog); }
-	std::cout << "\nВведите слово для поиска: "; std::cin >> _word;
-	std::cout << "\nВведите файл (пример: C:\\somePath\\result.txt), где будет сохранен результат\n(Если не нужно сохранять - N): "; std::cin >> saveFileName; obj._fileName = saveFileName;
+	std::cout << "\nEnter a word to find: "; std::cin >> _word;
+	std::cout << "\nEnter the name of the file (example: C:\\somePath\\result.txt) where the result will be saved\n(No need to save the result - N): "; std::cin >> saveFileName; obj._fileName = saveFileName;
 
 	auto print_result = [](const auto& aVector, const std::string& fWord, int& counterFile, const FileAbstract::SaveFile& obj) {
 
@@ -161,10 +159,10 @@ void FileAll::findWordNotAll() {
 						while (line[coun] == ' ') { spaceBarCounter++; coun++; }
 						line.erase(0, spaceBarCounter);
 
-						std::cout << "\nИскомое слово: " << fWord;
-						std::cout << "\nПуть: " << f;
-						std::cout << "\nНомер строки: " << counter;
-						std::cout << "\nСтрока: " << line;
+						std::cout << "\nSearching word: " << fWord;
+						std::cout << "\nPath: " << f;
+						std::cout << "\nLine number: " << counter;
+						std::cout << "\nLine: " << line;
 						counterFile++;
 						printf("\n\n");
 
@@ -189,6 +187,6 @@ void FileAll::findWordNotAll() {
 
 	auto end = std::chrono::steady_clock::now();
 	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "Кол-во файлов со схожим результатом поиска: " << counterFile;
-	std::cout << "\nВремя: " << finalTime.count();
+	std::cout << "Number of files with a similar search result: " << counterFile;
+	std::cout << "\nTime: " << finalTime.count();
 }
