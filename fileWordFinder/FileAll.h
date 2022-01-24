@@ -9,10 +9,10 @@
 #include "FileAbstract.h"
 
 class FileAll : public FileAbstract{
-	std::string _word;
+	//std::string _word;
 public:
-	void displayFiles() override;
-	void displayNotAllFiles() override;
+	//void displayFiles() override;
+	//void displayNotAllFiles() override;
 
 	void findWordAll();
 	void findWordNotAll();

@@ -19,69 +19,30 @@
 namespace fs = std::filesystem;
 #endif
 
+#ifndef CHRONO
+#define CHRONO
+#include <chrono>
+#endif
+
 #include "FileAll.h"
 #include "getDirectoryFiles.h"
 #include "getNotAllDirectoryFiles.h"
 
-void FileAll::displayFiles() {
-	system("cls");
-	std::string catalog;
-	auto path = fs::current_path();
-
-	std::cout << "\nCurrent path: " << path;
-	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): "); std::cin >> catalog;
-	if (catalog != "D") { path = fs::path(catalog); }
-
-	auto print_files = [](const auto& aVector) {
-		for (auto& f : aVector) { std::cout << f << "\n"; }
-		std::cout << "\nAmount of files: " << aVector.size();
-	};
-
-	auto start = std::chrono::steady_clock::now();
-
-	auto files = getDirectoryFiles(path, {});
-	print_files(files);
-
-	auto end = std::chrono::steady_clock::now();
-	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "\nTime: " << finalTime.count();
-}
-void FileAll::displayNotAllFiles() {
-	system("cls");
-	std::string catalog;
-	auto path = fs::current_path();
-	
-	std::cout << "\nCurrent path: " << path;
-	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): "); std::cin >> catalog;
-	if (catalog != "D") { path = fs::path(catalog); }
-
-	auto print_files = [](const auto& aVector) {
-		for (auto& f : aVector) { std::cout << f << "\n"; }
-		std::cout << "\nAmount of files: " << aVector.size();
-	};
-
-	auto start = std::chrono::steady_clock::now();
-
-	auto files = getNotAllDirectoryFiles(path, {});
-	print_files(files);
-
-	auto end = std::chrono::steady_clock::now();
-	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "\nTime: " << finalTime.count();
-}
-
 void FileAll::findWordAll() {
 	system("cls");
 	FileAbstract::SaveFile obj;
-	std::string catalog, saveFileName;
+	std::string catalog, saveFileName, findingWord;
 	int counterFile = 0;
 	auto path = fs::current_path();
 
 	std::cout << "\nCurrent path: " << path;
+	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n \
+		(If left as is - D): ");
+	std::cin >> catalog;
 
-	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): "); std::cin >> catalog;
 	if (catalog != "D") { path = fs::path(catalog); }
-	std::cout << "\nEnter a word to find: "; std::cin >> _word;
+
+	std::cout << "\nEnter a word to find: "; std::cin >> findingWord; setFindWord(findingWord);
 	std::cout << "\nEnter the name of the file (example: C:\\somePath\\result.txt) where the result will be saved\n(No need to save the result - N): "; std::cin >> saveFileName; obj._fileName = saveFileName;
 
 	auto print_result = [](const auto& aVector, const std::string& fWord, int& counterFile, const FileAbstract::SaveFile& obj) {
@@ -123,7 +84,7 @@ void FileAll::findWordAll() {
 	auto start = std::chrono::steady_clock::now();
 
 	auto files = getDirectoryFiles(path, {});
-	print_result(files, _word, counterFile, obj);
+	print_result(files, getFindWord(), counterFile, obj);
 
 	auto end = std::chrono::steady_clock::now();
 	std::chrono::duration<double> finalTime = end - start;
@@ -133,16 +94,21 @@ void FileAll::findWordAll() {
 void FileAll::findWordNotAll() {
 	system("cls");
 	FileAbstract::SaveFile obj;
-	std::string catalog, saveFileName;
+	std::string catalog, saveFileName, findingWord;
 	int counterFile = 0;
 	auto path = fs::current_path();
 
 	std::cout << "\nCurrent path: " << path;
+	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n \
+		(If left as is - D): ");
+	std::cin >> catalog;
 
-	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): "); std::cin >> catalog;
 	if (catalog != "D") { path = fs::path(catalog); }
-	std::cout << "\nEnter a word to find: "; std::cin >> _word;
-	std::cout << "\nEnter the name of the file (example: C:\\somePath\\result.txt) where the result will be saved\n(No need to save the result - N): "; std::cin >> saveFileName; obj._fileName = saveFileName;
+
+	std::cout << "\nEnter a word to find: "; std::cin >> findingWord; setFindWord(findingWord);
+	std::cout << "\nEnter the name of the file (example: C:\\somePath\\result.txt) where the result will be saved\n \
+					(No need to save the result - N): "; 
+	std::cin >> saveFileName; obj._fileName = saveFileName;
 
 	auto print_result = [](const auto& aVector, const std::string& fWord, int& counterFile, const FileAbstract::SaveFile& obj) {
 
@@ -183,7 +149,7 @@ void FileAll::findWordNotAll() {
 	auto start = std::chrono::steady_clock::now();
 
 	auto files = getNotAllDirectoryFiles(path, {});
-	print_result(files, _word, counterFile, obj);
+	print_result(files, getFindWord(), counterFile, obj);
 
 	auto end = std::chrono::steady_clock::now();
 	std::chrono::duration<double> finalTime = end - start;
