@@ -19,11 +19,6 @@
 namespace fs = std::filesystem;
 #endif
 
-#ifndef CHRONO
-#define CHRONO
-#include <chrono>
-#endif
-
 #include "FileTxt.h"
 #include "getDirectoryFiles.h"
 #include "getNotAllDirectoryFiles.h"
@@ -84,15 +79,8 @@ void FileTxt::findWordAll() {
 		printf("\n");
 	};
 
-	auto start = std::chrono::steady_clock::now();
-
 	auto files = getDirectoryFiles(path, { getFileType() });
 	print_result(files, getFindWord(), counterFile, obj);
-
-	auto end = std::chrono::steady_clock::now();
-	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "Number of files with a similar search result: " << counterFile;
-	std::cout << "\nTime: " << finalTime.count();
 }
 void FileTxt::findWordNotAll() {
 	system("cls");
@@ -147,15 +135,8 @@ void FileTxt::findWordNotAll() {
 		printf("\n");
 	};
 	
-	auto start = std::chrono::steady_clock::now();
-
 	auto files = getNotAllDirectoryFiles(path, { getFileType() });
 	print_result(files, getFindWord(), counterFile, obj);
-
-	auto end = std::chrono::steady_clock::now();
-	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "Number of files with a similar search result: " << counterFile;
-	std::cout << "\nTime: " << finalTime.count();
 }
 
 

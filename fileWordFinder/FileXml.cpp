@@ -18,12 +18,6 @@
 #include <fstream>
 #endif
 
-
-#ifndef CHRONO
-#define CHRONO
-#include <chrono>
-#endif
-
 #ifndef FILESYSTEM
 #define FILESYSTEM
 #include <filesystem>
@@ -142,15 +136,8 @@ void FileXml::findWordAll() {
 		printf("\n");
 	};
 
-	auto start = std::chrono::steady_clock::now();
-
 	auto files = getDirectoryFiles(path, { getFileType() });
 	print_result(files, getFindWord(), counterFile, obj);
-
-	auto end = std::chrono::steady_clock::now();
-	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "Number of files with a similar search result: " << counterFile;
-	std::cout << "\nTime: " << finalTime.count();
 }
 void FileXml::findWordNotAll() {
 	system("cls");
@@ -260,13 +247,6 @@ void FileXml::findWordNotAll() {
 		printf("\n");
 	};
 
-	auto start = std::chrono::steady_clock::now();
-
 	auto files = getNotAllDirectoryFiles(path, { getFileType() });
 	print_result(files, getFindWord(), counterFile, obj);
-
-	auto end = std::chrono::steady_clock::now();
-	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "Кол-во файлов со схожим результатом поиска: " << counterFile;
-	std::cout << "\nВремя: " << finalTime.count();
 }
