@@ -32,7 +32,7 @@ void FileAll::findWordAll() {
 
 	std::cout << "\nCurrent path: " << path;
 	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n \
-		(If left as is - D): ");
+(If left as is - D): ");
 	std::cin >> catalog;
 
 	if (catalog != "D") { path = fs::path(catalog); }

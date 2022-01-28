@@ -36,44 +36,37 @@ void FileAbstract::setFindWord(std::string& word) { _word = word; }
 const std::string& FileAbstract::getFindWord() const { return _word; }
 void FileAbstract::setFileType(std::string type) { _fileType = type; }
 
-void FileAbstract::displayFiles() {
-	system("cls");
+std::filesystem::path FileAbstract::enterPath() {
 	std::string catalog;
 	auto path = fs::current_path();
 
 	std::cout << "\nCurrent path: " << path;
-	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n \
-		(If left as is - D): ");
+	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): ");
 	std::cin >> catalog;
 
 	if (catalog != "D") { path = fs::path(catalog); }
+	//catalog = path.u8string();
+	return path;
+}
+
+void FileAbstract::displayFiles() {
+	system("cls");
+	
+	const std::filesystem::path path = enterPath();
 
 	auto print_files = [](const auto& aVector) {
 		for (auto& f : aVector)
 			std::cout << f << "\n";
 		std::cout << "\nNumber of files: " << aVector.size();
 	};
-
-	auto start = std::chrono::steady_clock::now();
 
 	auto files = getDirectoryFiles(path, { getFileType() });
 	print_files(files);
-
-	auto end = std::chrono::steady_clock::now();
-	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "\nTime: " << finalTime.count();
 }
 void FileAbstract::displayNotAllFiles() {
 	system("cls");
-	std::string catalog;
-	auto path = fs::current_path();
-
-	std::cout << "\nCurrent path: " << path;
-	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n \
-		(If left as is - D): ");
-	std::cin >> catalog;
-
-	if (catalog != "D") { path = fs::path(catalog); }
+	
+	const std::filesystem::path path = enterPath();
 
 	auto print_files = [](const auto& aVector) {
 		for (auto& f : aVector)
@@ -81,14 +74,8 @@ void FileAbstract::displayNotAllFiles() {
 		std::cout << "\nNumber of files: " << aVector.size();
 	};
 
-	auto start = std::chrono::steady_clock::now();
-
 	auto files = getNotAllDirectoryFiles(path, { getFileType() });
 	print_files(files);
-
-	auto end = std::chrono::steady_clock::now();
-	std::chrono::duration<double> finalTime = end - start;
-	std::cout << "\nTime: " << finalTime.count();
 }
 
 void FileAbstract::SaveFile::saveInfoTxt(std::string word, std::string path, int& lineNum, std::string& line, FileAbstract::SaveFile obj) {

@@ -8,21 +8,34 @@
 #include <vector>
 #endif
 
+#ifndef FILESYSTEM
+#define FILESYSTEM
+#include <filesystem>
+namespace fs = std::filesystem;
+#endif
+
 #ifndef FILE_ABSTRACT_H
 #define FILE_ABSTRACT_H
+enum ShowWithSubDir
+{
+	WithSubDir,
+	WithoutSubDir
+};
+
 class FileAbstract {
 	std::string _word;
 	std::string _fileType = "";
+
 public:
 	virtual ~FileAbstract() {};
 
 	virtual void displayFiles();
 	virtual void displayNotAllFiles();
 
-	// stub 
 	virtual void findWordAll() {};
 	virtual void findWordNotAll() {};
-	// 
+
+	std::filesystem::path enterPath();
 
 	const std::string& getFileType() const;
 	void setFileType(std::string type);
@@ -30,7 +43,8 @@ public:
 	void setFindWord(std::string& word);
 	const std::string& getFindWord() const;
 
-	struct SaveFile {
+	class SaveFile {
+	public:
 		std::string _fileName;
 		static void saveInfoTxt(std::string, std::string, int&, std::string&, FileAbstract::SaveFile);
 		static void saveInfoHtml(std::vector<std::string>, std::string, int&, std::string&, FileAbstract::SaveFile);
