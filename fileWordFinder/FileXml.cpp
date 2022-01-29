@@ -110,6 +110,9 @@ void FileXml::findObject() {
 
 			file.close();
 		}
+
+		if (0 == counterFile) { std::cout << "No files in dir"; }
+
 		printf("\n");
 	};
 
@@ -213,6 +216,9 @@ void FileXml::findNotAllObject() {
 
 			file.close();
 		}
+
+		if (0 == counterFile) { std::cout << "No files in dir"; }
+
 		printf("\n");
 	};
 

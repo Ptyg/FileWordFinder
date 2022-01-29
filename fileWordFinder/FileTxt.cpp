@@ -58,6 +58,9 @@ void FileTxt::findWordAll() {
 			}
 			file.close();
 		}
+
+		if (0 == counterFile) { std::cout << "No files in dir"; }
+		
 		printf("\n");
 	};
 
@@ -107,6 +110,9 @@ void FileTxt::findWordNotAll() {
 			}
 			file.close();
 		}
+
+		if (0 == counterFile) { std::cout << "No files in dir"; }
+
 		printf("\n");
 	};
 	

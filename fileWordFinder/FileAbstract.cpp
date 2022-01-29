@@ -45,7 +45,6 @@ std::filesystem::path FileAbstract::enterPath() {
 	std::cin >> catalog;
 
 	if (catalog != "D") { path = fs::path(catalog); }
-	//catalog = path.u8string();
 	return path;
 }
 
