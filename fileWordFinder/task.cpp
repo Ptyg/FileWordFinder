@@ -19,16 +19,6 @@
 namespace fs = std::filesystem;
 #endif
 
-#ifndef CHRONO
-#define CHRONO
-#include <chrono>
-#endif
-
-#ifndef MEMORY
-#define MEMORY
-#include <memory>
-#endif
-
 #include "task.h"
 #include "FileHtml.h"
 #include "FileTxt.h"
@@ -112,27 +102,26 @@ vector<string> getDirectoryNotAllFilesNames(const fs::path& dir, const vector<st
 // Display .txt types of files, 
 // taking into account all directories and without
 void displayTxtFiles() {
-	std::unique_ptr<FileAbstract> ftxt = std::make_unique<FileTxt>();
-	ftxt->displayFiles();
+	FileTxt ftxt; 
+	ftxt.displayFiles();
 	cin.ignore(); cin.get();
 }
 void displayNotAllTxtFiles() {
-	std::unique_ptr<FileAbstract> ftxt = std::make_unique<FileTxt>();
-	ftxt->displayNotAllFiles();
+	FileTxt ftxt; 
+	ftxt.displayNotAllFiles();
 	cin.ignore(); cin.get();
 }
 
 // Search for word in .txt, taking into account 
 // all directories and without
 void findWord() {
-	std::unique_ptr<FileAbstract> ftxt = std::make_unique<FileTxt>();
-	ftxt->findWordAll();
-	
+	FileTxt ftxt; 
+	ftxt.findWordAll();
 	cin.ignore(); cin.get();
 }
 void findNotAllWord() {
-	std::unique_ptr<FileAbstract> ftxt = std::make_unique<FileTxt>();	
-	ftxt->findWordNotAll();
+	FileTxt ftxt; 
+	ftxt.findWordNotAll();
 	cin.ignore(); cin.get();
 }
 
@@ -145,26 +134,26 @@ void findNotAllWord() {
 // Display .xml types of files, 
 // taking into account all directories and without
 void displayXmlFiles() {
-	std::unique_ptr<FileAbstract> fxml = std::make_unique<FileXml>();
-	fxml->displayFiles();
+	FileXml fxml; 
+	fxml.displayFiles();
 	cin.ignore(); cin.get();
 }
-void displayNotAllXmlFiles() {
-	std::unique_ptr<FileAbstract> fxml = std::make_unique<FileXml>();
-	fxml->displayNotAllFiles();
+void displayNotAllXmlFiles(){
+	FileXml fxml; 
+	fxml.displayNotAllFiles();
 	cin.ignore(); cin.get();
 }
 
 // Search for objects in xml, taking into account 
 // all directories and without
 void findObject() {
-	std::unique_ptr<FileAbstract> fxml = std::make_unique<FileXml>();
-	fxml->findWordAll();
+	FileXml fxml; 
+	fxml.findObject();
 	cin.ignore(); cin.get();
 }
 void findNotAllObject(){
-	std::unique_ptr<FileAbstract> fxml = std::make_unique<FileXml>();
-	fxml->findWordNotAll();
+	FileXml fxml; 
+	fxml.findNotAllObject();
 	cin.ignore(); cin.get();
 }
 
@@ -177,13 +166,13 @@ void findNotAllObject(){
 // Display .html types of files, 
 // taking into account all directories and without
 void displayHtmlFiles() {
-	std::unique_ptr<FileAbstract> fhtml = std::make_unique<FileHtml>();
-	fhtml->displayFiles();
+	FileHtml fhtml; 
+	fhtml.displayFiles();
 	cin.ignore(); cin.get();
 }
 void displayNotAllHtmlFiles() {
-	std::unique_ptr<FileAbstract> fhtml = std::make_unique<FileHtml>();
-	fhtml->displayNotAllFiles();
+	FileHtml fhtml; 
+	fhtml.displayNotAllFiles();
 	cin.ignore(); cin.get();
 }
 
@@ -198,26 +187,26 @@ void displayNotAllHtmlFiles() {
 // display all types of files, 
 // taking into account all directories and without
 void displayAllFiles() {
-	std::unique_ptr<FileAbstract> fAll = std::make_unique<FileAll>();
-	fAll->displayFiles();
+	FileAll fall; 
+	fall.displayFiles();
 	cin.ignore(); cin.get();
 }
 void displayNotAllFiles() {
-	std::unique_ptr<FileAbstract> fAll = std::make_unique<FileAll>();
-	fAll->displayNotAllFiles();
+	FileAll fall; 
+	fall.displayNotAllFiles();
 	cin.ignore(); cin.get();
 }
 
 // Search for words in all files, taking into account 
 // all directories and without
 void findWordAll() {
-	std::unique_ptr<FileAbstract> fAll = std::make_unique<FileAll>();
-	fAll->findWordAll();
+	FileAll fall; 
+	fall.findWordAll();
 	cin.ignore(); cin.get();
 }
 void findNotAllWordAll() {
-	std::unique_ptr<FileAbstract> fAll = std::make_unique<FileAll>();
-	fAll->findWordNotAll();
+	FileAll fall; 
+	fall.findWordNotAll();
 	cin.ignore(); cin.get();
 }
 

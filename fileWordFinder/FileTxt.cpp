@@ -3,20 +3,9 @@
 #include <iostream>
 #endif
 
-#ifndef STRING
-#define STRING
-#include <string>
-#endif
-
 #ifndef FSTREAM
 #define FSTREAM
 #include <fstream>
-#endif
-
-#ifndef FILESYSTEM
-#define FILESYSTEM
-#include <filesystem>
-namespace fs = std::filesystem;
 #endif
 
 #include "FileTxt.h"
@@ -31,14 +20,7 @@ void FileTxt::findWordAll() {
 	FileAbstract::SaveFile obj;
 	std::string catalog, saveFileName, findingWord;
 	int counterFile = 0;
-	auto path = fs::current_path();
-
-	std::cout << "\nCurrent path: " << path;
-	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n \
-		(If left as is - D): ");
-	std::cin >> catalog;
-
-	if (catalog != "D") { path = fs::path(catalog); }
+	const std::filesystem::path path = enterPath();
 
 	std::cout << "\nEnter a word to find: "; std::cin >> findingWord; setFindWord(findingWord);
 	std::cout << "\nEnter the name of the file (example: C:\\somePath\\result.txt) where the result will be saved\n(No need to save the result - N): "; std::cin >> saveFileName; obj._fileName = saveFileName;
@@ -87,14 +69,7 @@ void FileTxt::findWordNotAll() {
 	FileAbstract::SaveFile obj;
 	std::string catalog, saveFileName, findingWord;
 	int counterFile = 0;
-	auto path = fs::current_path();
-
-	std::cout << "\nCurrent path: " << path;
-	printf("\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n \
-		(If left as is - D): ");
-	std::cin >> catalog;
-
-	if (catalog != "D") { path = fs::path(catalog); }
+	const std::filesystem::path path = enterPath();
 
 	std::cout << "\nEnter a word to find: "; std::cin >> findingWord; setFindWord(findingWord);
 	std::cout << "\nEnter the name of the file (example: C:\\somePath\\result.txt) where the result will be saved\n(No need to save the result - N): "; std::cin >> saveFileName; obj._fileName = saveFileName;

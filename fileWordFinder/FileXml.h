@@ -8,8 +8,8 @@ public:
 	FileXml();
 	~FileXml();
 
-	void findWordAll();
-	void findWordNotAll();
+	void findObject();
+	void findNotAllObject();
 };
 
 #endif

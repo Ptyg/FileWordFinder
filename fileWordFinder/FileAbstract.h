@@ -16,11 +16,6 @@ namespace fs = std::filesystem;
 
 #ifndef FILE_ABSTRACT_H
 #define FILE_ABSTRACT_H
-enum ShowWithSubDir
-{
-	WithSubDir,
-	WithoutSubDir
-};
 
 class FileAbstract {
 	std::string _word;
@@ -29,11 +24,8 @@ class FileAbstract {
 public:
 	virtual ~FileAbstract() {};
 
-	virtual void displayFiles();
-	virtual void displayNotAllFiles();
-
-	virtual void findWordAll() {};
-	virtual void findWordNotAll() {};
+	void displayFiles();
+	void displayNotAllFiles();
 
 	std::filesystem::path enterPath();
 
