@@ -149,17 +149,25 @@ void FileXml::findNotAllObject() {
 		const char SLASH = '/';
 
 		// i - obj with slash, j - without slash
-		for (int i = 0; i < obj.size(); i++) {
+		for (int i = obj.size() - 1; i >= 0; i--) {
 			if (obj[i][1] == SLASH) {
 				std::string tmp = obj[i];
-				tmp.erase(remove(tmp.begin(), tmp.end(), SLASH), tmp.end());
+				tmp.erase(remove(tmp.begin(), tmp.end(), SLASH), tmp.end()); tmp.pop_back();
+				int lenToCrop = tmp.size();
+
+				//delete objects, finally
 				for (int j = i - 1; j >= 0; j--) {
-					if (obj[j] == tmp) { obj.erase(obj.begin() + i); obj.erase(obj.begin() + j); }
-					break;
+					if (obj[j].size() > lenToCrop) {
+						std::string tmp2{ obj[j] };
+						tmp2.erase(tmp2.begin() + lenToCrop, tmp2.end());
+
+						if (tmp2 == tmp) { obj.erase(obj.begin() + i); obj.erase(obj.begin() + j); }
+						break;
+					}
+
 				}
 			}
 		}
-	};
 
 	auto print_result = [&spaceBarEraserFromFront, &deleteExtraObjects](const auto& aVector, const std::string& fWord, int& counterFile, const FileAbstract::SaveFile& obj) {
 		for (auto& f : aVector) {
@@ -199,12 +207,12 @@ void FileXml::findNotAllObject() {
 
 							std::cout << "\nObject path: ";
 							for (auto& obj : objects) { std::cout << obj << ' '; }
-							std::cout << "\nWords` tag: " << tag;
+							std::cout << "\nWord`s tag: " << tag;
 							for (size_t i = 0; i < tag.size(); i++) {
 								if (tag[i] == '<') { tag.insert(i + 1, std::string("/")); break; }
 							}
 							std::cout << tag;
-							std::cout << "\nFiles` path: " << f;
+							std::cout << "\nFile`s path: " << f;
 							std::cout << "\nLine number: " << counter;
 							std::cout << "\nLine: " << line;
 							counterFile++;
