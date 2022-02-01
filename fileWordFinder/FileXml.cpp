@@ -39,17 +39,17 @@ void FileXml::findObject() {
 				std::string tmp = obj[i];
 				tmp.erase(remove(tmp.begin(), tmp.end(), SLASH), tmp.end()); tmp.pop_back();
 				int lenToCrop = tmp.size();
-				
+
 				//delete objects, finally
 				for (int j = i - 1; j >= 0; j--) {
 					if (obj[j].size() > lenToCrop) {
 						std::string tmp2{ obj[j] };
-						tmp2.erase(tmp2.begin()+lenToCrop, tmp2.end());
+						tmp2.erase(tmp2.begin() + lenToCrop, tmp2.end());
 
 						if (tmp2 == tmp) { obj.erase(obj.begin() + i); obj.erase(obj.begin() + j); }
 						break;
 					}
-					
+
 				}
 			}
 		}
@@ -91,7 +91,7 @@ void FileXml::findObject() {
 
 							deleteExtraObjects(objects);
 
-							std::cout << "\nObject path: "; 
+							std::cout << "\nObject path: ";
 							for (auto& obj : objects) { std::cout << obj << ' '; }
 							std::cout << "\nWord`s tag: " << tag;
 							for (size_t i = 0; i < tag.size(); i++) {
@@ -168,77 +168,77 @@ void FileXml::findNotAllObject() {
 				}
 			}
 		}
-	}
-	
+	};
+
 	auto print_result = [&spaceBarEraserFromFront, &deleteExtraObjects](const auto& aVector, const std::string& fWord, int& counterFile, const FileAbstract::SaveFile& obj) {
-			for (auto& f : aVector) {
-				std::ifstream file;
-				std::string line;
-				std::vector <std::string> objects;
-				const char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
-				int counter = 1;
+		for (auto& f : aVector) {
+			std::ifstream file;
+			std::string line;
+			std::vector <std::string> objects;
+			const char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
+			int counter = 1;
 
-				try {
-					file.open(f);
-					while (getline(file, line)) {
+			try {
+				file.open(f);
+				while (getline(file, line)) {
 
-						int forstObjectBracketPos = line.find(FIRST_BRACKET);
-						int secondObjectBracketPos = line.find(SECOND_BRACKET);
-						int objectWordLengthWithBracket = secondObjectBracketPos - forstObjectBracketPos;
-						spaceBarEraserFromFront(line);
+					int forstObjectBracketPos = line.find(FIRST_BRACKET);
+					int secondObjectBracketPos = line.find(SECOND_BRACKET);
+					int objectWordLengthWithBracket = secondObjectBracketPos - forstObjectBracketPos;
+					spaceBarEraserFromFront(line);
 
-						if (objectWordLengthWithBracket < line.size() - 1) {
-							if (line.find(fWord) != std::string::npos) {
-								std::string tag;
+					if (objectWordLengthWithBracket < line.size() - 1) {
+						if (line.find(fWord) != std::string::npos) {
+							std::string tag;
 
-								spaceBarEraserFromFront(line);
+							spaceBarEraserFromFront(line);
 
-								for (int i = 0; i < line.size(); i++) {
-									if (line[i] == ' ') { continue; }
-									else {
-										if (line[i] == '>') {
-											tag.push_back(line[i]);
-											break;
-										}
+							for (int i = 0; i < line.size(); i++) {
+								if (line[i] == ' ') { continue; }
+								else {
+									if (line[i] == '>') {
 										tag.push_back(line[i]);
+										break;
 									}
+									tag.push_back(line[i]);
 								}
-
-								deleteExtraObjects(objects);
-
-								std::cout << "\nObject path: ";
-								for (auto& obj : objects) { std::cout << obj << ' '; }
-								std::cout << "\nWord`s tag: " << tag;
-								for (size_t i = 0; i < tag.size(); i++) {
-									if (tag[i] == '<') { tag.insert(i + 1, std::string("/")); break; }
-								}
-								std::cout << tag;
-								std::cout << "\nFile`s path: " << f;
-								std::cout << "\nLine number: " << counter;
-								std::cout << "\nLine: " << line;
-								counterFile++;
-								printf("\n\n");
-
-								if (obj._fileName != "N") { obj.saveInfoXml(tag, f, counter, line, obj, objects); }
 							}
-						}
-						else { objects.push_back(line); }
-						counter++;
-					}
-				}
-				catch (const std::exception& ex) {
-					printf("\nFile does not exist\n");
-					std::cout << ex.what() << "\n";
-					file.close();
-				}
 
+							deleteExtraObjects(objects);
+
+							std::cout << "\nObject path: ";
+							for (auto& obj : objects) { std::cout << obj << ' '; }
+							std::cout << "\nWord`s tag: " << tag;
+							for (size_t i = 0; i < tag.size(); i++) {
+								if (tag[i] == '<') { tag.insert(i + 1, std::string("/")); break; }
+							}
+							std::cout << tag;
+							std::cout << "\nFile`s path: " << f;
+							std::cout << "\nLine number: " << counter;
+							std::cout << "\nLine: " << line;
+							counterFile++;
+							printf("\n\n");
+
+							if (obj._fileName != "N") { obj.saveInfoXml(tag, f, counter, line, obj, objects); }
+						}
+					}
+					else { objects.push_back(line); }
+					counter++;
+				}
+			}
+			catch (const std::exception& ex) {
+				printf("\nFile does not exist\n");
+				std::cout << ex.what() << "\n";
 				file.close();
 			}
 
-			if (0 == counterFile) { std::cout << "No files in dir"; }
+			file.close();
+		}
 
-			printf("\n");
-		};
+		if (0 == counterFile) { std::cout << "No files in dir"; }
+
+		printf("\n");
+	};
 
 	auto files = getNotAllDirectoryFiles(path, { getFileType() });
 	print_result(files, getFindWord(), counterFile, obj);
