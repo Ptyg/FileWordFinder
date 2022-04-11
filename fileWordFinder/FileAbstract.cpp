@@ -9,10 +9,12 @@
 
 namespace fs = std::filesystem;
 
-
 const std::string& FileAbstract::getFileType() const { return _fileType; }
+
 void FileAbstract::setFindWord(std::string& word) { _word = word; }
+
 const std::string& FileAbstract::getFindWord() const { return _word; }
+
 void FileAbstract::setFileType(std::string type) { _fileType = type; }
 
 std::filesystem::path FileAbstract::enterPath() {

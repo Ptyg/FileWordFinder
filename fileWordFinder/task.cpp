@@ -1,42 +1,22 @@
-#ifndef IOSTREAM
-#define IOSTREAM
+#include "task.hpp"
+#include "FileHtml.hpp"
+#include "FileTxt.hpp"
+#include "FileXml.hpp"
+#include "FileAll.hpp"
+
 #include <iostream>
-#endif
-
-#ifndef STRING
-#define STRING
 #include <string>
-#endif
-
-#ifndef VECTOR
-#define VECTOR
 #include <vector>
-#endif
-
-#ifndef FILESYSTEM
-#define FILESYSTEM
 #include <filesystem>
 namespace fs = std::filesystem;
-#endif
-
-#include "task.h"
-#include "FileHtml.h"
-#include "FileTxt.h"
-#include "FileXml.h"
-#include "FileAll.h"
-
-using std::cin;
-using std::cout;
-using std::string;
-using std::vector;
 
 /////////////////////////////////////////////////////
 //
 //	FUNCTIONS TO GET FILES NAME OR PATH FROM DIRS
 //
 /////////////////////////////////////////////////////
-vector<string> getDirectoryFiles(const fs::path& dir, const vector<string>& ext) {
-	vector<string> files;
+std::vector<std::string> getDirectoryFiles(const fs::path& dir, const std::vector<std::string>& ext) {
+	std::vector<std::string> files;
 	try{
 		for (auto& p : fs::recursive_directory_iterator(dir)) {
 			if (fs::is_regular_file(p)) {
@@ -46,15 +26,15 @@ vector<string> getDirectoryFiles(const fs::path& dir, const vector<string>& ext)
 		}
 	}
 	catch (const std::exception& ex){
-		cout << ex.what() << "\n";
-		cin.ignore(); cin.get();
+		std::cout << ex.what() << "\n";
+		std::cin.ignore(); std::cin.get();
 	}
 	
 	return files;
 }
 
-vector<string> getNotAllDirectoryFiles(const fs::path& dir, const vector<string>& ext) {
-	vector<string> files;
+std::vector<std::string> getNotAllDirectoryFiles(const fs::path& dir, const std::vector<std::string>& ext) {
+	std::vector<std::string> files;
 	try{
 		for (auto& p : fs::directory_iterator(dir)) {
 			if (fs::is_regular_file(p)) {
@@ -64,15 +44,15 @@ vector<string> getNotAllDirectoryFiles(const fs::path& dir, const vector<string>
 		}
 	}
 	catch (const std::exception& ex){
-		cout << ex.what() << "\n";
-		cin.ignore(); cin.get();
+		std::cout << ex.what() << "\n";
+		std::cin.ignore(); std::cin.get();
 	}
 	
 	return files;
 }
 
-vector<string> getDirectoryFilesNames(const fs::path& dir, const vector<string>& ext) {
-	vector<string> files;
+std::vector<std::string> getDirectoryFilesNames(const fs::path& dir, const std::vector<std::string>& ext) {
+	std::vector<std::string> files;
 	for (auto& p : fs::directory_iterator(dir)) {
 		if (fs::is_regular_file(p)) {
 			if (ext.empty() || find(ext.begin(), ext.end(), p.path().extension().string()) != ext.end())
@@ -82,8 +62,8 @@ vector<string> getDirectoryFilesNames(const fs::path& dir, const vector<string>&
 	return files;
 }
 
-vector<string> getDirectoryNotAllFilesNames(const fs::path& dir, const vector<string>& ext) {
-	vector<string> files;
+std::vector<std::string> getDirectoryNotAllFilesNames(const fs::path& dir, const std::vector<std::string>& ext) {
+	std::vector<std::string> files;
 	for (auto& p : fs::recursive_directory_iterator(dir)) {
 		if (fs::is_regular_file(p)) {
 			if (ext.empty() || find(ext.begin(), ext.end(), p.path().extension().string()) != ext.end())
@@ -104,12 +84,12 @@ vector<string> getDirectoryNotAllFilesNames(const fs::path& dir, const vector<st
 void displayTxtFiles() {
 	FileTxt ftxt; 
 	ftxt.displayFiles();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 void displayNotAllTxtFiles() {
 	FileTxt ftxt; 
 	ftxt.displayNotAllFiles();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 
 // Search for word in .txt, taking into account 
@@ -117,12 +97,12 @@ void displayNotAllTxtFiles() {
 void findWord() {
 	FileTxt ftxt; 
 	ftxt.findWordAll();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 void findNotAllWord() {
 	FileTxt ftxt; 
 	ftxt.findWordNotAll();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 
 //////////////////////////////////////////////////////
@@ -136,12 +116,12 @@ void findNotAllWord() {
 void displayXmlFiles() {
 	FileXml fxml; 
 	fxml.displayFiles();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 void displayNotAllXmlFiles(){
 	FileXml fxml; 
 	fxml.displayNotAllFiles();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 
 // Search for objects in xml, taking into account 
@@ -149,12 +129,12 @@ void displayNotAllXmlFiles(){
 void findObject() {
 	FileXml fxml; 
 	fxml.findObject();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 void findNotAllObject(){
 	FileXml fxml; 
 	fxml.findNotAllObject();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 
 //////////////////////////////////////////////////////
@@ -168,12 +148,12 @@ void findNotAllObject(){
 void displayHtmlFiles() {
 	FileHtml fhtml; 
 	fhtml.displayFiles();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 void displayNotAllHtmlFiles() {
 	FileHtml fhtml; 
 	fhtml.displayNotAllFiles();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 
 // TODO: MAKE FINDING FOR SMTH IN HTML
@@ -189,12 +169,12 @@ void displayNotAllHtmlFiles() {
 void displayAllFiles() {
 	FileAll fall; 
 	fall.displayFiles();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 void displayNotAllFiles() {
 	FileAll fall; 
 	fall.displayNotAllFiles();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 
 // Search for words in all files, taking into account 
@@ -202,30 +182,29 @@ void displayNotAllFiles() {
 void findWordAll() {
 	FileAll fall; 
 	fall.findWordAll();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 void findNotAllWordAll() {
 	FileAll fall; 
 	fall.findWordNotAll();
-	cin.ignore(); cin.get();
+	std::cin.ignore(); std::cin.get();
 }
 
 //////////////////////////////////////////////////////
 //
-// INTERFAÑES FOR EACH FILE TYPE
+// INTERFAFES FOR EACH FILE TYPE
 //  
 //////////////////////////////////////////////////////
 
 void userInterfaceAll() {
 	char ch;
 	do {
-		system("cls");
-		printf("01. Show all files including subdirectories\n");
-		printf("02. Show all files without subdirectories\n");
-		printf("03. Word searching including subdirectories\n");
-		printf("04. Word searching without subdirectories\n");
-		printf("05. Exit\n");
-		printf("Please, enter your choice (1-5): "); cin >> ch;
+		std::cout << "01. Show all files including subdirectories\n";
+		std::cout << "02. Show all files without subdirectories\n";
+		std::cout << "03. Word searching including subdirectories\n";
+		std::cout << "04. Word searching without subdirectories\n";
+		std::cout << "05. Exit\n";
+		std::cout << "Please, enter your choice (1-5): "; std::cin >> ch;
 
 		switch (ch) {
 		case '1': displayAllFiles(); break;
@@ -234,20 +213,19 @@ void userInterfaceAll() {
 		case '4': findNotAllWordAll(); break;
 		case '5': break;
 
-		default: printf("\a"); break;
+		default: std::cout << "\a"; break;
 		}
 	} while (ch != '5');
 }
 void userInterfaceTxt() {
 	char ch;
 	do {
-		system("cls");
-		printf("01. Show all .txt files including subdirectories\n");
-		printf("02. Show all .txt files without subdirectories\n");
-		printf("03. Word searching including subdirectories\n");
-		printf("04. Word searching without subdirectories\n");
-		printf("05. Exit\n");
-		printf("Please, enter your choice (1-5): "); cin >> ch;
+		std::cout << "01. Show all .txt files including subdirectories\n";
+		std::cout << "02. Show all .txt files without subdirectories\n";
+		std::cout << "03. Word searching including subdirectories\n";
+		std::cout << "04. Word searching without subdirectories\n";
+		std::cout << "05. Exit\n";
+		std::cout << "Please, enter your choice (1-5): "; std::cin >> ch;
 
 		switch (ch) {
 		case '1': displayTxtFiles(); break;
@@ -255,20 +233,19 @@ void userInterfaceTxt() {
 		case '3': findWord(); break;
 		case '4': findNotAllWord(); break;
 		case '5': break;
-		default: printf("\a"); break;
+		default: std::cout << "\a"; break;
 		}
 	} while (ch != '5');
 }
 void userInterfaceXml() {
 	char ch;
 	do {
-		system("cls");
-		printf("01. Show all .xml files including subdirectories\n");
-		printf("02. Show all .xml files without subdirectories\n");
-		printf("03. Object(-s) searching including subdirectories\n");
-		printf("04. Object(-s) searching without subdirectories\n");
-		printf("05. Exit\n");
-		printf("Please, enter your choice (1-5): "); cin >> ch;
+		std::cout << "01. Show all .xml files including subdirectories\n";
+		std::cout << "02. Show all .xml files without subdirectories\n";
+		std::cout << "03. Object(-s) searching including subdirectories\n";
+		std::cout << "04. Object(-s) searching without subdirectories\n";
+		std::cout << "05. Exit\n";
+		std::cout << "Please, enter your choice (1-5): "; std::cin >> ch;
 
 		switch (ch) {
 		case '1': displayXmlFiles(); break;
@@ -276,25 +253,24 @@ void userInterfaceXml() {
 		case '3': findObject(); break;
 		case '4': findNotAllObject(); break;
 		case '5': break;
-		default: printf("\a"); break;
+		default: std::cout << "\a"; break;
 		}
 	} while (ch != '5');
 }
 void userInterfaceHtml() {
 	char ch;
 	do {
-		system("cls");
-		printf("01. Show all .html files including subdirectories\n");
-		printf("02. Show all .html files without subdirectories\n");
-		printf("03. Exit\n");
-		printf("Please, enter your choice (1-3): "); cin >> ch;
+		std::cout << "01. Show all .html files including subdirectories\n";
+		std::cout << "02. Show all .html files without subdirectories\n";
+		std::cout << "03. Exit\n";
+		std::cout << "Please, enter your choice (1-3): "; std::cin >> ch;
 
 		switch (ch) {
 		case '1': displayHtmlFiles(); break;
 		case '2': displayNotAllHtmlFiles(); break;
 		case '3': break;
 
-		default: printf("\a"); break;
+		default: std::cout << "\a"; break;
 		}
 	} while (ch != '3');
 }
@@ -303,13 +279,12 @@ void userInterfaceHtml() {
 void userInterface() {
 	char ch;
 	do{
-		system("cls");
-		printf("01. Work with chosen file type (in process...)\n");
-		printf("02. Work with .txt\n");
-		printf("03. Work with .xml\n");
-		printf("04. Work with .html (for now, only show files...)\n");
-		printf("05. Exit\n");
-		printf("Please, enter your choice (1-5): "); cin >> ch;
+		std::cout << "01. Work with chosen file type (in process...)\n";
+		std::cout << "02. Work with .txt\n";
+		std::cout << "03. Work with .xml\n";
+		std::cout << "04. Work with .html (for now, only show files...)\n";
+		std::cout << "05. Exit\n";
+		std::cout << "Please, enter your choice (1-5): "; std::cin >> ch;
 
 		switch (ch){
 		case '1': /*userInterfaceAll();*/ break;
@@ -317,9 +292,11 @@ void userInterface() {
 		case '3': userInterfaceXml(); break;
 		case '4': userInterfaceHtml(); break;
 		case '5': break;
-		default: printf("\a"); break;
+		default: std::cout << "\a"; break;
 		}
 	} while (ch != '5');
 }
 
-void task() { userInterface(); }
+void task() { 
+	userInterface(); 
+}
