@@ -1,35 +1,14 @@
-#include "FileAbstract.h"
+#include "FileAbstract.hpp"
+#include "getDirectoryFiles.hpp"
+#include "getNotAllDirectoryFiles.hpp"
 
-#ifndef FSTREAM
-#define FSTREAM
-#include <fstream>
-#endif
-
-#ifndef IOSTREAM
-#define IOSTREAM
-#include <iostream>
-#endif
-
-#ifndef FILESYSTEM
-#define FILESYSTEM
-#include <filesystem>
-namespace fs = std::filesystem;
-#endif
-
-#ifndef CHRONO
-#define CHRONO
 #include <chrono>
-#endif
+#include <fstream>
+#include <iostream>
+#include <filesystem>
 
-#ifndef GET_DIR_FILES_H
-#define GET_DIR_FILES_H
-#include "getDirectoryFiles.h"
-#endif
+namespace fs = std::filesystem;
 
-#ifndef GET_NOT_DIR_FILES_H
-#define GET_NOT_DIR_FILES_H
-#include "getNotAllDirectoryFiles.h"
-#endif
 
 const std::string& FileAbstract::getFileType() const { return _fileType; }
 void FileAbstract::setFindWord(std::string& word) { _word = word; }

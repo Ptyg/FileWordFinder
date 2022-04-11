@@ -1,16 +1,9 @@
-#ifndef IOSTREAM
-#define IOSTREAM
+#include "FileAll.hpp"
+#include "getDirectoryFiles.hpp"
+#include "getNotAllDirectoryFiles.hpp"
+
 #include <iostream>
-#endif
-
-#ifndef FSTREAM
-#define FSTREAM
 #include <fstream>
-#endif
-
-#include "FileAll.h"
-#include "getDirectoryFiles.h"
-#include "getNotAllDirectoryFiles.h"
 
 void FileAll::findWordAll() {
 	system("cls");

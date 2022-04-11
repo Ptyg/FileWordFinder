@@ -1,21 +1,10 @@
-#ifndef STRING
-#define STRING
-#include <string>
-#endif
-
-#ifndef VECTOR
-#define VECTOR
-#include <vector>
-#endif
-
-#ifndef FILESYSTEM
-#define FILESYSTEM
-#include <filesystem>
-namespace fs = std::filesystem;
-#endif
-
 #ifndef FILE_ABSTRACT_H
 #define FILE_ABSTRACT_H
+
+#include <string>
+#include <vector>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 class FileAbstract {
 	std::string _word;

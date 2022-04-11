@@ -1,7 +1,7 @@
 #ifndef FILE_USER_TYPE_H 
 #define FILE_USER_TYPE_H
 
-#include "FileAbstract.h"
+#include "FileAbstract.hpp"
 
 class FileUserType : public FileAbstract {
 public:

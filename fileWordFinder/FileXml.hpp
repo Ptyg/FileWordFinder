@@ -1,7 +1,7 @@
 #ifndef FILE_XML_H
 #define FILE_XML_H
 
-#include "FileAbstract.h"
+#include "FileAbstract.hpp"
 
 class FileXml : public FileAbstract {
 public:

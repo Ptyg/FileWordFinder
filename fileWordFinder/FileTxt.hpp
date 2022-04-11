@@ -1,7 +1,7 @@
 #ifndef FILE_TXT_H
 #define FILE_TXT_H
 
-#include "FileAbstract.h"
+#include "FileAbstract.hpp"
 
 class FileTxt : public FileAbstract {
 public:

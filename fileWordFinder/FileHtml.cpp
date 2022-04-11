@@ -1,9 +1,6 @@
-#ifndef IOSTREAM
-#define IOSTREAM
 #include <iostream>
-#endif
 
-#include "FileHtml.h"
+#include "FileHtml.hpp"
 
 FileHtml::FileHtml() { setFileType(".html"); }
 FileHtml::~FileHtml() {}

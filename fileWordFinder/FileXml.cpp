@@ -1,16 +1,9 @@
-#ifndef IOSTREAM
-#define IOSTREAM
+#include "FileXml.hpp"
+#include "getDirectoryFiles.hpp"
+#include "getNotAllDirectoryFiles.hpp"
+
 #include <iostream>
-#endif
-
-#ifndef FSTREAM
-#define FSTREAM
 #include <fstream>
-#endif
-
-#include "FileXml.h"
-#include "getDirectoryFiles.h"
-#include "getNotAllDirectoryFiles.h"
 
 FileXml::FileXml() { setFileType(".xml"); }
 FileXml::~FileXml() {}

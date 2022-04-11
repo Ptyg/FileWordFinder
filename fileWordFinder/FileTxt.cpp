@@ -1,16 +1,9 @@
-#ifndef IOSTREAM
-#define IOSTREAM
+#include "FileTxt.hpp"
+#include "getDirectoryFiles.hpp"
+#include "getNotAllDirectoryFiles.hpp"
+
 #include <iostream>
-#endif
-
-#ifndef FSTREAM
-#define FSTREAM
 #include <fstream>
-#endif
-
-#include "FileTxt.h"
-#include "getDirectoryFiles.h"
-#include "getNotAllDirectoryFiles.h"
 
 FileTxt::FileTxt() { setFileType(".txt"); }
 FileTxt::~FileTxt() {}
