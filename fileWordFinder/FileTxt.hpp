@@ -4,12 +4,15 @@
 #include "FileAbstract.hpp"
 
 class FileTxt : public FileAbstract {
+	
 public:
 	FileTxt();
-	~FileTxt();
+	FileTxt(const std::string& findingWord);
+	FileTxt(std::string&& findingWord);
+	~FileTxt() = default;
 
-	void findWordAll();
-	void findWordNotAll();
+	void showResultsFromAllDirs();
+	void showResultsFromNotAllDirs();
 };
 
 #endif
