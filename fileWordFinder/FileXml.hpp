@@ -6,10 +6,12 @@
 class FileXml : public FileAbstract {
 public:
 	FileXml();
-	~FileXml();
+	FileXml(const std::string& findingWord);
+	FileXml(std::string&& findingWord);
+	~FileXml() = default;
 
-	void findObject();
-	void findNotAllObject();
+	void showResultsFromAllDirs();
+	void showResultsFromNotAllDirs();
 };
 
 #endif

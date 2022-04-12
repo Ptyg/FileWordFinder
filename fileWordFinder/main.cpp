@@ -1,7 +1,7 @@
-﻿#include "task.hpp"
+﻿#include "workExample.hpp"
 
 int main() {
-	task();
+	example();
 	return 0;
 }
 
