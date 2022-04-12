@@ -20,8 +20,6 @@ public:
 	void setFileType(const std::string& type);
 	void setFindWord(std::string&& word);
 	void setFindWord(const std::string& word);
-	
-	
 };
 
 #endif

@@ -2,10 +2,7 @@
 #include "getDirectoryFiles.hpp"
 #include "getNotAllDirectoryFiles.hpp"
 
-#include <chrono>
-#include <fstream>
 #include <iostream>
-#include <filesystem>
 
 namespace fs = std::filesystem;
 
@@ -26,7 +23,7 @@ std::string FileAbstract::getFindWord() const {
 }
 
 void FileAbstract::setFileType(std::string&& type) { 
-	_fileType = type; 
+	_fileType = std::move(type); 
 }
 
 std::filesystem::path FileAbstract::enterPath() {
