@@ -217,6 +217,7 @@ void userInterfaceAll() {
 		}
 	} while (ch != '5');
 }
+
 void userInterfaceTxt() {
 	char ch;
 	do {
@@ -237,6 +238,7 @@ void userInterfaceTxt() {
 		}
 	} while (ch != '5');
 }
+
 void userInterfaceXml() {
 	char ch;
 	do {
@@ -257,6 +259,7 @@ void userInterfaceXml() {
 		}
 	} while (ch != '5');
 }
+
 void userInterfaceHtml() {
 	char ch;
 	do {

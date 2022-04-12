@@ -4,45 +4,51 @@
 
 #include <iostream>
 #include <fstream>
+#include <memory>
 
 FileTxt::FileTxt() { setFileType(".txt"); }
 FileTxt::~FileTxt() {}
 
-void FileTxt::findWordAll() {
-	system("cls");
-	FileAbstract::SaveFile obj;
+void FileTxt::findWordAll() {	
 	std::string catalog, saveFileName, findingWord;
 	int counterFile = 0;
 	const std::filesystem::path path = enterPath();
 
-	std::cout << "\nEnter a word to find: "; std::cin >> findingWord; setFindWord(findingWord);
-	std::cout << "\nEnter the name of the file (example: C:\\somePath\\result.txt) where the result will be saved\n(No need to save the result - N): "; std::cin >> saveFileName; obj._fileName = saveFileName;
-	
-	auto print_result = [](const auto& aVector, const std::string& fWord, int& counterFile, const FileAbstract::SaveFile& obj) {
+	std::cout << "\nEnter a word to find: "; 
+	std::cin >> findingWord; 
+	setFindWord(std::move(findingWord));
 
-		for (auto& f : aVector) {
+	std::cout << "\nEnter the name of the file (example: C:\\somePath\\result.txt) where the result will be saved\n(No need to save the result - N): "; 
+	std::cin >> saveFileName;
+
+	FileAbstract::SaveFile fileToSave(std::move(saveFileName));
+	
+	auto print_result = [&counterFile, &fileToSave](const auto& files, const std::string& findWord) {
+		for (const auto& currentFile : files) {
 			std::ifstream file;
 			std::string line;
-			int counter = 1;
+			int lineCounter = 1;
 			try {
-				file.open(f);
+				file.open(currentFile);
 				while (getline(file, line)) {
-					if (line.find(fWord) != std::string::npos) {
+					if (line.find(findWord) != std::string::npos) {
 
 						int spaceBarCounter = 0, coun = 0;
 						while (line[coun] == ' ') { spaceBarCounter++; coun++; }
 						line.erase(0, spaceBarCounter);
 
-						std::cout << "\nSearching word: " << fWord;
-						std::cout << "\npath to file: " << f;
-						std::cout << "\nLine number: " << counter;
+						std::cout << "\nSearching word: " << findWord;
+						std::cout << "\nPath to file: " << currentFile;
+						std::cout << "\nLine number: " << lineCounter;
 						std::cout << "\nLine: " << line;
+						std::cout << "\n\n";
 						counterFile++;
-						printf("\n\n");
 						
-						if (obj._fileName != "N") { obj.saveInfoTxt(fWord, f, counter, line, obj); }
+						if (fileToSave.getFileName() != "N") { 
+							fileToSave.saveInfoTxt(findWord, currentFile, lineCounter, line, fileToSave.getFileName()); 
+						}
 					}
-					counter++;
+					lineCounter++;
 				}
 			}
 			catch (const std::exception& ex) {
@@ -52,65 +58,34 @@ void FileTxt::findWordAll() {
 			file.close();
 		}
 
-		if (0 == counterFile) { std::cout << "No files in dir"; }
+		if (0 == counterFile) { 
+			std::cout << "No files in dir"; 
+		}
 		
-		printf("\n");
+		std::cout << "\n";
 	};
 
-	auto files = getDirectoryFiles(path, { getFileType() });
-	print_result(files, getFindWord(), counterFile, obj);
+	const auto files = getDirectoryFiles(path, { getFileType() });
+	print_result(files, getFindWord());
 }
+
 void FileTxt::findWordNotAll() {
-	system("cls");
-	FileAbstract::SaveFile obj;
 	std::string catalog, saveFileName, findingWord;
 	int counterFile = 0;
 	const std::filesystem::path path = enterPath();
 
-	std::cout << "\nEnter a word to find: "; std::cin >> findingWord; setFindWord(findingWord);
-	std::cout << "\nEnter the name of the file (example: C:\\somePath\\result.txt) where the result will be saved\n(No need to save the result - N): "; std::cin >> saveFileName; obj._fileName = saveFileName;
+	std::cout << "\nEnter a word to find: "; 
+	std::cin >> findingWord; 
+	setFindWord(findingWord);
 
-	auto print_result = [](const auto& aVector, const std::string& fWord, int& counterFile, const FileAbstract::SaveFile& obj) {
+	std::cout << "\nEnter the name of the file (example: C:\\somePath\\result.txt) where the result will be saved\n(No need to save the result - N): "; 
+	std::cin >> saveFileName; 
 
-		for (auto& f : aVector) {
-			std::ifstream file;
-			std::string line;
-			int counter = 1;
-			try {
-				file.open(f);
-				while (getline(file, line)) {
-					if (line.find(fWord) != std::string::npos) {
+	FileAbstract::SaveFile fileToSave(std::move(saveFileName));
 
-						int spaceBarCounter = 0, coun = 0;
-						while (line[coun] == ' ') { spaceBarCounter++; coun++; }
-						line.erase(0, spaceBarCounter);
-
-						std::cout << "\nSearching word: " << fWord;
-						std::cout << "\nPath to file: " << f;
-						std::cout << "\nLine number: " << counter;
-						std::cout << "\nLine: " << line;
-						counterFile++;
-						printf("\n\n");
-
-						if (obj._fileName != "N") { obj.saveInfoTxt(fWord, f, counter, line, obj); }
-					}
-					counter++;
-				}
-			}
-			catch (const std::exception& ex) {
-				std::cout << ex.what() << "\n";
-				file.close();
-			}
-			file.close();
-		}
-
-		if (0 == counterFile) { std::cout << "No files in dir"; }
-
-		printf("\n");
-	};
 	
-	auto files = getNotAllDirectoryFiles(path, { getFileType() });
-	print_result(files, getFindWord(), counterFile, obj);
+	const auto files = getNotAllDirectoryFiles(path, { getFileType() });
+	print_result(files, getFindWord());
 }
 
 
