@@ -1,11 +1,30 @@
 # FileWordFinder
 
-Well, this is my first "normal" attempt in creating git project. Yay!
-
 ## What is here?
 
-Here is my project, which was recommended to me by a friend and i think it`s going to be very useful.
+Here is my project which helps to find word in txt files and objects where this word is found in xml files. All you need to do is specify the path to the directory with the files.
 
-It can help you find words in .txt and objects in .xml. All you need to do is select a directory. Also, I want to add a feature that will find something in .html files, but I can't decide what it will be.
+## Source of ideas
 
-Moreover, it can simply display the files and their number.
+My problem was that I needed to find a word in a text file and object where the word in it in xml file, but I was too lazy to open each file and search with ctrl+f. So I made this program that allows you to view each file in a directory and show which file the word is in, the file path and line number.
+
+## Functionality
+
+So, to work with this programm you need:
+1. Choose file type to work with (txt or xml)
+2. Choose working option (with subdirectories or without it)
+3. Enter a word
+
+That's all. Working with TXT, we will get a list showing 
+- which file the word is in
+- the path to it
+- on which line 
+  
+Working with XML we will get other list showing 
+- which file the word is in
+- the path to it
+- object path to the word
+- on which line 
+
+
+

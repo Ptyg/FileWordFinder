@@ -8,32 +8,6 @@
 #include <filesystem>
 namespace fs = std::filesystem;
 
-void displayFiles() {
-	const std::filesystem::path path = enterPath();
-
-	auto print_files = [](const auto& files) {
-		for (const auto& f : files)
-			std::cout << f << "\n";
-		std::cout << "\nNumber of files: " << files.size();
-	};
-
-	const auto files = getDirectoryFiles(path, { getFileType() });
-	print_files(files);
-}
-
-void displayNotAllFiles() {
-	const std::filesystem::path path = enterPath();
-
-	auto print_files = [](const auto& files) {
-		for (auto& f : files)
-			std::cout << f << "\n";
-		std::cout << "\nNumber of files: " << files.size();
-	};
-
-	const auto files = getNotAllDirectoryFiles(path, { getFileType() });
-	print_files(files);
-}
-
 /////////////////////////////////////////////////////
 //
 //	FUNCTIONS TO GET FILES NAME OR PATH FROM DIRS
@@ -62,6 +36,12 @@ std::vector<std::string> getDirectoryNotAllFilesNames(const fs::path& dir, const
 	return files;
 }
 
+std::string inputFindingWord(){
+	std::string findingWord;
+	std::cout << "\nEnter word to find: "; std::cin >> findingWord; 
+	return findingWord;
+}
+
 //////////////////////////////////////////////////////
 //
 // FOR .TXT
@@ -80,12 +60,12 @@ void displayNotAllTxtFiles() {
 // Search for word in .txt, taking into account 
 // all directories and without
 void findWord() {
-	FileTxt ftxt; 
+	FileTxt ftxt(inputFindingWord());
 	ftxt.showResultsFromAllDirs();
 	std::cin.ignore(); std::cin.get();
 }
 void findNotAllWord() {
-	FileTxt ftxt; 
+	FileTxt ftxt(inputFindingWord());
 	ftxt.showResultsFromNotAllDirs();
 	std::cin.ignore(); std::cin.get();
 }
@@ -109,13 +89,13 @@ void displayNotAllXmlFiles(){
 // Search for objects in xml, taking into account 
 // all directories and without
 void findObject() {
-	FileXml fxml; 
+	FileXml fxml(inputFindingWord()); 
 	fxml.showResultsFromAllDirs();
 	std::cin.ignore(); std::cin.get();
 }
 
 void findNotAllObject(){
-	FileXml fxml; 
+	FileXml fxml(inputFindingWord()); 
 	fxml.showResultsFromNotAllDirs();
 	std::cin.ignore(); std::cin.get();
 }
