@@ -58,7 +58,7 @@ void FileTxt::showResultsFromAllDirs() {
 		}
 
 		if (0 == counterFile) { 
-			std::cout << "No files in dir"; 
+			std::cout << "No files in dir\n"; 
 		}
 		
 		std::cout << "\n";
