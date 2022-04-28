@@ -8,7 +8,7 @@ namespace fs = std::filesystem;
 
 class FileAbstract {
 	std::string _word;
-	static std::string _fileType;
+	std::string _fileType;
 	std::filesystem::path _dirPath; 
 public:
 	virtual ~FileAbstract() = default;
@@ -19,8 +19,8 @@ public:
 	std::string getDirPath() const;
 
 	void setDirPath();
-	static void setFileType(std::string&& type) noexcept;
-	static void setFileType(const std::string& type);
+	void setFileType(std::string&& type) noexcept;
+	void setFileType(const std::string& type);
 	void setFindWord(std::string&& word) noexcept;
 	void setFindWord(const std::string& word);
 };
