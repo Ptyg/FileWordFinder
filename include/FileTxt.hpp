@@ -8,7 +8,7 @@ class FileTxt : public FileAbstract {
 public:
 	FileTxt();
 	FileTxt(const std::string& findingWord);
-	FileTxt(std::string&& findingWord) noexcept;
+	FileTxt(std::string&& findingWord);
 	~FileTxt() = default;
 
 	void showResultsFromAllDirs();

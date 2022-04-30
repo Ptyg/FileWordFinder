@@ -20,8 +20,6 @@ FileTxt::FileTxt(std::string&& findingWord){
 	setFindWord(std::move(findingWord));
 }
 
-FileTxt::~FileTxt() {}
-
 void FileTxt::showResultsFromAllDirs() {	
 	std::string catalog;
 	int counterFile = 0;
