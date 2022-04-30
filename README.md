@@ -26,5 +26,13 @@ Working with XML we will get other list showing
 - object path to the word
 - on which line 
 
+## Technical part
 
+To build project:
+```
+mkdir build
+cd build
+cmake ..
+cmake --build . --config Release (or Debug)
+```
 
