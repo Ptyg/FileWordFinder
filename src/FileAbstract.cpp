@@ -5,6 +5,15 @@
 #include <iostream>
 #include <memory>
 
+
+std::filesystem::path FileAbstract::getDirPath() const{
+	return _dirPath;
+}
+
+void FileAbstract::setFileType(const std::string& type){
+	_fileType = type;
+}
+
 std::string FileAbstract::getFileType() const{ 
 	return _fileType; 
 }
@@ -27,13 +36,13 @@ void FileAbstract::setFileType(std::string&& type) {
 
 void FileAbstract::setPath() {
 	std::string dir;
-	std::filesystem::path _dirPath = fs::current_path();
+	_dirPath = fs::current_path();
 
 	std::cout << "\nCurrent path: " << _dirPath;
 	std::cout << "\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): ";
 	std::cin >> dir;
 
 	if (dir != "D") { 
-		std::filesystem::path _dirPath = fs::path(dir); 
+		_dirPath = fs::path(dir); 
 	}
 }

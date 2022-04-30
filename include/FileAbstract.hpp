@@ -16,12 +16,11 @@ public:
 	void setPath();
 	std::string getFileType() const;
 	std::string getFindWord() const;
-	std::string getDirPath() const;
+	std::filesystem::path getDirPath() const;
 
-	void setDirPath();
-	void setFileType(std::string&& type) noexcept;
+	void setFileType(std::string&& type);
 	void setFileType(const std::string& type);
-	void setFindWord(std::string&& word) noexcept;
+	void setFindWord(std::string&& word);
 	void setFindWord(const std::string& word);
 };
 
