@@ -1,6 +1,8 @@
 #include "workExample.hpp"
 #include "FileTxt.hpp"
 #include "FileXml.hpp"
+#include "getDirectoryFiles.hpp"
+#include "getNotAllDirectoryFiles.hpp"
 
 #include <iostream>
 #include <string>
@@ -8,34 +10,6 @@
 #include <filesystem>
 
 namespace fs = std::filesystem;
-
-/////////////////////////////////////////////////////
-//
-//	FUNCTIONS TO GET FILES NAME OR PATH FROM DIRS
-//
-/////////////////////////////////////////////////////
-
-std::vector<std::string> getDirectoryFilesNames(const fs::path& dir, const std::vector<std::string>& ext) {
-	std::vector<std::string> files;
-	for (const auto& p : fs::directory_iterator(dir)) {
-		if (fs::is_regular_file(p)) {
-			if (ext.empty() || find(ext.begin(), ext.end(), p.path().extension().string()) != ext.end())
-				files.push_back(p.path().filename().string());
-		}
-	}
-	return files;
-}
-
-std::vector<std::string> getDirectoryNotAllFilesNames(const fs::path& dir, const std::vector<std::string>& ext) {
-	std::vector<std::string> files;
-	for (const auto& p : fs::recursive_directory_iterator(dir)) {
-		if (fs::is_regular_file(p)) {
-			if (ext.empty() || find(ext.begin(), ext.end(), p.path().extension().string()) != ext.end())
-				files.push_back(p.path().filename().string());
-		}
-	}
-	return files;
-}
 
 std::string inputFindingWord(){
 	std::string findingWord;
@@ -52,10 +26,21 @@ std::string inputFindingWord(){
 // Display .txt types of files, 
 // taking into account all directories and without
 void displayTxtFiles() {
-	
+	FileTxt ftxt;
+	ftxt.setPath();
+	std::function<std::vector<std::string>(const fs::path& dir, 
+										   const std::vector<std::string>& ext)> func = getDirectoryFiles;
+	ftxt.showFilesInDir(func);
+	std::cin.ignore(); std::cin.get();
 }
-void displayNotAllTxtFiles() {
 
+void displayNotAllTxtFiles() {
+	FileTxt ftxt;
+	ftxt.setPath();
+	std::function<std::vector<std::string>(const fs::path& dir, 
+										   const std::vector<std::string>& ext)> func = getNotAllDirectoryFiles;
+	ftxt.showFilesInDir(func);
+	std::cin.ignore(); std::cin.get();
 }
 
 // Search for word in .txt, taking into account 
@@ -65,6 +50,7 @@ void findWord() {
 	ftxt.showResultsFromAllDirs();
 	std::cin.ignore(); std::cin.get();
 }
+
 void findNotAllWord() {
 	FileTxt ftxt(inputFindingWord());
 	ftxt.showResultsFromNotAllDirs();

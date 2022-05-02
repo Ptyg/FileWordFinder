@@ -3,6 +3,8 @@
 
 #include "FileAbstract.hpp"
 
+#include <functional>
+
 class FileTxt : public FileAbstract {
 	
 public:
@@ -13,6 +15,8 @@ public:
 
 	void showResultsFromAllDirs();
 	void showResultsFromNotAllDirs();
+	void showFilesInDir(const std::function<std::vector<std::string>(const fs::path& dir, 
+																	const std::vector<std::string>& ext)>& func);
 };
 
 #endif

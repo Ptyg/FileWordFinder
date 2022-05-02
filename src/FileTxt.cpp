@@ -21,7 +21,6 @@ FileTxt::FileTxt(std::string&& findingWord){
 }
 
 void FileTxt::showResultsFromAllDirs() {	
-	std::string catalog;
 	int counterFile = 0;
 
 	auto print_result = [&counterFile](const auto& files, const std::string& findWord) {
@@ -67,7 +66,6 @@ void FileTxt::showResultsFromAllDirs() {
 }
 
 void FileTxt::showResultsFromNotAllDirs() {
-	std::string catalog;
 	int counterFile = 0;
 
 	auto print_result = [&counterFile](const auto& files, const std::string& findWord) {
@@ -112,5 +110,10 @@ void FileTxt::showResultsFromNotAllDirs() {
 	print_result(files, getFindWord());
 }
 
-
+void FileTxt::showFilesInDir(const std::function<std::vector<std::string>(const fs::path& dir, 
+																		  const std::vector<std::string>& ext)>& func) {
+	const auto files = func(getDirPath(), { getFileType() });
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+}
 
