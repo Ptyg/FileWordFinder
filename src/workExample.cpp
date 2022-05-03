@@ -47,13 +47,17 @@ void displayNotAllTxtFiles() {
 // all directories and without
 void findWord() {
 	FileTxt ftxt(inputFindingWord());
-	ftxt.showResultsFromAllDirs();
+	std::function<std::vector<std::string>(const fs::path& dir, 
+										   const std::vector<std::string>& ext)> func = getDirectoryFiles;
+	ftxt.findWord(func);
 	std::cin.ignore(); std::cin.get();
 }
 
 void findNotAllWord() {
 	FileTxt ftxt(inputFindingWord());
-	ftxt.showResultsFromNotAllDirs();
+		std::function<std::vector<std::string>(const fs::path& dir, 
+										   const std::vector<std::string>& ext)> func = getNotAllDirectoryFiles;
+	ftxt.findWord(func);
 	std::cin.ignore(); std::cin.get();
 }
 
