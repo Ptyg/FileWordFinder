@@ -1,7 +1,7 @@
 ﻿#include "workExample.hpp"
 
 int main() {
-	example();
+	userInterface();
 	return 0;
 }
 

@@ -1,5 +1,5 @@
 #ifndef WORK_EXAMPLE
 #define WORK_EXAMPLE
-void example();
+void userInterface();
 #endif 
 

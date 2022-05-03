@@ -31,6 +31,7 @@ void displayTxtFiles() {
 	std::function<std::vector<std::string>(const fs::path& dir, 
 										   const std::vector<std::string>& ext)> func = getDirectoryFiles;
 	ftxt.showFilesInDir(func);
+	std::cout << "[Info]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
@@ -40,6 +41,7 @@ void displayNotAllTxtFiles() {
 	std::function<std::vector<std::string>(const fs::path& dir, 
 										   const std::vector<std::string>& ext)> func = getNotAllDirectoryFiles;
 	ftxt.showFilesInDir(func);
+	std::cout << "[Info]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
@@ -155,8 +157,4 @@ void userInterface() {
 		default: std::cout << "\a"; break;
 		}
 	} while (ch != '4');
-}
-
-void example() { 
-	userInterface(); 
 }
