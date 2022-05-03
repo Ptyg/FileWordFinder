@@ -49,14 +49,14 @@ void FileTxt::findWord(const std::function<std::vector<std::string>(const fs::pa
 				}
 			}
 			catch (const std::exception& ex) {
-				std::cout << ex.what() << "\n";
+				std::cout << "[ERROR]: " << ex.what() << "\n";
 				file.close();
 			}
 			file.close();
 		}
 
 		if (0 == counterFile) { 
-			std::cout << "No files in dir"; 
+			std::cout << "[INFO]: No files in dir"; 
 		}
 		
 		std::cout << "\n";

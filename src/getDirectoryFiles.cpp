@@ -13,8 +13,7 @@ std::vector<std::string> getDirectoryFiles(const fs::path& dir, const std::vecto
 		}
 	}
 	catch (const std::exception& ex){
-		std::cout << ex.what() << "\n";
-		std::cin.ignore(); std::cin.get();
+		std::cout << "[ERROR]: " << ex.what() << "\n";
 	}
 	return files;
 }
