@@ -13,10 +13,10 @@ public:
 	FileTxt(std::string&& findingWord);
 	~FileTxt() = default;
 
-	void showResultsFromAllDirs();
-	void showResultsFromNotAllDirs();
+	void findWord(const std::function<std::vector<std::string>(const fs::path& dir, 
+															   const std::vector<std::string>& ext)>& func);
 	void showFilesInDir(const std::function<std::vector<std::string>(const fs::path& dir, 
-																	const std::vector<std::string>& ext)>& func);
+																	 const std::vector<std::string>& ext)>& func);
 };
 
 #endif
