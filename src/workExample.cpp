@@ -45,19 +45,23 @@ void displayNotAllTxtFiles() {
 
 // Search for word in .txt, taking into account 
 // all directories and without
-void findWord() {
+void findWord() {	
 	FileTxt ftxt(inputFindingWord());
+	ftxt.setPath();
 	std::function<std::vector<std::string>(const fs::path& dir, 
 										   const std::vector<std::string>& ext)> func = getDirectoryFiles;
 	ftxt.findWord(func);
+	std::cout << "[Info]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void findNotAllWord() {
 	FileTxt ftxt(inputFindingWord());
-		std::function<std::vector<std::string>(const fs::path& dir, 
+	ftxt.setPath();
+	std::function<std::vector<std::string>(const fs::path& dir, 
 										   const std::vector<std::string>& ext)> func = getNotAllDirectoryFiles;
 	ftxt.findWord(func);
+	std::cout << "[Info]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 

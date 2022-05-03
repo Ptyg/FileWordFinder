@@ -42,7 +42,7 @@ void FileTxt::findWord(const std::function<std::vector<std::string>(const fs::pa
 						std::cout << "\nPath to file: " << currentFile;
 						std::cout << "\nLine number: " << lineCounter;
 						std::cout << "\nLine: " << line;
-						std::cout << "\n\n";
+						std::cout << "\n";
 						counterFile++;
 					}
 					lineCounter++;
@@ -56,18 +56,24 @@ void FileTxt::findWord(const std::function<std::vector<std::string>(const fs::pa
 		}
 
 		if (0 == counterFile) { 
-			std::cout << "[INFO]: No files in dir"; 
+			std::cout << "[INFO]: Word cannot be founded"; 
 		}
 		
 		std::cout << "\n";
 	};
-
+	
+	std::cout << "[INFO]: Collecting files...\n";
 	const auto files = func(getDirPath(), { getFileType() });
+	std::cout << "[INFO]: Collecting has been completed\n";
+	std::cout << "[INFO]: Finding word...\n";
+	print_result(files, getFindWord());
 }
 
 void FileTxt::showFilesInDir(const std::function<std::vector<std::string>(const fs::path& dir, 
 																		  const std::vector<std::string>& ext)>& func) {
+	std::cout << "[INFO]: Collecting files...\n";
 	const auto files = func(getDirPath(), { getFileType() });
+	std::cout << "[INFO]: Collecting has been completed\n";
 	for (const auto& currentFile : files)
 		std::cout << currentFile << '\n';
 }
