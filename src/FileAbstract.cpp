@@ -5,13 +5,8 @@
 #include <iostream>
 #include <memory>
 
-
 std::filesystem::path FileAbstract::getDirPath() const{
 	return _dirPath;
-}
-
-void FileAbstract::setFileType(const std::string& type){
-	_fileType = type;
 }
 
 std::string FileAbstract::getFileType() const{ 
@@ -22,7 +17,11 @@ std::string FileAbstract::getFindWord() const {
 	return _word; 
 }
 
-void FileAbstract::setFindWord(const std::string& word) { 
+void FileAbstract::setFileType(const std::string& type){
+	_fileType = type;
+}
+
+void FileAbstract::setFindWord(const std::string& word){ 
 	_word = word; 
 }
 
@@ -34,15 +33,20 @@ void FileAbstract::setFileType(std::string&& type) {
 	_fileType = std::move(type); 
 }
 
-void FileAbstract::setPath() {
-	std::string dir;
-	_dirPath = fs::current_path();
+void FileAbstract::setPath(const std::filesystem::path& path){
+	_dirPath = path;
+}
 
-	std::cout << "\nCurrent path: " << _dirPath;
-	std::cout << "\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n(If left as is - D): ";
-	std::cin >> dir;
+void FileAbstract::setPath(std::filesystem::path&& path){
+	_dirPath = std::move(path);
+}
 
-	if (dir != "D") { 
-		_dirPath = fs::path(dir); 
-	}
+void FileAbstract::showFilesInDir(const std::function<std::vector<std::string>(const fs::path& dir, 
+																	 const std::vector<std::string>& ext)>& func)
+{
+	std::cout << "[INFO]: Collecting files...\n";
+	const auto files = func(getDirPath(), { getFileType() });
+	std::cout << "[INFO]: Collecting has been completed\n";
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
 }

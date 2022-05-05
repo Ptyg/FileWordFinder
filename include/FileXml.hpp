@@ -3,15 +3,23 @@
 
 #include "FileAbstract.hpp"
 
+#include <functional>
+
 class FileXml : public FileAbstract {
 public:
 	FileXml();
 	FileXml(const std::string& findingWord);
 	FileXml(std::string&& findingWord);
+	FileXml(const std::filesystem::path& path);
+	FileXml(std::filesystem::path&& path);
+	FileXml(const std::string& findingWord, const std::filesystem::path& path);
+	FileXml(const std::string& findingWord, std::filesystem::path&& path);
+	FileXml(std::string&& findingWord, std::filesystem::path&& path);
+	FileXml(std::string&& findingWord, const std::filesystem::path& path);
 	~FileXml() = default;
 
-	void showResultsFromAllDirs();
-	void showResultsFromNotAllDirs();
+	void findObject(const std::function<std::vector<std::string>(const fs::path& dir, 
+															   const std::vector<std::string>& ext)>& func);
 };
 
 #endif

@@ -20,6 +20,40 @@ FileTxt::FileTxt(std::string&& findingWord){
 	setFindWord(std::move(findingWord));
 }
 
+FileTxt::FileTxt(const std::filesystem::path& path){
+	setFileType(".txt");
+	setPath(path);
+}
+
+FileTxt::FileTxt(std::filesystem::path&& path){
+	setFileType(".txt");
+	setPath(std::move(path));
+}
+
+FileTxt::FileTxt(const std::string& findingWord, const std::filesystem::path& path){
+	setFileType(".txt"); 
+	setFindWord(findingWord);
+	setPath(path);
+}
+
+FileTxt::FileTxt(const std::string& findingWord, std::filesystem::path&& path){
+	setFileType(".txt"); 
+	setFindWord(findingWord);
+	setPath(std::move(path));
+}
+
+FileTxt::FileTxt(std::string&& findingWord, std::filesystem::path&& path){
+	setFileType(".txt"); 
+	setFindWord(std::move(findingWord));
+	setPath(std::move(path));
+}
+
+FileTxt::FileTxt(std::string&& findingWord, const std::filesystem::path& path){
+	setFileType(".txt");
+	setFindWord(std::move(findingWord));
+	setPath(path);
+}
+
 void FileTxt::findWord(const std::function<std::vector<std::string>(const fs::path& dir, 
 																	const std::vector<std::string>& ext)>& func){
 	int counterFile = 0;
@@ -64,17 +98,8 @@ void FileTxt::findWord(const std::function<std::vector<std::string>(const fs::pa
 	
 	std::cout << "[INFO]: Collecting files...\n";
 	const auto files = func(getDirPath(), { getFileType() });
-	std::cout << "[INFO]: Collecting has been completed\n";
+	std::cout << "[INFO]: Collecting has been completed. Number of files: " << files.size() << '\n';
 	std::cout << "[INFO]: Finding word...\n";
 	print_result(files, getFindWord());
-}
-
-void FileTxt::showFilesInDir(const std::function<std::vector<std::string>(const fs::path& dir, 
-																		  const std::vector<std::string>& ext)>& func) {
-	std::cout << "[INFO]: Collecting files...\n";
-	const auto files = func(getDirPath(), { getFileType() });
-	std::cout << "[INFO]: Collecting has been completed\n";
-	for (const auto& currentFile : files)
-		std::cout << currentFile << '\n';
 }
 

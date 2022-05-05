@@ -11,12 +11,16 @@ public:
 	FileTxt();
 	FileTxt(const std::string& findingWord);
 	FileTxt(std::string&& findingWord);
+	FileTxt(const std::filesystem::path& path);
+	FileTxt(std::filesystem::path&& path);
+	FileTxt(const std::string& findingWord, const std::filesystem::path& path);
+	FileTxt(const std::string& findingWord, std::filesystem::path&& path);
+	FileTxt(std::string&& findingWord, std::filesystem::path&& path);
+	FileTxt(std::string&& findingWord, const std::filesystem::path& path);
 	~FileTxt() = default;
 
 	void findWord(const std::function<std::vector<std::string>(const fs::path& dir, 
 															   const std::vector<std::string>& ext)>& func);
-	void showFilesInDir(const std::function<std::vector<std::string>(const fs::path& dir, 
-																	 const std::vector<std::string>& ext)>& func);
 };
 
 #endif

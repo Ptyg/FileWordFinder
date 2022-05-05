@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <functional>
 #include <filesystem>
 namespace fs = std::filesystem;
 
@@ -13,15 +14,21 @@ class FileAbstract {
 public:
 	virtual ~FileAbstract() = default;
 
-	void setPath();
 	std::string getFileType() const;
 	std::string getFindWord() const;
 	std::filesystem::path getDirPath() const;
 
+	void setPath(const std::filesystem::path& path);
+	void setPath(std::filesystem::path&& path);
 	void setFileType(std::string&& type);
 	void setFileType(const std::string& type);
 	void setFindWord(std::string&& word);
 	void setFindWord(const std::string& word);
+
+	/* function takes a function that searches files in dir. Example of that func in getDirectoryFiles.cpp*/
+	void showFilesInDir(const std::function<std::vector<std::string>(const fs::path& dir, 
+																	 const std::vector<std::string>& ext)>& func);
+
 };
 
 #endif

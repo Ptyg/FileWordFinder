@@ -11,10 +11,25 @@
 
 namespace fs = std::filesystem;
 
+std::function<std::vector<std::string>(const fs::path& dir, 
+										   const std::vector<std::string>& ext)> funcForAll = getDirectoryFiles;
+
+std::function<std::vector<std::string>(const fs::path& dir, 
+										   const std::vector<std::string>& ext)> funcForNotAll = getNotAllDirectoryFiles;
+
 std::string inputFindingWord(){
 	std::string findingWord;
 	std::cout << "\nEnter word to find: "; std::cin >> findingWord; 
 	return findingWord;
+}
+
+std::filesystem::path inputPath() {
+	std::string dir;
+	std::cout << "\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n: ";
+	std::cin >> dir;
+
+	std::filesystem::path dirPath = fs::path(dir);
+	return dirPath;
 }
 
 //////////////////////////////////////////////////////
@@ -26,44 +41,32 @@ std::string inputFindingWord(){
 // Display .txt types of files, 
 // taking into account all directories and without
 void displayTxtFiles() {
-	FileTxt ftxt;
-	ftxt.setPath();
-	std::function<std::vector<std::string>(const fs::path& dir, 
-										   const std::vector<std::string>& ext)> func = getDirectoryFiles;
-	ftxt.showFilesInDir(func);
-	std::cout << "[Info]: Press \"Enter\" to continue...";
+	FileTxt ftxt(inputPath());
+	ftxt.showFilesInDir(funcForAll);
+	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void displayNotAllTxtFiles() {
-	FileTxt ftxt;
-	ftxt.setPath();
-	std::function<std::vector<std::string>(const fs::path& dir, 
-										   const std::vector<std::string>& ext)> func = getNotAllDirectoryFiles;
-	ftxt.showFilesInDir(func);
-	std::cout << "[Info]: Press \"Enter\" to continue...";
+	FileTxt ftxt(inputPath());
+	ftxt.showFilesInDir(funcForNotAll);
+	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 // Search for word in .txt, taking into account 
 // all directories and without
 void findWord() {	
-	FileTxt ftxt(inputFindingWord());
-	ftxt.setPath();
-	std::function<std::vector<std::string>(const fs::path& dir, 
-										   const std::vector<std::string>& ext)> func = getDirectoryFiles;
-	ftxt.findWord(func);
-	std::cout << "[Info]: Press \"Enter\" to continue...";
+	FileTxt ftxt(inputFindingWord(), inputPath());
+	ftxt.findWord(funcForAll);
+	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void findNotAllWord() {
-	FileTxt ftxt(inputFindingWord());
-	ftxt.setPath();
-	std::function<std::vector<std::string>(const fs::path& dir, 
-										   const std::vector<std::string>& ext)> func = getNotAllDirectoryFiles;
-	ftxt.findWord(func);
-	std::cout << "[Info]: Press \"Enter\" to continue...";
+	FileTxt ftxt(inputFindingWord(), inputPath());
+	ftxt.findWord(funcForNotAll);
+	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
@@ -73,29 +76,43 @@ void findNotAllWord() {
 //  
 //////////////////////////////////////////////////////
 
-// Display .xml types of files, 
+// Display .xml files, 
 // taking into account all directories and without
 void displayXmlFiles() {
-	
+	FileXml fxml(inputPath());
+	fxml.showFilesInDir(funcForAll);
+	std::cout << "[INFO]: Press \"Enter\" to continue...";
+	std::cin.ignore(); std::cin.get();
 }
 
 void displayNotAllXmlFiles(){
-
+	FileXml fxml(inputPath());
+	fxml.showFilesInDir(funcForNotAll);
+	std::cout << "[INFO]: Press \"Enter\" to continue...";
+	std::cin.ignore(); std::cin.get();
 }
 
 // Search for objects in xml, taking into account 
 // all directories and without
 void findObject() {
-	FileXml fxml(inputFindingWord()); 
-	fxml.showResultsFromAllDirs();
+	FileXml fxml(inputFindingWord(), inputPath());
+	fxml.findObject(funcForAll);
+	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void findNotAllObject(){
-	FileXml fxml(inputFindingWord()); 
-	fxml.showResultsFromNotAllDirs();
+	FileXml fxml(inputFindingWord(), inputPath());
+ 	fxml.findObject(funcForNotAll);
+	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
+
+//////////////////////////////////////////////////////
+//
+// CUI (console user interface)
+//  
+//////////////////////////////////////////////////////
 
 void userInterfaceTxt() {
 	char ch;
@@ -126,7 +143,8 @@ void userInterfaceXml() {
 		std::cout << "03. Object(-s) searching including subdirectories\n";
 		std::cout << "04. Object(-s) searching without subdirectories\n";
 		std::cout << "05. Exit\n";
-		std::cout << "Please, enter your choice (1-5): "; std::cin >> ch;
+		std::cout << "Please, enter your choice (1-5): "; 
+		std::cin >> ch;
 
 		switch (ch) {
 		case '1': displayXmlFiles(); break;
@@ -147,7 +165,8 @@ void userInterface() {
 		std::cout << "02. Work with .txt\n";
 		std::cout << "03. Work with .xml\n";
 		std::cout << "04. Exit\n";
-		std::cout << "Please, enter your choice (1-4): "; std::cin >> ch;
+		std::cout << "Please, enter your choice (1-4): "; 
+		std::cin >> ch;
 
 		switch (ch){
 		case '1': break;
