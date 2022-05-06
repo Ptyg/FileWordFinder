@@ -2,11 +2,11 @@
 
 ## What is here?
 
-Here is my project which helps to find word in txt files and objects where this word is found in xml files. All you need to do is specify the path to the directory with the files.
+Here is my project which helps to find word in txt files and objects where this word is found in xml files. All you need to do is specify the path to the directory with the files and\or word to find.
 
 ## Source of ideas
 
-My problem was that I needed to find a word in a text file and object where the word in it in xml file, but I was too lazy to open each file and search with ctrl+f. So I made this program that allows you to view each file in a directory and show which file the word is in, the file path and line number.
+I needed to find a word in a text file and object where the word in it in xml file, but I was too lazy to open each file and search with ctrl+f. So I made this program that allows you to view each file in a directory and show which file the word is in, the file path and line number.
 
 ## Functionality
 
