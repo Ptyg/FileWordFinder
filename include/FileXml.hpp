@@ -18,6 +18,7 @@ public:
 	FileXml(std::string&& findingWord, const std::filesystem::path& path);
 	~FileXml() = default;
 
+	/* function takes a function that searches files in dir. Example of that func in getDirectoryFiles.cpp*/
 	void findObject(const std::function<std::vector<std::string>(const fs::path& dir, 
 															   const std::vector<std::string>& ext)>& func);
 };
