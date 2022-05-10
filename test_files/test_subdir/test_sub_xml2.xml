@@ -1,0 +1,13 @@
+<root>
+  <person firstname="Augustine" lastname="Sawtelle" city="Basse-Terre" country="Greenland" firstname2="Regina" lastname2="Buffum" email="Regina.Buffum@yopmail.com">
+  <random>24</random>
+  <random_float>49.237</random_float>
+  <bool>false</bool>
+  <date>1993-12-22</date>
+  <regEx>hellooooo to you</regEx>
+  <enum>generator</enum>
+  <elt>Fernande</elt><elt>Carilyn</elt><elt>Gui</elt><elt>Bill</elt><elt>Ofilia</elt>  
+  <Regina>
+    <age>73</age>
+  </Regina>
+</root>

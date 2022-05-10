@@ -58,8 +58,9 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 															   		  const std::vector<std::string>& ext)>& func) {
 	int counterFile = 0;
 
+	/*erases spaces before text*/
 	auto spaceBarEraserFromFront = [](std::string& line) {
-		int spaceBarCounter = 0, count = 0;
+		size_t spaceBarCounter = 0, count = 0;
 		while (line[count] == ' ' && count < line.size()) { 
 			spaceBarCounter++; 
 			count++; 
@@ -67,24 +68,28 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 		line.erase(0, spaceBarCounter);
 	};
 
+	/*deleted all extra objects after analysis*/
 	auto deleteExtraObjects = [](std::vector<std::string>& obj) {
 		constexpr char SLASH = '/';
 
 		// i - obj with slash, j - without slash
-		for (size_t i = obj.size() - 1; i >= 0; i--) {
+		for (size_t i = obj.size() - 1; i > 0; i--) {
+			std::string tmp;
 			if (obj[i][1] == SLASH) {
-				std::string tmp = obj[i];
+				tmp = obj[i];
 				tmp.erase(remove(tmp.begin(), tmp.end(), SLASH), tmp.end()); 
+				// extra pop beacause it need it
 				tmp.pop_back();
-				int lenToCrop = tmp.size();
+				size_t lenToCrop = tmp.size();
 
-				//delete objects, finally
+				//find the same object and delte both
 				for (size_t j = i - 1; j >= 0; j--) {
+					std::string tmp2;
 					if (obj[j].size() > lenToCrop) {
-						std::string tmp2{ obj[j] };
+						tmp2 = obj[j];
 						tmp2.erase(tmp2.begin() + lenToCrop, tmp2.end());
-
-						if (tmp2 == tmp) { 
+						
+						if (0 == tmp2.compare(tmp)) { 
 							obj.erase(obj.begin() + i); 
 							obj.erase(obj.begin() + j); 
 						}
@@ -100,7 +105,7 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 			std::ifstream file;
 			std::string line;
 			std::vector<std::string> objects;
-			const char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
+			constexpr char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
 			int counter = 1;
 
 			try {
@@ -118,18 +123,13 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 
 							spaceBarEraserFromFront(line);
 
-							// loop to find object
+							// loop to designate object
 							for (size_t i = 0; i < line.size(); i++) {
-								if (line[i] == ' ') { 
-									continue; 
-								}
-								else {
-									if (line[i] == '>') {
-										tag.push_back(line[i]);
-										break;
-									}
+								if (line[i] == '>') {
 									tag.push_back(line[i]);
+									break;
 								}
+								tag.push_back(line[i]);
 							}
 
 							deleteExtraObjects(objects);
@@ -141,7 +141,7 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 
 							std::cout << "\nWord`s tag: " << tag;
 							
-							// loop to add slash into object
+							// loop to add slash into object just to display it
 							for (size_t i = 0; i < tag.size(); i++) {
 								if (tag[i] == '<') { 
 									tag.insert(i + 1, std::string("/")); 
