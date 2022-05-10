@@ -1,0 +1,21 @@
+<root>
+  <person>
+    <firstname>"Donnie"</firstname>
+    <lastname>"Willie"</lastname>
+    <city>"Jaipur"</city>
+    <country>"Ethiopia"</country>
+    <firstname2>"Rochette"</firstname2>
+    <lastname2>"Lesley"</lastname2>
+    <email>"Rochette.Lesley@yopmail.com"</email>
+  </person>
+  <random>45</random>
+  <random_float>7.134</random_float>
+  <bool>false</bool>
+  <date>1985-09-03</date>
+  <regEx>helloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo world</regEx>
+  <enum>xml</enum>
+  <elt>Lory</elt><elt>Stacey</elt><elt>Miquela</elt><elt>Wilma</elt><elt>Wilma</elt>  
+  <Rochette>
+    <age>76</age>
+  </Rochette>
+</root>
