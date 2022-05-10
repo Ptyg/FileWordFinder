@@ -105,7 +105,7 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 			std::ifstream file;
 			std::string line;
 			std::vector<std::string> objects;
-			const char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
+			constexpr char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
 			int counter = 1;
 
 			try {
@@ -141,7 +141,7 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 
 							std::cout << "\nWord`s tag: " << tag;
 							
-							// loop to add slash into object
+							// loop to add slash into object just to display it
 							for (size_t i = 0; i < tag.size(); i++) {
 								if (tag[i] == '<') { 
 									tag.insert(i + 1, std::string("/")); 
