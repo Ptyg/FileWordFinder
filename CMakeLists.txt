@@ -2,15 +2,6 @@ cmake_minimum_required(VERSION 3.0)
 
 project(fileWordFinder LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
-include_directories("./include")
-file(GLOB CPP_SOURCES "src/*.cpp")
+add_executable(${POJECT_NAME} main.cpp)
 
-if(NOT CMAKE_CXX_EXTENSIONS)
-    set(CMAKE_CXX_EXTENSIONS OFF)
-endif()
-
-add_executable(
-    file_word_finder 
-    ${CPP_SOURCES}
-)
+target_include_directories(${POJECT_NAME} "./headers")
