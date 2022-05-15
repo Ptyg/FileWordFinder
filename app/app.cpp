@@ -1,7 +1,7 @@
-﻿#include "FileTxt.hpp"
-#include "FileXml.hpp"
+﻿#include "FileXml.hpp"
 #include "getDirectoryFiles.hpp"
 #include "getNotAllDirectoryFiles.hpp"
+#include "FileTxt.hpp"
 
 #include <iostream>
 #include <string>

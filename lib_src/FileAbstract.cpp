@@ -1,7 +1,6 @@
 #include "FileAbstract.hpp"
-#include "getDirectoryFiles.hpp"
 #include "getNotAllDirectoryFiles.hpp"
-
+#include "getDirectoryFiles.hpp"
 #include <iostream>
 #include <memory>
 
