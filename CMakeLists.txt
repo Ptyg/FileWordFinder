@@ -12,7 +12,8 @@ set(LIB_SRC
 )
 
 add_library(${PROJECT_NAME}_lib STATIC ${LIB_SRC})
+target_include_directories(${PROJECT_NAME}_lib PUBLIC ${PROJECT_SOURCE_DIR}/lib_include)
 
 add_executable(${PROJECT_NAME} app/app.cpp)
-target_include_directories(${PROJECT_NAME}_lib PUBLIC ${PROJECT_SOURCE_DIR}/lib_src)
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/lib_include)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_lib)

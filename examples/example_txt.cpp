@@ -21,6 +21,18 @@ displayTxtFiles: in this func we`ll see all xml files in the directory and subdi
 				 and sub-subdirectories and... you get it
 
 displayNotAllTxtFiles: in this func we`ll see all xml files in the directory but without subdirectories
+
+Result looks like this <<with subdirs>>:
+	Enter path: C:\\SuperProject\\DirWithTxts 
+		C:\\SuperProject\\DirWithTxts\\test_subdir\\test_sub_txt1.txt
+		C:\\SuperProject\\DirWithTxts\\test_subdir\\test_sub_txt2.txt
+		C:\\SuperProject\\DirWithTxts\\test_txt1.txt
+		C:\\SuperProject\\DirWithTxts\\test_txt2.txt
+
+<<Or without subdirs>>
+	Enter path: C:\\SuperProject\\DirWithTxts
+		C:\\SuperProject\\DirWithTxts\\test_txt1.txt
+		C:\\SuperProject\\DirWithTxts\\test_txt2.txt
 */
 void displayTxtFiles() {
 	FileTxt ftxt("C:\\SuperProject\\DirWithTxts");
@@ -42,6 +54,21 @@ findWord: in this func we`ll see all txt files including files
 
 findNotAllWord: in this func we`ll see all txt files without 
 				files in subdirs containing word "password" and some metadata
+
+Result looks like this <<with subdirs>>:
+	Enter path: C:\\SuperProject\\DirWithTxts
+	Enter word: Cat
+		Searching word: Cat
+		Path to file: C:\\SuperProject\\DirWithTxts\\test_txt1.txt
+		Line number: 11
+		Line: Cat communication includes vocalizations like meowing, purring, trilling, hissing,
+
+		Searching word: Cat
+		Path to file: C:\\SuperProject\\DirWithTxts\\test_subdir\\test_sub_txt1.txt
+		Line number: 17
+		Line: Cats also secrete and perceive pheromones.
+
+	<<without subdirs looks similarly>>:
 */
 void findWord() {	
 	FileTxt ftxt("password", "C:\\SuperProject\\Passwords");
