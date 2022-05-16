@@ -45,6 +45,6 @@ std::vector<std::string> FileAbstract::collectFiles(const std::function<std::vec
 {
 	std::cout << "[INFO]: Collecting files...\n";
 	const auto files = func(getDirPath(), { getFileType() });
-	std::cout << "[INFO]: Collecting has been completed\n";
+	std::cout << "[INFO]: Collecting has been completed. Number of files: " << files.size() << '\n';
 	return files;
 }
