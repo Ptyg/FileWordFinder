@@ -32,7 +32,7 @@ Working with XML we will get other list showing
 
 There is a preconfigured console application and you can use it, but if you want to create your own, there is also a preconfigured library(lib_src/lib_include) for that. 
 
-To build project:
+To build ready app:
 ```
 mkdir build
 cd build
