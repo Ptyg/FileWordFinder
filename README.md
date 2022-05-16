@@ -6,7 +6,9 @@ Here is my project which helps to find word in txt files and objects where this 
 
 ## Source of ideas
 
-My problem was that I needed to find a word in a text file and object where the word in it in xml file, but I was too lazy to open each file and search with ctrl+f. So I made this program that allows you to view each file in a directory and show which file the word is in, the file path and line number.
+I was training in OOP and needed an idea for some project that might be useful. And to make it more interesting, I added one condition - use all pillars of the OOP.
+
+So, while I was studying OOP, I needed to find one word in a text file that was among a thousand others and I was too lazy to search for it. From that moment I had an idea for a project that would allow me to search conveniently. And after that, i decided to add functionality in searching objects in xml files. 
 
 ## Functionality
 
@@ -27,6 +29,8 @@ Working with XML we will get other list showing
 - on which line 
 
 ## Technical part
+
+There is a preconfigured console application and you can use it, but if you want to create your own, there is also a preconfigured library(lib_src/lib_include) for that. 
 
 To build project:
 ```
