@@ -96,9 +96,7 @@ void FileTxt::findWord(const std::function<std::vector<std::string>(const fs::pa
 		std::cout << "\n";
 	};
 	
-	std::cout << "[INFO]: Collecting files...\n";
-	const auto files = func(getDirPath(), { getFileType() });
-	std::cout << "[INFO]: Collecting has been completed. Number of files: " << files.size() << '\n';
+	const auto files = collectFiles(func);
 	std::cout << "[INFO]: Finding word...\n";
 	print_result(files, getFindWord());
 }
