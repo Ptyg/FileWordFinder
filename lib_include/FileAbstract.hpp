@@ -26,7 +26,7 @@ public:
 	void setFindWord(const std::string& word);
 
 	/* function takes a function that searches files in dir. Example of that func in getDirectoryFiles.cpp*/
-	void showFilesInDir(const std::function<std::vector<std::string>(const fs::path& dir, 
+	std::vector<std::string> collectFiles(const std::function<std::vector<std::string>(const fs::path& dir, 
 																	 const std::vector<std::string>& ext)>& func);
 
 };
