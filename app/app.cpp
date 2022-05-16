@@ -41,14 +41,22 @@ std::filesystem::path inputPath() {
 // taking into account all directories and without
 void displayTxtFiles() {
 	FileTxt ftxt(inputPath());
-	ftxt.showFilesInDir(funcForAll);
+	const auto files = ftxt.collectFiles(funcForAll);
+
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void displayNotAllTxtFiles() {
 	FileTxt ftxt(inputPath());
-	ftxt.showFilesInDir(funcForNotAll);
+	const auto files = ftxt.collectFiles(funcForNotAll);
+
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
@@ -79,14 +87,22 @@ void findNotAllWord() {
 // taking into account all directories and without
 void displayXmlFiles() {
 	FileXml fxml(inputPath());
-	fxml.showFilesInDir(funcForAll);
+	const auto files = fxml.collectFiles(funcForAll);
+
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void displayNotAllXmlFiles(){
 	FileXml fxml(inputPath());
-	fxml.showFilesInDir(funcForNotAll);
+	const auto files = fxml.collectFiles(funcForNotAll);
+
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
@@ -160,21 +176,19 @@ void userInterfaceXml() {
 void userInterface() {
 	char ch;
 	do{
-		std::cout << "01. Work with chosen file type (in process...)\n";
-		std::cout << "02. Work with .txt\n";
-		std::cout << "03. Work with .xml\n";
-		std::cout << "04. Exit\n";
-		std::cout << "Please, enter your choice (1-4): "; 
+		std::cout << "01. Work with .txt\n";
+		std::cout << "02. Work with .xml\n";
+		std::cout << "03. Exit\n";
+		std::cout << "Please, enter your choice (1-3): "; 
 		std::cin >> ch;
 
 		switch (ch){
-		case '1': break;
-		case '2': userInterfaceTxt(); break;
-		case '3': userInterfaceXml(); break;
-		case '4': break;
-		default: std::cout << "\a"; break;
+			case '1': userInterfaceTxt(); break;
+			case '2': userInterfaceXml(); break;
+			case '3': break;
+			default: std::cout << "\a"; break;
 		}
-	} while (ch != '4');
+	} while (ch != '3');
 }
 
 int main(){
