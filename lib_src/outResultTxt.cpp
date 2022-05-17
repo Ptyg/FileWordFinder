@@ -12,6 +12,6 @@ std::string	OutResult::getLine() const{
     return _line;
 }
 
-int getLineNumber() const{
+int OutResult::getLineNumber() const{
 	return _lineNumber;
 }

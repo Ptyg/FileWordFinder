@@ -1,5 +1,8 @@
 #ifndef OUT_RESULT_TXT
 #define OUT_RESULT_TXT
+
+#include <string>
+
 /*
 Data structure for result that we get from finding word in txts
 */
