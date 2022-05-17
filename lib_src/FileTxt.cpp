@@ -54,11 +54,12 @@ FileTxt::FileTxt(std::string&& findingWord, const std::filesystem::path& path){
 	setPath(path);
 }
 
-void FileTxt::findWord(const std::function<std::vector<std::string>(const fs::path& dir, 
+std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::string>(const fs::path& dir, 
 																	const std::vector<std::string>& ext)>& func){
 	int counterFile = 0;
+	std::vector<OutResult> results;
 
-	auto print_result = [&counterFile](const auto& files, const std::string& findWord) {
+	auto doFinding = [&](const auto& files, const std::string& findWord) {
 		for (const auto& currentFile : files) {
 			std::ifstream file;
 			std::string line;
@@ -71,12 +72,7 @@ void FileTxt::findWord(const std::function<std::vector<std::string>(const fs::pa
 						int spaceBarCounter = 0, coun = 0;
 						while (line[coun] == ' ') { spaceBarCounter++; coun++; }
 						line.erase(0, spaceBarCounter);
-
-						std::cout << "\nSearching word: " << findWord;
-						std::cout << "\nPath to file: " << currentFile;
-						std::cout << "\nLine number: " << lineCounter;
-						std::cout << "\nLine: " << line;
-						std::cout << "\n";
+						results.push_back(OutResult(findWord, currentFile, line, lineCounter));
 						counterFile++;
 					}
 					lineCounter++;
@@ -98,7 +94,10 @@ void FileTxt::findWord(const std::function<std::vector<std::string>(const fs::pa
 	
 	const auto files = collectFiles(func);
 	if (0 == files.size()) return;
+
 	std::cout << "[INFO]: Finding word...\n";
-	print_result(files, getFindWord());
+	doFinding(files, getFindWord());
+
+	return results;
 }
 
