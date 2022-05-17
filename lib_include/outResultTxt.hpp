@@ -21,7 +21,7 @@ public:
 	
 	OutResult(const std::string& findWord, const std::string& file,
 			  const std::string& line, const int& lineNumber) 
-	: _findWord(findWord), _currentFile(file), _line(line), _lineNumber(lineNumber) {}
+	: _findWord(findWord), _filePath(file), _line(line), _lineNumber(lineNumber) {}
 
     std::string getFindWord() const;
     std::string getfilePath() const;
