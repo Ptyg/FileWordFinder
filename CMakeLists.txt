@@ -9,6 +9,7 @@ set(LIB_SRC
     lib_src/FileXml.cpp
     lib_src/getDirectoryFiles.cpp
     lib_src/getNotAllDirectoryFiles.cpp
+    lib_src/outResultTxt.cpp
 )
 
 # compile the library
