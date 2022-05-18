@@ -30,7 +30,7 @@ Working with XML we will get other list showing
 
 ## Technical part
 
-There is a preconfigured console application and you can use it, but if you want to create your own, there is also a preconfigured library(lib_src/lib_include) for that. 
+There is a preconfigured console application and you can use it, but if you want to create your own, there is also a preconfigured library(lib_src/lib_include) for that. Part for library compiling marked in CMakeLists.txt with relevant commentary. 
 
 To build ready app:
 ```
