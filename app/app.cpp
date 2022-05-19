@@ -1,6 +1,7 @@
 ﻿#include "FileXml.hpp"
 #include "FileTxt.hpp"
 #include "outResultBase.hpp"
+#include "outResultXml.hpp"
 #include "getDirectoryFiles.hpp"
 #include "getNotAllDirectoryFiles.hpp"
 
@@ -128,14 +129,45 @@ void displayNotAllXmlFiles(){
 // all directories and without
 void findObject() {
 	FileXml fxml(inputFindingWord(), inputPath());
-	fxml.findObject(funcForAll);
+	auto results = fxml.findObject(funcForAll);
+
+	for (const auto& i : results){
+		auto objectPath = i.getObjects();
+
+		std::cout << "Word: " << i.getFindWord() << '\n';
+		std::cout << "File path: " << i.getfilePath() << '\n';
+
+		std::cout << "Object path: ";
+		for (const auto& object : objectPath)
+			std::cout << object;
+
+		std::cout << "\nObject: " << i.getWordObject() << '\n';
+		std::cout << "Line: " << i.getLine() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << '\n';
+	}
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void findNotAllObject(){
 	FileXml fxml(inputFindingWord(), inputPath());
- 	fxml.findObject(funcForNotAll);
+ 	auto results = fxml.findObject(funcForAll);
+
+	for (const auto& i : results){
+		auto objectPath = i.getObjects();
+
+		std::cout << "Word: " << i.getFindWord() << '\n';
+		std::cout << "File path: " << i.getfilePath() << '\n';
+
+		std::cout << "Object path: ";
+		for (const auto& object : objectPath)
+			std::cout << object;
+
+		std::cout << "\nObject: " << i.getWordObject() << '\n';
+		std::cout << "Line: " << i.getLine() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << '\n';
+	}
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
