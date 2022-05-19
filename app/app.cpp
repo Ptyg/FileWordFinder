@@ -1,7 +1,8 @@
 ﻿#include "FileXml.hpp"
+#include "FileTxt.hpp"
+#include "outResultTxt.hpp"
 #include "getDirectoryFiles.hpp"
 #include "getNotAllDirectoryFiles.hpp"
-#include "FileTxt.hpp"
 
 #include <iostream>
 #include <string>
@@ -65,14 +66,30 @@ void displayNotAllTxtFiles() {
 // all directories and without
 void findWord() {	
 	FileTxt ftxt(inputFindingWord(), inputPath());
-	ftxt.findWord(funcForAll);
+	auto results = ftxt.findWord(funcForAll);
+
+	for (const auto& i : results) {
+		std::cout << "Word: " << i.getFindWord() << '\n';
+		std::cout << "Path: " << i.getfilePath() << '\n';
+		std::cout << "Line: " << i.getLine() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << "\n\n";
+	}
+	
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void findNotAllWord() {
 	FileTxt ftxt(inputFindingWord(), inputPath());
-	ftxt.findWord(funcForNotAll);
+	auto results = ftxt.findWord(funcForNotAll);
+
+	for (const auto& i : results) {
+		std::cout << "Word: " << i.getFindWord() << '\n';
+		std::cout << "Path: " << i.getfilePath() << '\n';
+		std::cout << "Line: " << i.getLine() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << "\n\n";
+	}
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
