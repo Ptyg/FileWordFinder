@@ -166,7 +166,7 @@ void findNotAllObject(){
 
 		std::cout << "\nObject: " << i.getWordObject() << '\n';
 		std::cout << "Line: " << i.getLine() << '\n';
-		std::cout << "Line number: " << i.getLineNumber() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << '\n\n';
 	}
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
