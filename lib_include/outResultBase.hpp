@@ -1,10 +1,10 @@
-#ifndef OUT_RESULT_TXT
-#define OUT_RESULT_TXT
+#ifndef OUT_RESULT_BASE
+#define OUT_RESULT_BASE
 
 #include <string>
 
 /*
-Data structure for result that we get from finding word in txts
+Basic data structure for result that we get from finding word
 */
 class OutResult{
 	std::string _findWord;

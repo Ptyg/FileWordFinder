@@ -1,4 +1,4 @@
-#include "outResultTxt.hpp"
+#include "outResultBase.hpp"
 
 std::string OutResult::getFindWord() const{
     return _findWord;
