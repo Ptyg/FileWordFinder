@@ -10,17 +10,19 @@ std::function<std::vector<std::string>(const fs::path& dir,
 std::function<std::vector<std::string>(const fs::path& dir, 
 									   const std::vector<std::string>& ext)> funcForNotAll = getNotAllDirectoryFiles;
 
+
+/*------------------------------ TXT ------------------------------*/
+
 /*
-ftxt.showFilesInDir: Takes a func that collecting files with specific extention. 
-					 Extention type already exists in each class.  
-					 So, you can use your collecting function. All what you need to do
-					 is create the std::function object. Example of collecting function you can check in 
-					 lib_src dir
+collectFiles: Takes a func that collecting files with specific extention. (In this case - txt)
+				Extention type already exists in each class.  
+			    So, you can use your collecting function. All what you need to do
+				is create the std::function object. Example of collecting function you can check in 
+			    lib_src dir. In result - vector contains results to each file with metadata
 
-displayTxtFiles: in this func we`ll see all xml files in the directory and subdirectories 
-				 and sub-subdirectories and... you get it
+displayTxtFiles: in this func we`ll see all txt files in the directory and subdirectories recursively
 
-displayNotAllTxtFiles: in this func we`ll see all xml files in the directory but without subdirectories
+displayNotAllTxtFiles: in this func we`ll see all txt files in the directory but without subdirectories
 
 Result looks like this <<with subdirs>>:
 	Enter path: C:\\SuperProject\\DirWithTxts 
@@ -36,14 +38,22 @@ Result looks like this <<with subdirs>>:
 */
 void displayTxtFiles() {
 	FileTxt ftxt("C:\\SuperProject\\DirWithTxts");
-	ftxt.showFilesInDir(funcForAll);
+	const auto files = ftxt.collectFiles(funcForAll);
+
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void displayNotAllTxtFiles() {
 	FileTxt ftxt("C:\\SuperProject\\DirWithTxts");
-	ftxt.showFilesInDir(funcForNotAll);
+	const auto files = ftxt.collectFiles(funcForNotAll);
+
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
@@ -51,9 +61,6 @@ void displayNotAllTxtFiles() {
 /*
 findWord: in this func we`ll see all txt files including files 
 		  in subdirs containing word "password" and some metadata
-
-findNotAllWord: in this func we`ll see all txt files without 
-				files in subdirs containing word "password" and some metadata
 
 Result looks like this <<with subdirs>>:
 	Enter path: C:\\SuperProject\\DirWithTxts
@@ -72,14 +79,30 @@ Result looks like this <<with subdirs>>:
 */
 void findWord() {	
 	FileTxt ftxt("password", "C:\\SuperProject\\Passwords");
-	ftxt.findWord(funcForAll);
+	auto results = ftxt.findWord(funcForAll);
+
+	for (const auto& i : results) {
+		std::cout << "Word: " << i.getFindWord() << '\n';
+		std::cout << "Path: " << i.getfilePath() << '\n';
+		std::cout << "Line: " << i.getLine() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << "\n\n";
+	}
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void findNotAllWord() {
 	FileTxt ftxt("name", "C:\\SuperProject\\Passwords");
-	ftxt.findWord(funcForNotAll);
+	auto results = ftxt.findWord(funcForNotAll);
+
+	for (const auto& i : results) {
+		std::cout << "Word: " << i.getFindWord() << '\n';
+		std::cout << "Path: " << i.getfilePath() << '\n';
+		std::cout << "Line: " << i.getLine() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << "\n\n";
+	}
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
+
+

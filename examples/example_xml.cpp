@@ -11,78 +11,108 @@ std::function<std::vector<std::string>(const fs::path& dir,
 									   const std::vector<std::string>& ext)> funcForNotAll = getNotAllDirectoryFiles;
 
 /*
-ftxt.showFilesInDir: Takes a func that collecting files with specific extention.
-                     Extention type already exists in each class
-				     So, you can use your collecting function. All what you need to do
-				     is create the std::function object. Example of this function you can check in 
-				     lib_src dir
+collectFiles: Takes a func that collecting files with specific extention. (In this case - txt)
+				Extention type already exists in each class.  
+			    So, you can use your collecting function. All what you need to do
+				is create the std::function object. Example of collecting function you can check in 
+			    lib_src dir. In result - vector contains results to each file with metadata
 
-displayXmlFiles: in this func we`ll see all xml files in the directory and subdirectories 
-				 and sub-subdirectories and... you get it
-
-displayNotAllXmlFiles: in this func we`ll see all xml files in the directory but without subdirectories
-
-Result looks like this:
-	Enter path: C:\\SuperProject\\DirWithXmls
+Result looks like this <<with subdirs>>:
+	Enter path: C:\\SuperProject\\DirWithXmls 
 		C:\\SuperProject\\DirWithXmls\\test_subdir\\test_sub_xml1.xml
-		C:\\SuperProject\\DirWithXmls\\test_subdir\test_sub_xml2.xml
+		C:\\SuperProject\\DirWithXmls\\test_subdir\\test_sub_xml2.xml
 		C:\\SuperProject\\DirWithXmls\\test_xml1.xml
 		C:\\SuperProject\\DirWithXmls\\test_xml2.xml
-
 */
+
 void displayXmlFiles() {
-	FileXml fxml("C:\\SuperProject\\DirWithXmls");
-	fxml.showFilesInDir(funcForAll);
+	FileXml fxml(inputPath());
+	const auto files = fxml.collectFiles(funcForAll);
+
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void displayNotAllXmlFiles(){
-	FileXml fxml("C:\\SuperProject\\DirWithXmls");
-	fxml.showFilesInDir(funcForNotAll);
+	FileXml fxml(inputPath());
+	const auto files = fxml.collectFiles(funcForNotAll);
+
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 /*
-findWord: in this func we`ll see all xml files including files 
-		  in subdirs containing word "password" and some metadata
-
-findNotAllWord: in this func we`ll see all xml files without 
-				files in subdirs containing word "password" and some metadata
+findObject: in this func we`ll see all xml files including files 
+		    in subdirs containing word "password" and some metadata
 
 Result looks like this:
 	Enter path: C:\\SuperProject\\DirWithXmls
 	Enter word: EXE
-		Object path: <?xml version="1.0"?> <Tests xmlns="http://www.adatum.com"> <Test TestId="0001" TestType="CMD">
-		Word`s tag: <CommandLine></CommandLine>
-		File`s path: C:\Programming\FileHelper\FileWordFinder\test_files\test_xml1.xml
-		Line number: 5
+		
+		Word: EXE
+		File path: C:\Programming\FileHelper\FileWordFinder\test_files\test_xml1.xml
+		Object path: <?xml version="1.0"?><Tests xmlns="http://www.adatum.com"><Test TestId="0001" TestType="CMD">
+		Object: <CommandLine>
 		Line: <CommandLine>Examp1.EXE</CommandLine>
+		Line number: 5
 
-
-		Object path: <?xml version="1.0"?> <Tests xmlns="http://www.adatum.com"> <Test TestId="0002" TestType="CMD">
-		Word`s tag: <CommandLine></CommandLine>
-		File`s path: C:\Programming\FileHelper\FileWordFinder\test_files\test_xml1.xml
-		Line number: 11
+		Word: EXE
+		File path: C:\Programming\FileHelper\FileWordFinder\test_files\test_xml1.xml
+		Object path: <?xml version="1.0"?><Tests xmlns="http://www.adatum.com"><Test TestId="0002" TestType="CMD">
+		Object: <CommandLine>
 		Line: <CommandLine>Examp2.EXE</CommandLine>
+		Line number: 11
 
-		Object path: <?xml version="1.0"?> <Tests xmlns="http://www.adatum.com"> <Test TestId="0003" TestType="GUI">
-		Word`s tag: <CommandLine></CommandLine>
-		File`s path: C:\Programming\FileHelper\FileWordFinder\test_files\test_xml1.xml
-		Line number: 17
-		Line: <CommandLine>Examp2.EXE /Verbose</CommandLine>
+	<<without subdirs looks similarly>>:
 */
+
 void findObject() {
-	FileXml fxml("Book", "C:\\SuperProject\\DirWithXmls");
-	fxml.findObject(funcForAll);
+	FileXml fxml(inputFindingWord(), inputPath());
+	auto results = fxml.findObject(funcForAll);
+
+	for (const auto& i : results){
+		auto objectPath = i.getObjects();
+
+		std::cout << "Word: " << i.getFindWord() << '\n';
+		std::cout << "File path: " << i.getfilePath() << '\n';
+
+		std::cout << "Object path: ";
+		for (const auto& object : objectPath)
+			std::cout << object;
+
+		std::cout << "\nObject: " << i.getWordObject() << '\n';
+		std::cout << "Line: " << i.getLine() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << '\n';
+	}
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void findNotAllObject(){
-	FileXml fxml("Book", "C:\\SuperProject\\DirWithXmls");
- 	fxml.findObject(funcForNotAll);
+	FileXml fxml(inputFindingWord(), inputPath());
+ 	auto results = fxml.findObject(funcForAll);
+
+	for (const auto& i : results){
+		auto objectPath = i.getObjects();
+
+		std::cout << "Word: " << i.getFindWord() << '\n';
+		std::cout << "File path: " << i.getfilePath() << '\n';
+
+		std::cout << "Object path: ";
+		for (const auto& object : objectPath)
+			std::cout << object;
+
+		std::cout << "\nObject: " << i.getWordObject() << '\n';
+		std::cout << "Line: " << i.getLine() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << '\n';
+	}
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }

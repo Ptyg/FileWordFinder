@@ -1,7 +1,6 @@
 #include "FileXml.hpp"
 #include "getDirectoryFiles.hpp"
 #include "getNotAllDirectoryFiles.hpp"
-#include "outResultXml.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -136,6 +135,7 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 
 							deleteExtraObjects(objects);
 							results.push_back(OutResultXml(findingWord, currentFile, objects, tag, line, counter));
+							counterFile++;
 						}
 					}
 					else { 
@@ -145,7 +145,6 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 				}
 			}
 			catch (const std::exception& ex) {
-				printf("\nFile does not exist\n");
 				std::cout << "[ERROR]: " << ex.what() << "\n";
 				file.close();
 			}

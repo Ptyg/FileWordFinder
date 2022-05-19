@@ -2,6 +2,7 @@
 #define FILE_XML_H
 
 #include "FileAbstract.hpp"
+#include "outResultXml.hpp"
 
 #include <functional>
 
