@@ -2,7 +2,7 @@
 #define FILE_TXT_H
 
 #include "FileAbstract.hpp"
-#include "outResultTxt.hpp"
+#include "outResultBase.hpp"
 
 #include <functional>
 

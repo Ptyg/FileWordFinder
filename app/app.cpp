@@ -1,6 +1,6 @@
 ﻿#include "FileXml.hpp"
 #include "FileTxt.hpp"
-#include "outResultTxt.hpp"
+#include "outResultBase.hpp"
 #include "getDirectoryFiles.hpp"
 #include "getNotAllDirectoryFiles.hpp"
 
