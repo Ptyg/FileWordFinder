@@ -1,6 +1,7 @@
 #include "FileXml.hpp"
 #include "getDirectoryFiles.hpp"
 #include "getNotAllDirectoryFiles.hpp"
+#include "outResultXml.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -54,8 +55,9 @@ FileXml::FileXml(std::string&& findingWord, const std::filesystem::path& path){
 	setPath(path);
 }
 
-void FileXml::findObject(const std::function<std::vector<std::string>(const fs::path& dir, 
-															   		  const std::vector<std::string>& ext)>& func) {
+std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<std::string>(const fs::path& dir, 
+											  const std::vector<std::string>& ext)>& func) {
+	std::vector<OutResultXml> results;
 	int counterFile = 0;
 
 	/*erases spaces before text*/
@@ -100,7 +102,7 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 		}
 	};
 
-	auto print_result = [&](const std::vector<std::string>& files, const std::string& findingWord) {
+	auto doFinding = [&](const std::vector<std::string>& files, const std::string& findingWord) {
 		for (const auto& currentFile : files) {
 			std::ifstream file;
 			std::string line;
@@ -133,27 +135,7 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 							}
 
 							deleteExtraObjects(objects);
-
-							std::cout << "\nObject path: ";
-							for (const auto& obj : objects) { 
-								std::cout << obj << ' '; 
-							}
-
-							std::cout << "\nWord`s tag: " << tag;
-							
-							// loop to add slash into object just to display it
-							for (size_t i = 0; i < tag.size(); i++) {
-								if (tag[i] == '<') { 
-									tag.insert(i + 1, std::string("/")); 
-									break; 
-								}
-							}
-							std::cout << tag;
-							std::cout << "\nFile`s path: " << currentFile;
-							std::cout << "\nLine number: " << counter;
-							std::cout << "\nLine: " << line;
-							counterFile++;
-							std::cout << "\n\n";
+							results.push_back(OutResultXml(findingWord, currentFile, objects, tag, line, counter));
 						}
 					}
 					else { 
@@ -177,9 +159,11 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 	};
 
 	const auto files = collectFiles(func);
-	if (0 == files.size()) return;
+	
 	std::cout << "[INFO]: Finding word...\n";
-	print_result(files, getFindWord());
+	doFinding(files, getFindWord());
+	
+	return results;
 }
 
 

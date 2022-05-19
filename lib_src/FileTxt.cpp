@@ -86,17 +86,14 @@ std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::st
 		}
 
 		if (0 == counterFile) { 
-			std::cout << "[INFO]: Word cannot be founded"; 
+			std::cout << "[INFO]: No files with this word"; 
 		}
 		
 		std::cout << "\n";
 	};
 	
 	const auto files = collectFiles(func);
-	if (0 == files.size()) {
-		return results;
-	}
-
+	
 	std::cout << "[INFO]: Finding word...\n";
 	doFinding(files, getFindWord());
 
