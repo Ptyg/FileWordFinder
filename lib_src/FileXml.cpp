@@ -102,26 +102,26 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 	};
 
 	auto doFinding = [&](const std::vector<std::string>& files, const std::string& findingWord) {
+		std::ifstream file;
+		std::string line;
+		std::vector<std::string> objects;
+		std::string tag;
+		constexpr char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
+		int counter = 1;
+	
 		for (const auto& currentFile : files) {
-			std::ifstream file;
-			std::string line;
-			std::vector<std::string> objects;
-			constexpr char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
-			int counter = 1;
-
 			try {
 				file.open(currentFile);
 				while (getline(file, line)) {
-
+					spaceBarEraserFromFront(line);
+					
 					size_t firstObjectBracketPos = line.find(FIRST_BRACKET);
 					size_t secondObjectBracketPos = line.find(SECOND_BRACKET);
 					size_t objectWordLengthWithBracket = secondObjectBracketPos - firstObjectBracketPos;
-					spaceBarEraserFromFront(line);
-
+					
 					if (objectWordLengthWithBracket < line.size() - 1) {
 						if (line.find(findingWord) != std::string::npos) {
-							std::string tag;
-
+							tag.clear();
 							// loop to designate object
 							for (size_t i = 0; i < line.size(); i++) {
 								if (line[i] == '>') {
@@ -140,6 +140,8 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 						objects.push_back(line); 	
 					}
 					counter++;
+					tag.clear();
+					line.clear();
 				}
 			}
 			catch (const std::exception& ex) {
