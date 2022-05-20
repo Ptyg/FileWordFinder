@@ -1,13 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <root>
-  <person firstname="Cordi" lastname="Kenney" city="Sydney" country="Guyana" firstname2="Christy" lastname2="Old" email="Christy.Old@yopmail.com">
-  <random>8</random>
-  <random_float>21.069</random_float>
-  <bool>true</bool>
-  <date>1994-02-27</date>
-  <regEx>helloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo to you</regEx>
-  <enum>generator</enum>
-  <elt>Cecile</elt><elt>Evaleen</elt><elt>Jaime</elt><elt>Tersina</elt><elt>Patricia</elt>  
-  <Christy>
-    <age>22</age>
-  </Christy>
+   <person firstname="Cordi" lastname="Kenney" city="Sydney" country="Guyana" firstname2="Christy" lastname2="Old" email="Christy.Old@yopmail.com">
+      <random>8</random>
+      <random_float>21.069</random_float>
+      <bool>true</bool>
+      <date>1994-02-27</date>
+      <regEx>hellooooo to you</regEx>
+      <enum>generator</enum>
+      <elt>Cecile</elt>
+      <elt>Evaleen</elt>
+      <elt>Jaime</elt>
+      <elt>Tersina</elt>
+      <elt>Patricia</elt>
+      <Christy>
+         <age>22</age>
+      </Christy>
+   </person>
 </root>
