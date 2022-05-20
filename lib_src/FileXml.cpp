@@ -122,8 +122,6 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 						if (line.find(findingWord) != std::string::npos) {
 							std::string tag;
 
-							spaceBarEraserFromFront(line);
-
 							// loop to designate object
 							for (size_t i = 0; i < line.size(); i++) {
 								if (line[i] == '>') {
