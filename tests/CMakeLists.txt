@@ -1,17 +1,29 @@
 cmake_minimum_required(VERSION 3.0)
 
-set(This Test)
-
-set(Sources
-    xml_txt.cpp
+set(SourcesTxt
+    test_txt.cpp
 )
 
-add_executable(${This} ${Sources})
-target_link_libraries(${This} PUBLIC 
+set(SourcesXml
+    test_xml.cpp
+)
+
+add_executable(TestTxts ${SourcesTxt})
+target_link_libraries(TestTxts PUBLIC 
+    gtest_main
+    fileWordFinder_lib
+)
+
+add_executable(TestXmls ${SourcesXml})
+target_link_libraries(TestXmls PUBLIC 
     gtest_main
     fileWordFinder_lib
 )
 
 add_test(
-    XmlTxtTest ${This}
+    TxtTest TestTxts
+)
+
+add_test(
+    XmlTest TestXmls
 )
