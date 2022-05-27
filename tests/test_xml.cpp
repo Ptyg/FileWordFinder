@@ -7,7 +7,7 @@ TEST(fileXml, getFileTypeWithBasicConstr_ReturnFileType_XmlFileTypeReturned){
     EXPECT_EQ(fxml.getFileType(), ".xml");
 }
 
-TEST(fileTxt, getFileTypeWithPathMoveConstr_ReturnFileType_XmlFileTypeReturned){    
+TEST(fileXml, getFileTypeWithPathMoveConstr_ReturnFileType_XmlFileTypeReturned){    
     std::filesystem::path path{"C:\\Dir"};
 
     FileXml fxml(std::move(path));
@@ -15,7 +15,7 @@ TEST(fileTxt, getFileTypeWithPathMoveConstr_ReturnFileType_XmlFileTypeReturned){
     EXPECT_EQ(fxml.getFileType(), ".xml");
 }
 
-TEST(fileTxt, getFileTypeWithPathCopyConstr_ReturnFileType_XmlFileTypeReturned){    
+TEST(fileXml, getFileTypeWithPathCopyConstr_ReturnFileType_XmlFileTypeReturned){    
     std::filesystem::path path{"C:\\Dir"};
 
     FileXml fxml(path);
@@ -23,7 +23,7 @@ TEST(fileTxt, getFileTypeWithPathCopyConstr_ReturnFileType_XmlFileTypeReturned){
     EXPECT_EQ(fxml.getFileType(), ".xml");
 }
 
-TEST(fileTxt, getFileTypeWithFindingWordMoveConstr_ReturnFileType_XmlFileTypeReturned){    
+TEST(fileXml, getFileTypeWithFindingWordMoveConstr_ReturnFileType_XmlFileTypeReturned){    
     std::string word{"word"};
 
     FileXml ftxt(std::move(word));
@@ -31,7 +31,7 @@ TEST(fileTxt, getFileTypeWithFindingWordMoveConstr_ReturnFileType_XmlFileTypeRet
     EXPECT_EQ(ftxt.getFileType(), ".xml");
 }
 
-TEST(fileTxt, getFileTypeWithFindingWordCopyConstr_ReturnFileType_XmlFileTypeReturned){    
+TEST(fileXml, getFileTypeWithFindingWordCopyConstr_ReturnFileType_XmlFileTypeReturned){    
     std::string word{"word"};
 
     FileXml ftxt(word);
@@ -39,7 +39,7 @@ TEST(fileTxt, getFileTypeWithFindingWordCopyConstr_ReturnFileType_XmlFileTypeRet
     EXPECT_EQ(ftxt.getFileType(), ".xml");
 }
 
-TEST(fileTxt, getFileTypeWithFullCopyConstr_ReturnFileType_XmlFileTypeReturned){    
+TEST(fileXml, getFileTypeWithFullCopyConstr_ReturnFileType_XmlFileTypeReturned){    
     std::filesystem::path path{"C:\\Dir"};
     std::string word{"word"};
 
@@ -48,11 +48,67 @@ TEST(fileTxt, getFileTypeWithFullCopyConstr_ReturnFileType_XmlFileTypeReturned){
     EXPECT_EQ(ftxt.getFileType(), ".xml");
 }
 
-TEST(fileTxt, getFileTypeWithFullMoveConstr_ReturnFileType_XmlFileTypeReturned){    
+TEST(fileXml, getFileTypeWithFullMoveConstr_ReturnFileType_XmlFileTypeReturned){    
     std::filesystem::path path{"C:\\Dir"};
     std::string word{"word"};
 
     FileXml ftxt(word, path);
     
     EXPECT_EQ(ftxt.getFileType(), ".xml");
+}
+
+TEST(fileXml, getWordWithBasicConstr_ReturnEmptyWord_EmptyStringReturned){
+    FileXml fxml;
+    
+    EXPECT_EQ(fxml.getFindWord(), "");
+}
+
+TEST(fileXml, getWordWithPathMoveConstr_ReturnEmptyWord_EmptyStringReturned){
+    std::filesystem::path path{"C:\\Dir"};
+    
+    FileXml fxml(std::move(path));
+    
+    EXPECT_EQ(fxml.getFindWord(), "");
+}
+
+TEST(fileXml, getWordWithPathCopyConstr_ReturnEmptyWord_EmptyStringReturned){
+    std::filesystem::path path{"C:\\Dir"};
+    
+    FileXml fxml(path);
+    
+    EXPECT_EQ(fxml.getFindWord(), "");
+}
+
+TEST(fileTxt, getWordWithWordMoveConstr_ReturnSetWord_SetStringReturned){
+    std::string word{"word"};
+
+    FileXml fxml(std::move(word));
+    
+    EXPECT_EQ(fxml.getFindWord(), "word");
+}
+
+TEST(fileTxt, getWordWithWordCopyConstr_ReturnSetWord_SetStringReturned){
+    std::string word{"word"};
+
+    FileXml fxml(word);
+    
+    EXPECT_EQ(fxml.getFindWord(), "word");
+}
+
+TEST(fileTxt, getWordWithFullMoveConstr_ReturnSetWord_SetWordReturned){
+    std::filesystem::path path{"C:\\Dir"};
+    std::string word{"word"};
+
+    FileXml fxml(std::move(word), std::move(path));
+    
+    EXPECT_EQ(fxml.getFindWord(), "word");
+}
+
+TEST(fileTxt, getWordWithFullCopyConstr_ReturnSetWord_SetWordReturned){
+    std::filesystem::path path{"C:\\Dir"};
+    std::string word{"word"};
+
+    FileXml fxml(word, path);
+    
+    EXPECT_EQ(fxml.getFindWord(), "word");
 }
