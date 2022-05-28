@@ -2,6 +2,5 @@
 #include <string>
 #include <filesystem>
 
-namespace fs = std::filesystem;
-
-std::vector<std::string> getNotAllDirectoryFiles(const fs::path& dir, const std::vector<std::string>& ext);
+std::vector<std::filesystem::path> getNotAllDirectoryFiles(const std::filesystem::path& dir, 
+                                                           const std::vector<std::string>& ext);
