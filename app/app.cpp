@@ -10,13 +10,11 @@
 #include <vector>
 #include <filesystem>
 
-namespace fs = std::filesystem;
+std::function<std::vector<std::filesystem::path>(const std::filesystem::path& dir, 
+									   const std::vector<std::string>& ext)> funcForAll = getDirectoryFiles;
 
-std::function<std::vector<std::string>(const fs::path& dir, 
-										   const std::vector<std::string>& ext)> funcForAll = getDirectoryFiles;
-
-std::function<std::vector<std::string>(const fs::path& dir, 
-										   const std::vector<std::string>& ext)> funcForNotAll = getNotAllDirectoryFiles;
+std::function<std::vector<std::filesystem::path>(const std::filesystem::path& dir, 
+									   const std::vector<std::string>& ext)> funcForNotAll = getNotAllDirectoryFiles;
 
 std::string inputFindingWord(){
 	std::string findingWord;
@@ -29,7 +27,7 @@ std::filesystem::path inputPath() {
 	std::cout << "\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n: ";
 	std::cin >> dir;
 
-	std::filesystem::path dirPath = fs::path(dir);
+	std::filesystem::path dirPath = std::filesystem::path(dir);
 	return dirPath;
 }
 

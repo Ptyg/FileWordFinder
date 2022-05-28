@@ -54,9 +54,9 @@ FileXml::FileXml(std::string&& findingWord, const std::filesystem::path& path){
 	setPath(path);
 }
 
-std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<std::string>(
-													const std::filesystem::path& dir, 
-											  		const std::vector<std::string>& ext)>& func) {
+std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<std::filesystem::path>(
+														const std::filesystem::path& dir, 
+											  			const std::vector<std::string>& ext)>& func) {
 	std::vector<OutResultXml> results;
 	int counterFile = 0;
 
@@ -102,7 +102,7 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 		}
 	};
 
-	auto doFinding = [&](const std::vector<std::string>& files, const std::string& findingWord) {
+	auto doFinding = [&](const auto& files, const std::string& findingWord) {
 		std::ifstream file;
 		std::string line;
 		std::vector<std::string> objects;

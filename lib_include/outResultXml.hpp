@@ -14,12 +14,12 @@ class OutResultXml : public OutResult {
     std::string _wordObject;
 public:
     OutResultXml() = default;
-    OutResultXml(std::string&& findWord, std::string&& file, std::vector<std::string>&& objects, 
+    OutResultXml(std::string&& findWord, std::filesystem::path&& file, std::vector<std::string>&& objects, 
                  std::string&& wordObject, std::string&& line, int&& lineNumber) 
         : OutResult(std::move(findWord), std::move(file), std::move(line), std::move(lineNumber)), 
         _objects(std::move(objects)), _wordObject(std::move(wordObject)){}
 
-    OutResultXml(const std::string& findWord, const std::string& file, const std::vector<std::string>& objects, 
+    OutResultXml(const std::string& findWord, const std::filesystem::path& file, const std::vector<std::string>& objects, 
                  const std::string& wordObject, const std::string& line, const int& lineNumber) 
         : OutResult(findWord, file, line, lineNumber),
         _objects(objects), _wordObject(wordObject){}

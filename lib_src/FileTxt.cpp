@@ -54,9 +54,9 @@ FileTxt::FileTxt(std::string&& findingWord, const std::filesystem::path& path){
 	setPath(path);
 }
 
-std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::string>(
-												const std::filesystem::path& dir, 
-												const std::vector<std::string>& ext)>& func){
+std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::filesystem::path>(
+														const std::filesystem::path& dir, 
+														const std::vector<std::string>& ext)>& func){
 	int counterFile = 0;
 	std::vector<OutResult> results;
 
