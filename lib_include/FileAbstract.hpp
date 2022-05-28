@@ -5,7 +5,6 @@
 #include <vector>
 #include <functional>
 #include <filesystem>
-namespace fs = std::filesystem;
 
 class FileAbstract {
 	std::string _word;
@@ -26,8 +25,9 @@ public:
 	void setFindWord(const std::string& word);
 
 	/* function takes a function that searches files in dir. Example of that func in getDirectoryFiles.cpp*/
-	std::vector<std::string> collectFiles(const std::function<std::vector<std::string>(const fs::path& dir, 
-																	 const std::vector<std::string>& ext)>& func);
+	std::vector<std::string> collectFiles(const std::function<std::vector<std::string>(
+												const std::filesystem::path& dir, 
+												const std::vector<std::string>& ext)>& func);
 
 };
 

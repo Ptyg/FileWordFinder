@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-std::vector<std::filesystem::path> getDirectoryFiles(const std::filesystem::path& dir, const std::vector<std::string>& ext) {
+std::vector<std::filesystem::path> getDirectoryFiles(const std::filesystem::path& dir, 
+													 const std::vector<std::string>& ext) {
 	std::vector<std::filesystem::path> files;
 	try{
 		for (const auto& p : std::filesystem::recursive_directory_iterator(dir)) {

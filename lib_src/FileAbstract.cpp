@@ -40,8 +40,9 @@ void FileAbstract::setPath(std::filesystem::path&& path){
 	_dirPath = std::move(path);
 }
 
-std::vector<std::string> FileAbstract::collectFiles(const std::function<std::vector<std::string>(const fs::path& dir, 
-																	 const std::vector<std::string>& ext)>& func)
+std::vector<std::string> FileAbstract::collectFiles(const std::function<std::vector<std::string>(
+															const std::filesystem::path& dir, 
+															const std::vector<std::string>& ext)>& func)
 {
 	std::cout << "[INFO]: Collecting files...\n";
 	const auto files = func(getDirPath(), { getFileType() });
