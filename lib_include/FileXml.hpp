@@ -2,8 +2,7 @@
 #define FILE_XML_H
 
 #include "FileAbstract.hpp"
-
-#include <functional>
+#include "outResultXml.hpp"
 
 class FileXml : public FileAbstract {
 public:
@@ -19,8 +18,9 @@ public:
 	~FileXml() = default;
 
 	/* function takes a function that searches files in dir. Example of that func in getDirectoryFiles.cpp*/
-	void findObject(const std::function<std::vector<std::string>(const fs::path& dir, 
-															   const std::vector<std::string>& ext)>& func);
+	std::vector<OutResultXml> findObject(const std::function<std::vector<std::filesystem::path>(
+												const std::filesystem::path& dir, 
+												const std::vector<std::string>& ext)>& func);
 };
 
 #endif

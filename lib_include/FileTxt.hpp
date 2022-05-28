@@ -2,11 +2,9 @@
 #define FILE_TXT_H
 
 #include "FileAbstract.hpp"
-
-#include <functional>
+#include "outResultBase.hpp"
 
 class FileTxt : public FileAbstract {
-	
 public:
 	FileTxt();
 	FileTxt(const std::string& findingWord);
@@ -20,8 +18,9 @@ public:
 	~FileTxt() = default;
 
 	/* function takes a function that searches files in dir. Example of that func in getDirectoryFiles.cpp*/
-	void findWord(const std::function<std::vector<std::string>(const fs::path& dir, 
-															   const std::vector<std::string>& ext)>& func);
+	std::vector<OutResult> findWord(const std::function<std::vector<std::filesystem::path>(
+													const std::filesystem::path& dir, 
+													const std::vector<std::string>& ext)>& func);
 };
 
 #endif

@@ -54,8 +54,10 @@ FileXml::FileXml(std::string&& findingWord, const std::filesystem::path& path){
 	setPath(path);
 }
 
-void FileXml::findObject(const std::function<std::vector<std::string>(const fs::path& dir, 
-															   		  const std::vector<std::string>& ext)>& func) {
+std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<std::filesystem::path>(
+														const std::filesystem::path& dir, 
+											  			const std::vector<std::string>& ext)>& func) {
+	std::vector<OutResultXml> results;
 	int counterFile = 0;
 
 	/*erases spaces before text*/
@@ -100,29 +102,27 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 		}
 	};
 
-	auto print_result = [&](const std::vector<std::string>& files, const std::string& findingWord) {
+	auto doFinding = [&](const auto& files, const std::string& findingWord) {
+		std::ifstream file;
+		std::string line;
+		std::vector<std::string> objects;
+		std::string tag;
+		constexpr char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
+		int counter = 1;
+	
 		for (const auto& currentFile : files) {
-			std::ifstream file;
-			std::string line;
-			std::vector<std::string> objects;
-			constexpr char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
-			int counter = 1;
-
 			try {
-				file.open(currentFile);
+				file.open(currentFile.string());
 				while (getline(file, line)) {
-
+					spaceBarEraserFromFront(line);
+					
 					size_t firstObjectBracketPos = line.find(FIRST_BRACKET);
 					size_t secondObjectBracketPos = line.find(SECOND_BRACKET);
 					size_t objectWordLengthWithBracket = secondObjectBracketPos - firstObjectBracketPos;
-					spaceBarEraserFromFront(line);
-
+					
 					if (objectWordLengthWithBracket < line.size() - 1) {
 						if (line.find(findingWord) != std::string::npos) {
-							std::string tag;
-
-							spaceBarEraserFromFront(line);
-
+							tag.clear();
 							// loop to designate object
 							for (size_t i = 0; i < line.size(); i++) {
 								if (line[i] == '>') {
@@ -133,37 +133,19 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 							}
 
 							deleteExtraObjects(objects);
-
-							std::cout << "\nObject path: ";
-							for (const auto& obj : objects) { 
-								std::cout << obj << ' '; 
-							}
-
-							std::cout << "\nWord`s tag: " << tag;
-							
-							// loop to add slash into object just to display it
-							for (size_t i = 0; i < tag.size(); i++) {
-								if (tag[i] == '<') { 
-									tag.insert(i + 1, std::string("/")); 
-									break; 
-								}
-							}
-							std::cout << tag;
-							std::cout << "\nFile`s path: " << currentFile;
-							std::cout << "\nLine number: " << counter;
-							std::cout << "\nLine: " << line;
+							results.push_back(OutResultXml(findingWord, currentFile, objects, tag, line, counter));
 							counterFile++;
-							std::cout << "\n\n";
 						}
 					}
 					else { 
 						objects.push_back(line); 	
 					}
 					counter++;
+					tag.clear();
+					line.clear();
 				}
 			}
 			catch (const std::exception& ex) {
-				printf("\nFile does not exist\n");
 				std::cout << "[ERROR]: " << ex.what() << "\n";
 				file.close();
 			}
@@ -176,11 +158,12 @@ void FileXml::findObject(const std::function<std::vector<std::string>(const fs::
 		std::cout << "\n";
 	};
 
-	std::cout << "[INFO]: Collecting files...\n";
-	const std::vector<std::string> files = func(getDirPath(), { getFileType() });
-	std::cout << "[INFO]: Collecting has been completed. Number of files: " << files.size() << '\n';
+	const auto files = collectFiles(func);
+	
 	std::cout << "[INFO]: Finding word...\n";
-	print_result(files, getFindWord());
+	doFinding(files, getFindWord());
+	
+	return results;
 }
 
 

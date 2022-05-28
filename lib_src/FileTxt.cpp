@@ -54,29 +54,26 @@ FileTxt::FileTxt(std::string&& findingWord, const std::filesystem::path& path){
 	setPath(path);
 }
 
-void FileTxt::findWord(const std::function<std::vector<std::string>(const fs::path& dir, 
-																	const std::vector<std::string>& ext)>& func){
+std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::filesystem::path>(
+														const std::filesystem::path& dir, 
+														const std::vector<std::string>& ext)>& func){
 	int counterFile = 0;
+	std::vector<OutResult> results;
 
-	auto print_result = [&counterFile](const auto& files, const std::string& findWord) {
+	auto doFinding = [&](const auto& files, const std::string& findWord) {
 		for (const auto& currentFile : files) {
 			std::ifstream file;
 			std::string line;
 			int lineCounter = 1;
 			try {
-				file.open(currentFile);
+				file.open(currentFile.string());
 				while (getline(file, line)) {
 					if (line.find(findWord) != std::string::npos) {
 
 						int spaceBarCounter = 0, coun = 0;
 						while (line[coun] == ' ') { spaceBarCounter++; coun++; }
 						line.erase(0, spaceBarCounter);
-
-						std::cout << "\nSearching word: " << findWord;
-						std::cout << "\nPath to file: " << currentFile;
-						std::cout << "\nLine number: " << lineCounter;
-						std::cout << "\nLine: " << line;
-						std::cout << "\n";
+						results.push_back(OutResult(findWord, currentFile, line, lineCounter));
 						counterFile++;
 					}
 					lineCounter++;
@@ -90,16 +87,17 @@ void FileTxt::findWord(const std::function<std::vector<std::string>(const fs::pa
 		}
 
 		if (0 == counterFile) { 
-			std::cout << "[INFO]: Word cannot be founded"; 
+			std::cout << "[INFO]: No files with this word"; 
 		}
 		
 		std::cout << "\n";
 	};
 	
-	std::cout << "[INFO]: Collecting files...\n";
-	const auto files = func(getDirPath(), { getFileType() });
-	std::cout << "[INFO]: Collecting has been completed. Number of files: " << files.size() << '\n';
+	const auto files = collectFiles(func);
+	
 	std::cout << "[INFO]: Finding word...\n";
-	print_result(files, getFindWord());
+	doFinding(files, getFindWord());
+
+	return results;
 }
 

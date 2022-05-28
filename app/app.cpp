@@ -1,6 +1,7 @@
-#include "workExample.hpp"
+﻿#include "FileXml.hpp"
 #include "FileTxt.hpp"
-#include "FileXml.hpp"
+#include "outResultBase.hpp"
+#include "outResultXml.hpp"
 #include "getDirectoryFiles.hpp"
 #include "getNotAllDirectoryFiles.hpp"
 
@@ -9,13 +10,11 @@
 #include <vector>
 #include <filesystem>
 
-namespace fs = std::filesystem;
+std::function<std::vector<std::filesystem::path>(const std::filesystem::path& dir, 
+									   const std::vector<std::string>& ext)> funcForAll = getDirectoryFiles;
 
-std::function<std::vector<std::string>(const fs::path& dir, 
-										   const std::vector<std::string>& ext)> funcForAll = getDirectoryFiles;
-
-std::function<std::vector<std::string>(const fs::path& dir, 
-										   const std::vector<std::string>& ext)> funcForNotAll = getNotAllDirectoryFiles;
+std::function<std::vector<std::filesystem::path>(const std::filesystem::path& dir, 
+									   const std::vector<std::string>& ext)> funcForNotAll = getNotAllDirectoryFiles;
 
 std::string inputFindingWord(){
 	std::string findingWord;
@@ -28,7 +27,7 @@ std::filesystem::path inputPath() {
 	std::cout << "\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n: ";
 	std::cin >> dir;
 
-	std::filesystem::path dirPath = fs::path(dir);
+	std::filesystem::path dirPath = std::filesystem::path(dir);
 	return dirPath;
 }
 
@@ -42,14 +41,22 @@ std::filesystem::path inputPath() {
 // taking into account all directories and without
 void displayTxtFiles() {
 	FileTxt ftxt(inputPath());
-	ftxt.showFilesInDir(funcForAll);
+	const auto files = ftxt.collectFiles(funcForAll);
+
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void displayNotAllTxtFiles() {
 	FileTxt ftxt(inputPath());
-	ftxt.showFilesInDir(funcForNotAll);
+	const auto files = ftxt.collectFiles(funcForNotAll);
+
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
@@ -58,14 +65,30 @@ void displayNotAllTxtFiles() {
 // all directories and without
 void findWord() {	
 	FileTxt ftxt(inputFindingWord(), inputPath());
-	ftxt.findWord(funcForAll);
+	auto results = ftxt.findWord(funcForAll);
+
+	for (const auto& i : results) {
+		std::cout << "Word: " << i.getFindWord() << '\n';
+		std::cout << "Path: " << i.getfilePath() << '\n';
+		std::cout << "Line: " << i.getLine() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << "\n\n";
+	}
+	
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void findNotAllWord() {
 	FileTxt ftxt(inputFindingWord(), inputPath());
-	ftxt.findWord(funcForNotAll);
+	auto results = ftxt.findWord(funcForNotAll);
+
+	for (const auto& i : results) {
+		std::cout << "Word: " << i.getFindWord() << '\n';
+		std::cout << "Path: " << i.getfilePath() << '\n';
+		std::cout << "Line: " << i.getLine() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << "\n\n";
+	}
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
@@ -80,14 +103,22 @@ void findNotAllWord() {
 // taking into account all directories and without
 void displayXmlFiles() {
 	FileXml fxml(inputPath());
-	fxml.showFilesInDir(funcForAll);
+	const auto files = fxml.collectFiles(funcForAll);
+
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void displayNotAllXmlFiles(){
 	FileXml fxml(inputPath());
-	fxml.showFilesInDir(funcForNotAll);
+	const auto files = fxml.collectFiles(funcForNotAll);
+
+	for (const auto& currentFile : files)
+		std::cout << currentFile << '\n';
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
@@ -96,14 +127,45 @@ void displayNotAllXmlFiles(){
 // all directories and without
 void findObject() {
 	FileXml fxml(inputFindingWord(), inputPath());
-	fxml.findObject(funcForAll);
+	auto results = fxml.findObject(funcForAll);
+
+	for (const auto& i : results){
+		auto objectPath = i.getObjects();
+
+		std::cout << "Word: " << i.getFindWord() << '\n';
+		std::cout << "File path: " << i.getfilePath() << '\n';
+
+		std::cout << "Object path: ";
+		for (const auto& object : objectPath)
+			std::cout << object;
+
+		std::cout << "\nObject: " << i.getWordObject() << '\n';
+		std::cout << "Line: " << i.getLine() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << "\n\n";
+	}
+
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
 
 void findNotAllObject(){
 	FileXml fxml(inputFindingWord(), inputPath());
- 	fxml.findObject(funcForNotAll);
+ 	auto results = fxml.findObject(funcForAll);
+
+	for (const auto& i : results){
+		auto objectPath = i.getObjects();
+
+		std::cout << "Word: " << i.getFindWord() << '\n';
+		std::cout << "File path: " << i.getfilePath() << '\n';
+
+		std::cout << "Object path: ";
+		for (const auto& object : objectPath)
+			std::cout << object;
+
+		std::cout << "\nObject: " << i.getWordObject() << '\n';
+		std::cout << "Line: " << i.getLine() << '\n';
+		std::cout << "Line number: " << i.getLineNumber() << "\n\n";
+	}
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
 }
@@ -161,19 +223,22 @@ void userInterfaceXml() {
 void userInterface() {
 	char ch;
 	do{
-		std::cout << "01. Work with chosen file type (in process...)\n";
-		std::cout << "02. Work with .txt\n";
-		std::cout << "03. Work with .xml\n";
-		std::cout << "04. Exit\n";
-		std::cout << "Please, enter your choice (1-4): "; 
+		std::cout << "01. Work with .txt\n";
+		std::cout << "02. Work with .xml\n";
+		std::cout << "03. Exit\n";
+		std::cout << "Please, enter your choice (1-3): "; 
 		std::cin >> ch;
 
 		switch (ch){
-		case '1': break;
-		case '2': userInterfaceTxt(); break;
-		case '3': userInterfaceXml(); break;
-		case '4': break;
-		default: std::cout << "\a"; break;
+			case '1': userInterfaceTxt(); break;
+			case '2': userInterfaceXml(); break;
+			case '3': break;
+			default: std::cout << "\a"; break;
 		}
-	} while (ch != '4');
+	} while (ch != '3');
+}
+
+int main(){
+	userInterface();
+	return 0;
 }

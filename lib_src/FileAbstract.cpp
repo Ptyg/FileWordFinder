@@ -1,7 +1,6 @@
 #include "FileAbstract.hpp"
-#include "getDirectoryFiles.hpp"
 #include "getNotAllDirectoryFiles.hpp"
-
+#include "getDirectoryFiles.hpp"
 #include <iostream>
 #include <memory>
 
@@ -41,12 +40,12 @@ void FileAbstract::setPath(std::filesystem::path&& path){
 	_dirPath = std::move(path);
 }
 
-void FileAbstract::showFilesInDir(const std::function<std::vector<std::string>(const fs::path& dir, 
-																	 const std::vector<std::string>& ext)>& func)
+std::vector<std::filesystem::path> FileAbstract::collectFiles(const std::function<std::vector<std::filesystem::path>(
+															  		const std::filesystem::path& dir, 
+															  		const std::vector<std::string>& ext)>& func)
 {
 	std::cout << "[INFO]: Collecting files...\n";
 	const auto files = func(getDirPath(), { getFileType() });
-	std::cout << "[INFO]: Collecting has been completed\n";
-	for (const auto& currentFile : files)
-		std::cout << currentFile << '\n';
+	std::cout << "[INFO]: Collecting has been completed. Number of files: " << files.size() << '\n';
+	return files;
 }
