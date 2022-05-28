@@ -4,7 +4,7 @@ std::string OutResult::getFindWord() const{
     return _findWord;
 }
 
-std::string OutResult::getfilePath() const{
+std::filesystem::path OutResult::getfilePath() const{
     return _filePath;
 }
 
