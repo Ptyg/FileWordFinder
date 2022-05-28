@@ -66,7 +66,7 @@ std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::fi
 			std::string line;
 			int lineCounter = 1;
 			try {
-				file.open(currentFile);
+				file.open(currentFile.string());
 				while (getline(file, line)) {
 					if (line.find(findWord) != std::string::npos) {
 

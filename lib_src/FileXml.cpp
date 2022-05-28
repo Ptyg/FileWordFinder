@@ -112,7 +112,7 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 	
 		for (const auto& currentFile : files) {
 			try {
-				file.open(currentFile);
+				file.open(currentFile.string());
 				while (getline(file, line)) {
 					spaceBarEraserFromFront(line);
 					
