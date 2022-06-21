@@ -6,7 +6,6 @@
 #include <memory>
 #include <fstream>
 
-
 FileTxt::FileTxt(const std::string& findingWord, const std::filesystem::path& path){
 	_fileType = ".txt"; 
 	_word = findingWord;
@@ -19,13 +18,13 @@ FileTxt::FileTxt(const std::string& findingWord, std::filesystem::path&& path){
 	_dirPath = std::move(path);
 }
 
-FileTxt::FileTxt(std::string&& findingWord, const std::filesystem::path& path){
+FileTxt::FileTxt(const std::filesystem::path& path, std::string&& findingWord){
 	_fileType = ".txt"; 
 	_word = std::move(findingWord);
 	_dirPath = path;
 }
 
-FileTxt::FileTxt(std::string&& findingWord, std::filesystem::path&& path){
+FileTxt::FileTxt(std::filesystem::path&& path, std::string&& findingWord){
 	_fileType = ".txt"; 
 	_word = std::move(findingWord);
 	_dirPath = std::move(path);

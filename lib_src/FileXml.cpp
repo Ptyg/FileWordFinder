@@ -18,13 +18,13 @@ FileXml::FileXml(const std::string& findingWord, std::filesystem::path&& path){
 	_dirPath = std::move(path);
 }
 
-FileXml::FileXml(std::string&& findingWord, const std::filesystem::path& path){
+FileXml::FileXml(const std::filesystem::path& path, std::string&& findingWord){
 	_fileType = ".xml";
 	_word = std::move(findingWord);
 	_dirPath = path;
 }
 
-FileXml::FileXml(std::string&& findingWord, std::filesystem::path&& path){
+FileXml::FileXml(std::filesystem::path&& path, std::string&& findingWord){
 	_fileType = ".xml";
 	_word = std::move(findingWord);
 	_dirPath = std::move(path);
