@@ -6,52 +6,28 @@
 #include <fstream>
 #include <memory>
 
-FileXml::FileXml() { 
-	setFileType(".xml"); 
-}
-
-FileXml::FileXml(const std::string& findingWord){
-	setFileType(".xml"); 
-	setFindWord(findingWord);
-}
-
-FileXml::FileXml(std::string&& findingWord){
-	setFileType(".xml");
-	setFindWord(std::move(findingWord));
-}
-
-FileXml::FileXml(const std::filesystem::path& path){
-	setFileType(".xml"); 
-	setPath(path);
-}
-
-FileXml::FileXml(std::filesystem::path&& path){
-	setFileType(".xml"); 
-	setPath(std::move(path));
-}
-
-FileXml::FileXml(const std::string& findingWord, const std::filesystem::path& path){
-	setFileType(".xml"); 
-	setFindWord(findingWord);
-	setPath(path);
+FileXml::FileXml(const std::string& findingWord, const std::filesystem::path& path) {
+	_fileType = ".xml";
+	_word = findingWord;
+	_dirPath = path;
 }
 
 FileXml::FileXml(const std::string& findingWord, std::filesystem::path&& path){
-	setFileType(".xml"); 
-	setFindWord(findingWord);
-	setPath(std::move(path));
-}
-
-FileXml::FileXml(std::string&& findingWord, std::filesystem::path&& path){
-	setFileType(".xml"); 
-	setFindWord(std::move(findingWord));
-	setPath(std::move(path));
+	_fileType = ".xml";
+	_word = findingWord;
+	_dirPath = std::move(path);
 }
 
 FileXml::FileXml(std::string&& findingWord, const std::filesystem::path& path){
-	setFileType(".xml");
-	setFindWord(std::move(findingWord));
-	setPath(path);
+	_fileType = ".xml";
+	_word = std::move(findingWord);
+	_dirPath = path;
+}
+
+FileXml::FileXml(std::string&& findingWord, std::filesystem::path&& path){
+	_fileType = ".xml";
+	_word = std::move(findingWord);
+	_dirPath = std::move(path);
 }
 
 std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<std::filesystem::path>(
@@ -161,11 +137,7 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 	const auto files = collectFiles(func);
 	
 	std::cout << "[INFO]: Finding word...\n";
-	doFinding(files, getFindWord());
+	doFinding(files, _word);
 	
 	return results;
 }
-
-
-
-
