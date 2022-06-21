@@ -8,9 +8,9 @@
 
 class FileAbstract {
 protected:
-	std::string _word;
-	std::string _fileType;
-	std::filesystem::path _dirPath; 
+	std::string _word{};
+	std::string _fileType{};
+	std::filesystem::path _dirPath{}; 
 public:
 	virtual ~FileAbstract() = default;
 
