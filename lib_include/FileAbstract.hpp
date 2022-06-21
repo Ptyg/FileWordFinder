@@ -7,6 +7,7 @@
 #include <filesystem>
 
 class FileAbstract {
+protected:
 	std::string _word;
 	std::string _fileType;
 	std::filesystem::path _dirPath; 
