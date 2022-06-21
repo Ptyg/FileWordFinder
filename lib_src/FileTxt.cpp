@@ -6,52 +6,29 @@
 #include <memory>
 #include <fstream>
 
-FileTxt::FileTxt() { 
-	setFileType(".txt"); 
-}
-
-FileTxt::FileTxt(const std::string& findingWord){
-	setFileType(".txt");
-	setFindWord(findingWord);
-}
-
-FileTxt::FileTxt(std::string&& findingWord){
-	setFileType(".txt");
-	setFindWord(std::move(findingWord));
-}
-
-FileTxt::FileTxt(const std::filesystem::path& path){
-	setFileType(".txt");
-	setPath(path);
-}
-
-FileTxt::FileTxt(std::filesystem::path&& path){
-	setFileType(".txt");
-	setPath(std::move(path));
-}
 
 FileTxt::FileTxt(const std::string& findingWord, const std::filesystem::path& path){
-	setFileType(".txt"); 
-	setFindWord(findingWord);
-	setPath(path);
+	_fileType = ".txt"; 
+	_word = findingWord;
+	_dirPath = path;
 }
 
 FileTxt::FileTxt(const std::string& findingWord, std::filesystem::path&& path){
-	setFileType(".txt"); 
-	setFindWord(findingWord);
-	setPath(std::move(path));
-}
-
-FileTxt::FileTxt(std::string&& findingWord, std::filesystem::path&& path){
-	setFileType(".txt"); 
-	setFindWord(std::move(findingWord));
-	setPath(std::move(path));
+	_fileType = ".txt"; 
+	_word = findingWord;
+	_dirPath = std::move(path);
 }
 
 FileTxt::FileTxt(std::string&& findingWord, const std::filesystem::path& path){
-	setFileType(".txt");
-	setFindWord(std::move(findingWord));
-	setPath(path);
+	_fileType = ".txt"; 
+	_word = std::move(findingWord);
+	_dirPath = path;
+}
+
+FileTxt::FileTxt(std::string&& findingWord, std::filesystem::path&& path){
+	_fileType = ".txt"; 
+	_word = std::move(findingWord);
+	_dirPath = std::move(path);
 }
 
 std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::filesystem::path>(
@@ -96,7 +73,7 @@ std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::fi
 	const auto files = collectFiles(func);
 	
 	std::cout << "[INFO]: Finding word...\n";
-	doFinding(files, getFindWord());
+	doFinding(files, _word);
 
 	return results;
 }
