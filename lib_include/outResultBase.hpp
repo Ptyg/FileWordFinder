@@ -5,7 +5,7 @@
 #include <filesystem>
 
 /*
-Basic data structure for result that we get from finding word
+	Parent data structure for result that we get from finding word
 */
 class OutResult{
 	std::string _findWord;

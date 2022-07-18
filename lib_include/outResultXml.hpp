@@ -7,7 +7,7 @@
 #include <string>
 
 /*
-Data structure for result that we get from finding word in xmls
+    Data structure for result that we get from finding word in xmls
 */
 class OutResultXml : public OutResult {
     std::vector<std::string> _objects;

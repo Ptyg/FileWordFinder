@@ -13,7 +13,17 @@ public:
 	FileTxt(const std::filesystem::path& path, std::string&& findingWord = " ");
 	~FileTxt() = default;
 
-	/* function takes a function that searches files in dir. Example of that func in getDirectoryFiles.cpp*/
+	/* 
+		Returns a vector with results
+
+		@ const std::function<std::vector<std::filesystem::path>(
+				const std::filesystem::path& dir, 
+				const std::vector<std::string>& ext
+			)>& func - function to collect files
+ 
+		@ const std::filesystem::path& dir - path to folder where files will be collected
+		@ const std::vector<std::string>& ext - files extentions 
+	*/
 	std::vector<OutResult> findWord(const std::function<std::vector<std::filesystem::path>(
 													const std::filesystem::path& dir, 
 													const std::vector<std::string>& ext)>& func);

@@ -77,3 +77,5 @@ std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::fi
 	return results;
 }
 
+
+

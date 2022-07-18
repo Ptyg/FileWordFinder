@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "FileXml.hpp"
 
+std::string path = {c}
+
 TEST(fileXml, getFileTypeWithBasicConstr_ReturnFileType_XmlFileTypeReturned){    
     FileXml fxml;
     
