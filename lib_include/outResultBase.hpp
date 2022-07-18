@@ -7,12 +7,12 @@
 /*
 	Parent data structure for result that we get from finding word
 */
-class OutResult{
+struct OutResult{
 	std::string _findWord;
 	std::filesystem::path _filePath;
 	std::string _line;
 	int _lineNumber;
-public:
+
     OutResult() = default;
 		
 	OutResult(std::string&& findWord, std::filesystem::path&& file, 
@@ -23,10 +23,5 @@ public:
 	OutResult(const std::string& findWord, const std::filesystem::path& file,
 			  const std::string& line, const int& lineNumber) 
 	: _findWord(findWord), _filePath(file), _line(line), _lineNumber(lineNumber) {}
-
-    std::string getFindWord() const;
-    std::filesystem::path getfilePath() const;
-    std::string	getLine() const;
-    int getLineNumber() const;
 };
 #endif

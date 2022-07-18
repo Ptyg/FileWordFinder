@@ -9,10 +9,10 @@
 /*
     Data structure for result that we get from finding word in xmls
 */
-class OutResultXml : public OutResult {
+struct OutResultXml : public OutResult {
     std::vector<std::string> _objects;
     std::string _wordObject;
-public:
+
     OutResultXml() = default;
     OutResultXml(std::string&& findWord, std::filesystem::path&& file, std::vector<std::string>&& objects, 
                  std::string&& wordObject, std::string&& line, int&& lineNumber) 
@@ -23,9 +23,6 @@ public:
                  const std::string& wordObject, const std::string& line, const int& lineNumber) 
         : OutResult(findWord, file, line, lineNumber),
         _objects(objects), _wordObject(wordObject){}
-
-    std::vector<std::string> getObjects() const;
-    std::string getWordObject() const;
 };
 
 #endif
