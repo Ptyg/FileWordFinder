@@ -6,25 +6,13 @@
 #include <fstream>
 #include <memory>
 
-FileXml::FileXml(const std::string& findingWord, const std::filesystem::path& path) {
-	_fileType = ".xml";
-	_word = findingWord;
-	_dirPath = path;
-}
-
-FileXml::FileXml(const std::string& findingWord, std::filesystem::path&& path){
-	_fileType = ".xml";
-	_word = findingWord;
-	_dirPath = std::move(path);
-}
-
-FileXml::FileXml(const std::filesystem::path& path, std::string&& findingWord){
+FileXml::FileXml(const std::filesystem::path& path, const std::string& findingWord /* = " " */){
 	_fileType = ".xml";
 	_word = std::move(findingWord);
 	_dirPath = path;
 }
 
-FileXml::FileXml(std::filesystem::path&& path, std::string&& findingWord){
+FileXml::FileXml(std::filesystem::path&& path, std::string&& findingWord /* = " " */){
 	_fileType = ".xml";
 	_word = std::move(findingWord);
 	_dirPath = std::move(path);
