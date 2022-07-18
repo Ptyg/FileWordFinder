@@ -12,19 +12,19 @@ FileTxt::FileTxt(const std::string& findingWord, const std::filesystem::path& pa
 	_dirPath = path;
 }
 
-FileTxt::FileTxt(const std::string& findingWord, std::filesystem::path&& path){
+FileTxt::FileTxt(std::string&& findingWord, std::filesystem::path&& path){
 	_fileType = ".txt"; 
-	_word = findingWord;
+	_word = std::move(findingWord);
 	_dirPath = std::move(path);
 }
 
-FileTxt::FileTxt(const std::filesystem::path& path, std::string&& findingWord){
-	_fileType = ".txt"; 
-	_word = std::move(findingWord);
+FileTxt::FileTxt(const std::filesystem::path& path, std::string&& findingWord /* = " "; */){
+	_fileType = ".txt";
 	_dirPath = path;
+	_word = std::move(findingWord);
 }
 
-FileTxt::FileTxt(std::filesystem::path&& path, std::string&& findingWord){
+FileTxt::FileTxt(std::filesystem::path&& path, std::string&& findingWord /* = " "; */){
 	_fileType = ".txt"; 
 	_word = std::move(findingWord);
 	_dirPath = std::move(path);
