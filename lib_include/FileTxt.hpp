@@ -6,11 +6,8 @@
 
 class FileTxt : public FileAbstract {
 public:
-
-	FileTxt(const std::string& findingWord, const std::filesystem::path& path);
-	FileTxt(std::string&& findingWord, std::filesystem::path&& path);
 	FileTxt(std::filesystem::path&& path, std::string&& findingWord = " ");
-	FileTxt(const std::filesystem::path& path, std::string&& findingWord = " ");
+	FileTxt(const std::filesystem::path& path, const std::string& findingWord = " ");
 	~FileTxt() = default;
 
 	/* 
