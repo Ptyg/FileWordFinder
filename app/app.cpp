@@ -64,14 +64,14 @@ void displayNotAllTxtFiles() {
 // Search for word in .txt, taking into account 
 // all directories and without
 void findWord() {	
-	FileTxt ftxt(inputFindingWord(), inputPath());
+	FileTxt ftxt(inputPath(), inputFindingWord());
 	auto results = ftxt.findWord(funcForAll);
 
 	for (const auto& i : results) {
-		std::cout << "Word: " << i.getFindWord() << '\n';
-		std::cout << "Path: " << i.getfilePath() << '\n';
-		std::cout << "Line: " << i.getLine() << '\n';
-		std::cout << "Line number: " << i.getLineNumber() << "\n\n";
+		std::cout << "Word: " << i._findWord << '\n';
+		std::cout << "Path: " << i._filePath << '\n';
+		std::cout << "Line: " << i._line << '\n';
+		std::cout << "Line number: " << i._lineNumber << "\n\n";
 	}
 	
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
@@ -79,14 +79,14 @@ void findWord() {
 }
 
 void findNotAllWord() {
-	FileTxt ftxt(inputFindingWord(), inputPath());
+	FileTxt ftxt(inputPath(), inputFindingWord());
 	auto results = ftxt.findWord(funcForNotAll);
 
 	for (const auto& i : results) {
-		std::cout << "Word: " << i.getFindWord() << '\n';
-		std::cout << "Path: " << i.getfilePath() << '\n';
-		std::cout << "Line: " << i.getLine() << '\n';
-		std::cout << "Line number: " << i.getLineNumber() << "\n\n";
+		std::cout << "Word: " << i._findWord << '\n';
+		std::cout << "Path: " << i._filePath << '\n';
+		std::cout << "Line: " << i._line << '\n';
+		std::cout << "Line number: " << i._lineNumber << "\n\n";
 	}
 
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
@@ -126,22 +126,20 @@ void displayNotAllXmlFiles(){
 // Search for objects in xml, taking into account 
 // all directories and without
 void findObject() {
-	FileXml fxml(inputFindingWord(), inputPath());
+	FileXml fxml(inputPath(), inputFindingWord());
 	auto results = fxml.findObject(funcForAll);
 
 	for (const auto& i : results){
-		auto objectPath = i.getObjects();
-
-		std::cout << "Word: " << i.getFindWord() << '\n';
-		std::cout << "File path: " << i.getfilePath() << '\n';
+		std::cout << "Word: " << i._findWord << '\n';
+		std::cout << "File path: " << i._filePath << '\n';
 
 		std::cout << "Object path: ";
-		for (const auto& object : objectPath)
-			std::cout << object;
+		for (const auto& curr_object : i._objects)
+			std::cout << curr_object;
 
-		std::cout << "\nObject: " << i.getWordObject() << '\n';
-		std::cout << "Line: " << i.getLine() << '\n';
-		std::cout << "Line number: " << i.getLineNumber() << "\n\n";
+		std::cout << "\nObject: " << i._wordObject << '\n';
+		std::cout << "Line: " << i._line << '\n';
+		std::cout << "Line number: " << i._lineNumber << "\n\n";
 	}
 
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
@@ -149,22 +147,20 @@ void findObject() {
 }
 
 void findNotAllObject(){
-	FileXml fxml(inputFindingWord(), inputPath());
+	FileXml fxml(inputPath(), inputFindingWord());
  	auto results = fxml.findObject(funcForAll);
 
 	for (const auto& i : results){
-		auto objectPath = i.getObjects();
-
-		std::cout << "Word: " << i.getFindWord() << '\n';
-		std::cout << "File path: " << i.getfilePath() << '\n';
+		std::cout << "Word: " << i._findWord << '\n';
+		std::cout << "File path: " << i._filePath << '\n';
 
 		std::cout << "Object path: ";
-		for (const auto& object : objectPath)
-			std::cout << object;
+		for (const auto& curr_object : i._objects)
+			std::cout << curr_object;
 
-		std::cout << "\nObject: " << i.getWordObject() << '\n';
-		std::cout << "Line: " << i.getLine() << '\n';
-		std::cout << "Line number: " << i.getLineNumber() << "\n\n";
+		std::cout << "\nObject: " << i._wordObject << '\n';
+		std::cout << "Line: " << i._line << '\n';
+		std::cout << "Line number: " << i._lineNumber << "\n\n";
 	}
 	std::cout << "[INFO]: Press \"Enter\" to continue...";
 	std::cin.ignore(); std::cin.get();
