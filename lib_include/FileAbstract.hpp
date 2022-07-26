@@ -9,25 +9,18 @@
 class FileAbstract {
 protected:
 	std::string _word{};
-	std::string _fileType{};
-	std::filesystem::path _dirPath{}; 
+	std::string _extention{};
+	std::filesystem::path _path{}; 
 public:
 	virtual ~FileAbstract() = default;
 
 	/*
 		Returns a vector with paths to files
 
-		@ const std::function<std::vector<std::filesystem::path>(
-				const std::filesystem::path& dir,
-				const std::vector<std::string>& ext
-			)& func - function to collect files
-
-		@ const std::filesystem::path& dir - path to folder where files will be collected
-		@ const std::vector<std::string>& ext - files extentions
+		@ bool collect_recursivly = false
 	*/
-	std::vector<std::filesystem::path> collectFiles(const std::function<std::vector<std::filesystem::path>(
-															const std::filesystem::path& dir, 
-															const std::vector<std::string>& ext)>& func);
+	
+	std::vector<std::filesystem::path> getDirectoryFiles(bool collect_recursivly = false);
 };
 
 #endif

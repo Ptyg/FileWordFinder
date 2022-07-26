@@ -2,19 +2,8 @@
 #include "FileTxt.hpp"
 #include "outResultBase.hpp"
 #include "outResultXml.hpp"
-#include "getDirectoryFiles.hpp"
-#include "getNotAllDirectoryFiles.hpp"
 
 #include <iostream>
-#include <string>
-#include <vector>
-#include <filesystem>
-
-std::function<std::vector<std::filesystem::path>(const std::filesystem::path& dir, 
-									   const std::vector<std::string>& ext)> funcForAll = getDirectoryFiles;
-
-std::function<std::vector<std::filesystem::path>(const std::filesystem::path& dir, 
-									   const std::vector<std::string>& ext)> funcForNotAll = getNotAllDirectoryFiles;
 
 std::string inputFindingWord(){
 	std::string findingWord;
@@ -41,7 +30,7 @@ std::filesystem::path inputPath() {
 // taking into account all directories and without
 void displayTxtFiles() {
 	FileTxt ftxt(inputPath());
-	const auto files = ftxt.collectFiles(funcForAll);
+	const auto files = ftxt.getDirectoryFiles(true);
 
 	for (const auto& currentFile : files)
 		std::cout << currentFile << '\n';
@@ -52,7 +41,7 @@ void displayTxtFiles() {
 
 void displayNotAllTxtFiles() {
 	FileTxt ftxt(inputPath());
-	const auto files = ftxt.collectFiles(funcForNotAll);
+	const auto files = ftxt.getDirectoryFiles();
 
 	for (const auto& currentFile : files)
 		std::cout << currentFile << '\n';
@@ -65,7 +54,7 @@ void displayNotAllTxtFiles() {
 // all directories and without
 void findWord() {	
 	FileTxt ftxt(inputPath(), inputFindingWord());
-	auto results = ftxt.findWord(funcForAll);
+	auto results = ftxt.findWord(true);
 
 	for (const auto& i : results) {
 		std::cout << "Word: " << i._findWord << '\n';
@@ -80,7 +69,7 @@ void findWord() {
 
 void findNotAllWord() {
 	FileTxt ftxt(inputPath(), inputFindingWord());
-	auto results = ftxt.findWord(funcForNotAll);
+	auto results = ftxt.findWord(true);
 
 	for (const auto& i : results) {
 		std::cout << "Word: " << i._findWord << '\n';
@@ -103,7 +92,7 @@ void findNotAllWord() {
 // taking into account all directories and without
 void displayXmlFiles() {
 	FileXml fxml(inputPath());
-	const auto files = fxml.collectFiles(funcForAll);
+	const auto files = fxml.getDirectoryFiles(true);
 
 	for (const auto& currentFile : files)
 		std::cout << currentFile << '\n';
@@ -114,7 +103,7 @@ void displayXmlFiles() {
 
 void displayNotAllXmlFiles(){
 	FileXml fxml(inputPath());
-	const auto files = fxml.collectFiles(funcForNotAll);
+	const auto files = fxml.getDirectoryFiles();
 
 	for (const auto& currentFile : files)
 		std::cout << currentFile << '\n';
@@ -127,7 +116,7 @@ void displayNotAllXmlFiles(){
 // all directories and without
 void findObject() {
 	FileXml fxml(inputPath(), inputFindingWord());
-	auto results = fxml.findObject(funcForAll);
+	auto results = fxml.findObject(true);
 
 	for (const auto& i : results){
 		std::cout << "Word: " << i._findWord << '\n';
@@ -148,7 +137,7 @@ void findObject() {
 
 void findNotAllObject(){
 	FileXml fxml(inputPath(), inputFindingWord());
- 	auto results = fxml.findObject(funcForAll);
+ 	auto results = fxml.findObject(true);
 
 	for (const auto& i : results){
 		std::cout << "Word: " << i._findWord << '\n';

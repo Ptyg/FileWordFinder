@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "FileXml.hpp"
 
+/*
 std::string path = {c}
 
 TEST(fileXml, getFileTypeWithBasicConstr_ReturnFileType_XmlFileTypeReturned){    
@@ -114,3 +115,4 @@ TEST(fileTxt, getWordWithFullCopyConstr_ReturnSetWord_SetWordReturned){
     
     EXPECT_EQ(fxml.getFindWord(), "word");
 }
+*/

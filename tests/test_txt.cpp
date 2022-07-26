@@ -2,7 +2,7 @@
 #include "FileTxt.hpp"
 
 // method_whatDoing_whatExpected
-
+/*
 TEST(fileTxt, getFileTypeWithBasicConstr_ReturnFileType_TxtFileTypeReturned){    
     FileTxt ftxt;
     
@@ -114,3 +114,4 @@ TEST(fileTxt, getWordWithFullCopyConstr_ReturnSetWord_SetWordReturned){
     
     EXPECT_EQ(ftxt.getFindWord(), "word");
 }
+*/

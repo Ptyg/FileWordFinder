@@ -21,9 +21,7 @@ public:
 		@ const std::filesystem::path& dir - path to folder where files will be collected
 		@ const std::vector<std::string>& ext - files extentions 
 	*/
-	std::vector<OutResult> findWord(const std::function<std::vector<std::filesystem::path>(
-													const std::filesystem::path& dir, 
-													const std::vector<std::string>& ext)>& func);
+	std::vector<OutResult> findWord(bool collect_recursivly = false);
 };
 
 #endif

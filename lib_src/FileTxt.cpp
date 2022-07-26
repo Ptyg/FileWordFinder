@@ -1,26 +1,23 @@
 #include "FileTxt.hpp"
-#include "getDirectoryFiles.hpp"
-#include "getNotAllDirectoryFiles.hpp"
+#include "Timer.hpp"
 
 #include <iostream>
 #include <memory>
 #include <fstream>
 
-FileTxt::FileTxt(const std::filesystem::path& path, const std::string& findingWord /* = " "; */){
-	_fileType = ".txt";
-	_dirPath = path;
+FileTxt::FileTxt(const std::filesystem::path& path, const std::string& findingWord /* = " " */){
+	_extention = ".txt";
+	_path = path;
 	_word = findingWord;
 }
 
-FileTxt::FileTxt(std::filesystem::path&& path, std::string&& findingWord /* = " "; */){
-	_fileType = ".txt"; 
+FileTxt::FileTxt(std::filesystem::path&& path, std::string&& findingWord /* = " " */){
+	_extention = ".txt"; 
+	_path = std::move(path);
 	_word = std::move(findingWord);
-	_dirPath = std::move(path);
 }
 
-std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::filesystem::path>(
-														const std::filesystem::path& dir, 
-														const std::vector<std::string>& ext)>& func){
+std::vector<OutResult> FileTxt::findWord(bool collect_recursivly /* = false */){
 	int counterFile = 0;
 	std::vector<OutResult> results;
 
@@ -57,9 +54,14 @@ std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::fi
 		std::cout << "\n";
 	};
 	
-	const auto files = collectFiles(func);
+	const auto files = getDirectoryFiles(collect_recursivly);
 	
 	std::cout << "[INFO]: Finding word...\n";
+	
+#define DO_TIMER_FILE_TXT_FIND_WORD 1
+#if DO_TIMER_FILE_TXT_FIND_WORD
+	Timer t("Filexml::findObject");
+#endif
 	doFinding(files, _word);
 
 	return results;

@@ -1,26 +1,23 @@
 #include "FileXml.hpp"
-#include "getDirectoryFiles.hpp"
-#include "getNotAllDirectoryFiles.hpp"
+#include "Timer.hpp"
 
 #include <iostream>
 #include <fstream>
 #include <memory>
 
 FileXml::FileXml(const std::filesystem::path& path, const std::string& findingWord /* = " " */){
-	_fileType = ".xml";
+	_extention = ".xml";
 	_word = std::move(findingWord);
-	_dirPath = path;
+	_path = path;
 }
 
 FileXml::FileXml(std::filesystem::path&& path, std::string&& findingWord /* = " " */){
-	_fileType = ".xml";
+	_extention = ".xml";
 	_word = std::move(findingWord);
-	_dirPath = std::move(path);
+	_path = std::move(path);
 }
 
-std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<std::filesystem::path>(
-														const std::filesystem::path& dir, 
-											  			const std::vector<std::string>& ext)>& func) {
+std::vector<OutResultXml> FileXml::findObject(bool collect_recursivly /* = false */) {
 	std::vector<OutResultXml> results;
 	int counterFile = 0;
 
@@ -67,10 +64,10 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 	};
 
 	auto doFinding = [&](const auto& files, const std::string& findingWord) {
-		std::ifstream file;
-		std::string line;
-		std::vector<std::string> objects;
-		std::string tag;
+		std::ifstream file{};
+		std::string line{};
+		std::vector<std::string> objects{};
+		std::string tag{};
 		constexpr char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
 		int counter = 1;
 	
@@ -104,6 +101,7 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 					else { 
 						objects.push_back(line); 	
 					}
+
 					counter++;
 					tag.clear();
 					line.clear();
@@ -113,6 +111,7 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 				std::cout << "[ERROR]: " << ex.what() << "\n";
 				file.close();
 			}
+			objects.clear();
 			file.close();
 		}
 
@@ -122,10 +121,16 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 		std::cout << "\n";
 	};
 
-	const auto files = collectFiles(func);
+	const auto files = getDirectoryFiles(collect_recursivly);
 	
 	std::cout << "[INFO]: Finding word...\n";
+
+#define DO_TIMER_FILE_XML_FIND_OBJECT 1
+#if DO_TIMER_FILE_XML_FIND_OBJECT
+	Timer t("Filexml::findObject");
+#endif
+
 	doFinding(files, _word);
-	
+
 	return results;
 }

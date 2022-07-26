@@ -2,7 +2,7 @@
 #define FILE_XML_H
 
 #include "FileAbstract.hpp"
-#include "outResultXml.hpp"
+#include "OutResultXml.hpp"
 
 class FileXml : public FileAbstract {
 public:
@@ -21,9 +21,7 @@ public:
 		@ const std::filesystem::path& dir - path to folder where files will be collected
 		@ const std::vector<std::string>& ext - files extentions 
 	*/
-	std::vector<OutResultXml> findObject(const std::function<std::vector<std::filesystem::path>(
-												const std::filesystem::path& dir, 
-												const std::vector<std::string>& ext)>& func);
+	std::vector<OutResultXml> findObject(bool collect_recursivly = false);
 };
 
 #endif
