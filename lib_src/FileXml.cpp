@@ -1,9 +1,11 @@
-#include "FileXml.hpp"
-#include "Timer.hpp"
-
 #include <iostream>
 #include <fstream>
 #include <memory>
+#include <future>
+#include <mutex>
+
+#include "FileXml.hpp"
+#include "Timer.hpp"
 
 FileXml::FileXml(const std::filesystem::path& path, const std::string& findingWord /* = " " */){
 	_extention = ".xml";
@@ -17,9 +19,26 @@ FileXml::FileXml(std::filesystem::path&& path, std::string&& findingWord /* = " 
 	_path = std::move(path);
 }
 
-std::vector<OutResultXml> FileXml::findObject(bool collect_recursivly /* = false */) {
-	std::vector<OutResultXml> results;
-	int counterFile = 0;
+// mutex for findObjectInFileXml()
+static std::mutex mutXml;
+
+/*
+	Returns result after searching for object in xml
+
+	@ std::vector<OutResultXml>& results - container for results
+	@ const std::filesystem::path& currPath - path to file
+	@ const std::string& findingWord - word to find
+
+	p.s this function created for async call. F.e you would like to search in several files for object and
+		in async way. So this function for this   
+*/
+static void findObjectInFileXml(std::vector<OutResultXml>& results, const std::filesystem::path& currPath, const std::string& findingWord){
+	std::ifstream file{};
+	std::string line{};
+	std::vector<std::string> objects{};
+	std::string tag{};
+	constexpr char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
+	int counter = 1;
 
 	/*erases spaces before text*/
 	auto spaceBarEraserFromFront = [](std::string& line) {
@@ -63,74 +82,76 @@ std::vector<OutResultXml> FileXml::findObject(bool collect_recursivly /* = false
 		}
 	};
 
-	auto doFinding = [&](const auto& files, const std::string& findingWord) {
-		std::ifstream file{};
-		std::string line{};
-		std::vector<std::string> objects{};
-		std::string tag{};
-		constexpr char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
-		int counter = 1;
-	
-		for (const auto& currentFile : files) {
-			try {
-				file.open(currentFile.string());
-				while (getline(file, line)) {
-					spaceBarEraserFromFront(line);
-					
-					size_t firstObjectBracketPos = line.find(FIRST_BRACKET);
-					size_t secondObjectBracketPos = line.find(SECOND_BRACKET);
-					size_t objectWordLengthWithBracket = secondObjectBracketPos - firstObjectBracketPos;
-					
-					if (objectWordLengthWithBracket < line.size() - 1) {
-						if (line.find(findingWord) != std::string::npos) {
-							tag.clear();
-							// loop to designate object
-							for (size_t i = 0; i < line.size(); i++) {
-								if (line[i] == '>') {
-									tag.push_back(line[i]);
-									break;
-								}
-								tag.push_back(line[i]);
-							}
-
-							deleteExtraObjects(objects);
-							results.push_back(OutResultXml(findingWord, currentFile, objects, tag, line, counter));
-							counterFile++;
-						}
-					}
-					else { 
-						objects.push_back(line); 	
-					}
-
-					counter++;
+	try{
+		file.open(currPath.string());
+		while (getline(file, line)) {
+			spaceBarEraserFromFront(line);
+			
+			size_t firstObjectBracketPos = line.find(FIRST_BRACKET);
+			size_t secondObjectBracketPos = line.find(SECOND_BRACKET);
+			size_t objectWordLengthWithBracket = secondObjectBracketPos - firstObjectBracketPos;
+			
+			if (objectWordLengthWithBracket < line.size() - 1) {
+				if (line.find(findingWord) != std::string::npos) {
 					tag.clear();
-					line.clear();
+					// loop to designate object
+					for (size_t i = 0; i < line.size(); i++) {
+						if (line[i] == '>') {
+							tag.push_back(line[i]);
+							break;
+						}
+						tag.push_back(line[i]);
+					}
+
+					deleteExtraObjects(objects);
+					mutXml.lock();
+					results.push_back(OutResultXml(findingWord, currPath, objects, tag, line, counter));
+					mutXml.unlock();
 				}
 			}
-			catch (const std::exception& ex) {
-				std::cout << "[ERROR]: " << ex.what() << "\n";
-				file.close();
+			else { 
+				objects.push_back(line); 	
 			}
-			objects.clear();
-			file.close();
-		}
 
-		if (0 == counterFile) { 
-			std::cout << "[INFO]: No files with this word"; 
+			counter++;
+			tag.clear();
+			line.clear();
 		}
-		std::cout << "\n";
-	};
+		objects.clear();
+		file.close();
+	}
+	catch(const std::exception& ex){
+		std::cout << "[ERROR]: " << ex.what() << "\n";
+		file.close();
+	}
 
+	if (0 == results.size()) { 
+		std::cout << "\n[INFO]: No files with this word\n"; 
+	}
+}
+
+
+std::vector<OutResultXml> FileXml::findObject(bool collect_recursivly /* = false */) {
+	std::vector<OutResultXml> results;
 	const auto files = getDirectoryFiles(collect_recursivly);
-	
-	std::cout << "[INFO]: Finding word...\n";
 
 #define DO_TIMER_FILE_XML_FIND_OBJECT 1
 #if DO_TIMER_FILE_XML_FIND_OBJECT
 	Timer t("Filexml::findObject");
 #endif
 
-	doFinding(files, _word);
+#define DO_WITH_ASYNC 1
+#if DO_WITH_ASYNC
+	std::vector<std::future<void>> futures;
+	for (const auto& currentFile : files)
+		futures.push_back(std::async(std::launch::async, findObjectInFileXml, std::ref(results), std::ref(currentFile), std::ref(_word)));
+	// to wait for all threads. Like gather() in python
+	for (auto& currentFuture : futures)
+		currentFuture.get();
+#else
+	for (const auto& currentFile : files)
+		findObjectInFileXml(results, currentFile, _word);	
+#endif	
 
 	return results;
 }
