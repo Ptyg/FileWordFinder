@@ -125,9 +125,8 @@ static void findObjectInFileXml(std::vector<OutResultXml>& results, const std::f
 		file.close();
 	}
 
-	if (0 == results.size()) { 
+	if (0 == results.size())
 		std::cout << "\n[INFO]: No files with this word\n"; 
-	}
 }
 
 
@@ -135,23 +134,21 @@ std::vector<OutResultXml> FileXml::findObject(bool collect_recursivly /* = false
 	std::vector<OutResultXml> results;
 	const auto files = getDirectoryFiles(collect_recursivly);
 
-#define DO_TIMER_FILE_XML_FIND_OBJECT 1
-#if DO_TIMER_FILE_XML_FIND_OBJECT
-	Timer t("Filexml::findObject");
-#endif
+	#if DO_TIMER_FILE_XML_FIND_OBJECT
+		Timer t("FileXml::findObject");
+	#endif // DO_TIMER_FILE_XML_FIND_OBJECT
 
-#define DO_WITH_ASYNC 1
-#if DO_WITH_ASYNC
-	std::vector<std::future<void>> futures;
-	for (const auto& currentFile : files)
-		futures.push_back(std::async(std::launch::async, findObjectInFileXml, std::ref(results), std::ref(currentFile), std::ref(_word)));
-	// to wait for all threads. Like gather() in python
-	for (auto& currentFuture : futures)
-		currentFuture.get();
-#else
-	for (const auto& currentFile : files)
-		findObjectInFileXml(results, currentFile, _word);	
-#endif	
+	#if DO_WITH_ASYNC_XML
+		std::vector<std::future<void>> futures;
+		for (const auto& currentFile : files)
+			futures.push_back(std::async(std::launch::async, findObjectInFileXml, std::ref(results), std::ref(currentFile), std::ref(_word)));
+		// to wait for all threads. Like gather() in python
+		for (auto& currentFuture : futures)
+			currentFuture.get();
+	#else
+		for (const auto& currentFile : files)
+			findObjectInFileXml(results, currentFile, _word);	
+	#endif // DO_WITH_ASYNC_XML
 
 	return results;
 }
