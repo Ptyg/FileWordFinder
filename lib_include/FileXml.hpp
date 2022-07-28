@@ -23,14 +23,8 @@ public:
 
 	/*
 		Returns a vector with results
-
-		@ const std::function<std::vector<std::filesystem::path>(
-				const std::filesystem::path& dir, 
-				const std::vector<std::string>& ext
-			)>& func - function to collect files
 	
-		@ const std::filesystem::path& dir - path to folder where files will be collected
-		@ const std::vector<std::string>& ext - files extentions 
+		@ bool collect_recursivly - collect files from subdirs or not
 	*/
 	std::vector<OutResultXml> findObject(bool collect_recursivly = false);
 };

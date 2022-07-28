@@ -22,6 +22,16 @@ FileTxt::FileTxt(std::filesystem::path&& path, std::string&& findingWord /* = " 
 // mutex for findObjectInFileTxt()
 static std::mutex mutTxt;
 
+/*
+	Returns result after searching for word in txt
+
+	@ std::vector<OutResult>& results - container for results
+	@ const std::filesystem::path& currPath - path to file
+	@ const std::string& findingWord - word to find
+
+	p.s this function created for async call. F.e you would like to search in several files for word and
+		in async way. So this function for this   
+*/
 static void findObjectInFileTxt(std::vector<OutResult>& results, const std::filesystem::path& currPath, const std::string& findingWord){
 	std::ifstream file;
 	std::string line;
