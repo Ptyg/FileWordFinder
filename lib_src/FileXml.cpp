@@ -65,7 +65,7 @@ static void findObjectInFileXml(std::vector<OutResultXml>& results, const std::f
 				size_t lenToCrop = tmp.size();
 
 				//find the same object and delte both
-				for (size_t j = i - 1; j >= 0; j--) {
+				for (size_t j = i - 1; j > 0; j--) {
 					std::string tmp2;
 					if (obj[j].size() > lenToCrop) {
 						tmp2 = obj[j];
