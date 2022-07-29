@@ -23,9 +23,9 @@ std::vector<std::filesystem::path> FileAbstract::getDirectoryFiles(bool collect_
         
         (collect_recursivly) ? collectFiles(std::filesystem::recursive_directory_iterator(_path)) 
                              : collectFiles(std::filesystem::directory_iterator(_path));
-        return outFiles;
     }
 	catch (const std::exception& ex){
 		std::cout << "[ERROR]: " << ex.what() << "\n";
 	}
+    return outFiles;
 }
