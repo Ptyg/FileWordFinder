@@ -41,8 +41,8 @@ static void findObjectInFileTxt(std::vector<OutResult>& results, const std::file
 		file.open(currPath.string());
 		while (getline(file, line)) {
 			if (line.find(findingWord) != std::string::npos) {
-				int spaceBarCounter = 0, coun = 0;
-				while (line[coun] == ' ') { spaceBarCounter++; coun++; }
+				int spaceBarCounter = 0;
+				while (line[spaceBarCounter] == ' ') { spaceBarCounter++; }
 				line.erase(0, spaceBarCounter);
 				results.push_back(OutResult(findingWord, currPath, line, lineCounter));
 			}
@@ -60,7 +60,6 @@ static void findObjectInFileTxt(std::vector<OutResult>& results, const std::file
 }
 
 std::vector<OutResult> FileTxt::findWord(bool collect_recursivly /* = false */){
-	int counterFile = 0;
 	std::vector<OutResult> results;
 	
 	const auto files = getDirectoryFiles(collect_recursivly);

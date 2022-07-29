@@ -21,7 +21,7 @@ public:
         auto duration = end - start;
         double ms = duration * 0.001; 
         if (_timerPlaceName.size() > 0)
-            std::cout << "[TIMER]" << "[" << _timerPlaceName << "] " << duration << "us (" << ms << "ms)\n";
+            std::cout << "[TIMER]" << '[' << _timerPlaceName << ']' << duration << "us (" << ms << "ms)\n";
         else
             std::cout << "[TIMER] " << duration << "us (" << ms << "ms)\n";
     }
