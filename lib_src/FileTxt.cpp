@@ -64,8 +64,6 @@ std::vector<OutResult> FileTxt::findWord(bool collect_recursivly /* = false */){
 	
 	const auto files = getDirectoryFiles(collect_recursivly);
 	
-	std::cout << "[INFO]: Finding word...\n";
-
 	#if DO_TIMER_FILE_TXT_FIND_WORD
 		Timer t("FileTxt::findObject");
 	#endif // DO_TIMER_FILE_TXT_FIND_WORD
