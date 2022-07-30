@@ -42,9 +42,13 @@ static void findObjectInFileTxt(std::vector<OutResult>& results, const std::file
 		while (getline(file, line)) {
 			if (line.find(findingWord) != std::string::npos) {
 				int spaceBarCounter = 0;
+
 				while (line[spaceBarCounter] == ' ') { spaceBarCounter++; }
 				line.erase(0, spaceBarCounter);
+				
+				mutTxt.lock();
 				results.push_back(OutResult(findingWord, currPath, line, lineCounter));
+				mutTxt.unlock();
 			}
 			lineCounter++;
 		}
