@@ -11,7 +11,13 @@
 	#define DO_WITH_ASYNC_TXT 1
 #endif // DO_WITH_ASYNC_TXT
 
+#ifndef NEW_SEARCH_ALGORITHM
+	#define NEW_SEARCH_ALGORITHM 1
+#endif // NEW_SEARCH_ALGORITHM
+
 // -----------------------------------------------------------------------------------------------------------
+#include <regex>
+
 #include "FileAbstract.hpp"
 #include "outResultBase.hpp"
 

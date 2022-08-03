@@ -69,7 +69,7 @@ void findWord() {
 
 void findNotAllWord() {
 	FileTxt ftxt(inputPath(), inputFindingWord());
-	auto results = ftxt.findWord(true);
+	auto results = ftxt.findWord();
 
 	for (const auto& i : results) {
 		std::cout << "Word: " << i._findWord << '\n';
@@ -137,7 +137,7 @@ void findObject() {
 
 void findNotAllObject(){
 	FileXml fxml(inputPath(), inputFindingWord());
- 	auto results = fxml.findObject(true);
+ 	auto results = fxml.findObject();
 
 	for (const auto& i : results){
 		std::cout << "Word: " << i._findWord << '\n';

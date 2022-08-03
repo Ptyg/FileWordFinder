@@ -2,10 +2,11 @@ cmake_minimum_required(VERSION 3.13.4)
 
 project(fileWordFinder VERSION 2.0.0 DESCRIPTION "help to find word in txt files from dir and object where word is stored")
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_BUILD_TYPE Release)
 set(DO_TEST FALSE)
-add_compile_options(
-    -Wall
-)
+#add_compile_options(-Wall)  # needs to be commented if test needs to be completed. 
+                             # -Wall force standart library throwing errors, so, to avoid problems - 
+                             # - comment this line  
 
 set(LIB_SRC 
     lib_src/FileAbstract.cpp
