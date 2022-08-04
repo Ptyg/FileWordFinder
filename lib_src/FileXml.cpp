@@ -123,10 +123,7 @@ static void findObjectInFileXml(std::vector<OutResultXml>& results, const std::f
 	catch(const std::exception& ex){
 		std::cout << "[ERROR]: " << ex.what() << "\n";
 		file.close();
-	}
-
-	if (0 == results.size())
-		std::cout << "\n[INFO]: No files with this word\n"; 
+	} 
 }
 
 
@@ -149,6 +146,9 @@ std::vector<OutResultXml> FileXml::findObject(bool collect_recursivly /* = false
 		for (const auto& currentFile : files)
 			findObjectInFileXml(results, currentFile, _word);	
 	#endif // DO_WITH_ASYNC_XML
+
+	if (0 == results.size())
+		std::cout << "\n[INFO]: No files with this word\n";
 
 	return results;
 }
