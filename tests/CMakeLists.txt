@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.0)
 
-#set(SourceTime #{some_test.cpp})
+set(TxtTestsSource test_txt.cpp)
 
-#add_executable(TestTime ${SourceTime})
-#target_link_libraries(TestTime PUBLIC 
-#    gtest_main
-#    fileWordFinder_lib
-#)
+add_executable(TestTxtAllMethods ${TxtTestsSource})
+target_link_libraries(TestTxtAllMethods PUBLIC 
+    gtest_main
+    fileWordFinder_lib
+)
 
-#add_test(TimeTest TestTime)
+add_test(TxtClassTest TestTxtAllMethods)
