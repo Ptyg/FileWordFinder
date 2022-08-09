@@ -128,7 +128,7 @@ static void findObjectInFileXml(std::vector<OutResultXml>& results, const std::f
 
 
 std::vector<OutResultXml> FileXml::findObject(bool collect_recursivly /* = false */) {
-	std::vector<OutResultXml> results;
+	std::vector<OutResultXml> results{};
 	std::vector<std::filesystem::path> files{};
 
 	try{
