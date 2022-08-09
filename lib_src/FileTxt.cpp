@@ -99,16 +99,22 @@ static void findWordInFileTxt(std::vector<OutResult>& results, const std::filesy
 }
 
 std::vector<OutResult> FileTxt::findWord(bool collect_recursivly /* = false */){
-	std::vector<OutResult> results;
-	
-	const auto files = getDirectoryFiles(collect_recursivly);
+	std::vector<OutResult> results{};
+	std::vector<std::filesystem::path> files{};
+
+	try{
+		files = getDirectoryFiles(collect_recursivly);
+	}
+	catch(std::filesystem::filesystem_error const& err){
+		std::cout << "[EXCEPTION]" << err.what() << '\n' 
+		<< "Empty container returned" << '\n';
+		return results;
+	}
 	
 	#if DO_TIMER_FILE_TXT_FIND_WORD
 		Timer t("FileTxt::findWord");
 	#endif // DO_TIMER_FILE_TXT_FIND_WORD
 
-	// todo: make search alg with regular expr
-	
 	#if DO_WITH_ASYNC_TXT
 		std::vector<std::future<void>> futures;
 		for (const auto& currentFile : files)

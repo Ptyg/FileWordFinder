@@ -129,7 +129,16 @@ static void findObjectInFileXml(std::vector<OutResultXml>& results, const std::f
 
 std::vector<OutResultXml> FileXml::findObject(bool collect_recursivly /* = false */) {
 	std::vector<OutResultXml> results;
-	const auto files = getDirectoryFiles(collect_recursivly);
+	std::vector<std::filesystem::path> files{};
+
+	try{
+		files = getDirectoryFiles(collect_recursivly);
+	}
+	catch(std::filesystem::filesystem_error const& err){
+		std::cout << "[EXCEPTION]" << err.what() << '\n' 
+		<< "Empty container returned" << '\n';
+		return results;
+	}
 
 	#if DO_TIMER_FILE_XML_FIND_OBJECT
 		Timer t("FileXml::findObject");
