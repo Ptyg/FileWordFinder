@@ -9,16 +9,16 @@ enum typeOfColecting{
 };
 
 /*--------------------------------- Collect file path from dir -------------------------------------*/
-TEST(getDirectoryFiles, collectFilesFromDirectoryRecursivly, vectorOfPaths){
-    FileXml fxml(std::filesystem::current_path().string() + "..\\..\\test_files");
+TEST(FileXml, collectFilesFromDirectoryRecursivly){
+    FileXml fxml(std::filesystem::current_path().string() + "\\..\\..\\test_files");
 
     auto files = fxml.getDirectoryFiles(flagToCollectRecursivly);
 
     EXPECT_TRUE(files.size() == 4);
 }
 
-TEST(getDirectoryFiles, collectFilesFromDirectoryNotRecursivly, vectorOfPaths){
-    FileXml fxml(std::filesystem::current_path().string() + "..\\..\\test_files");
+TEST(FileXml, collectFilesFromDirectoryNotRecursivly){
+    FileXml fxml(std::filesystem::current_path().string() + "\\..\\..\\test_files");
 
     auto files = fxml.getDirectoryFiles(flagToCollectNotRecursivly);
 
@@ -27,30 +27,24 @@ TEST(getDirectoryFiles, collectFilesFromDirectoryNotRecursivly, vectorOfPaths){
 /*--------------------------------------------------------------------------------------------------*/
 
 /*------------------------- Throwing exception because of nonexistent dir --------------------------*/
-TEST(getDirectoryFiles, collectFilesFromNonexistentDirectoryRecursivly, exception){
-    FileXml fxml(std::filesystem::current_path().string() + "..\\..\\notExistentDir");
+TEST(FileXml, throwsExceptionBecauseOfNotExestentDir){
+    FileXml fxml(std::filesystem::current_path().string() + "\\..\\..\\notExistentDir");
 
-    EXPECT_THROW(fxml.getDirectoryFiles(flagToCollectRecursivly), std::filesystem::filesystem_error);
-}
-
-TEST(getDirectoryFiles, collectFilesFromNonexistentDirectoryNotRecursivly, vectorOfPaths){
-    FileXml fxml(std::filesystem::current_path().string() + "..\\..\\notExistentDir");
-
-    EXPECT_THROW(fxml.getDirectoryFiles(flagToCollectNotRecursivly), std::filesystem::filesystem_error);
+    EXPECT_THROW(fxml.getDirectoryFiles(/* flag is not necessary */), std::filesystem::filesystem_error);
 }
 /*--------------------------------------------------------------------------------------------------*/
 
 /*----------------------------------- Find word in files -------------------------------------------*/
-TEST(findWord, findWordInTxtsInDirectoryRecursivly, vectorOfResults){
-    FileXml fxml(std::filesystem::current_path().string() + "..\\..\\test_files", "cat");
+TEST(FileXml, findObjectInXmls_Recursivly){
+    FileXml fxml(std::filesystem::current_path().string() + "\\..\\..\\test_files", "cat");
     
     auto results = fxml.findObject(flagToCollectRecursivly);
 
     EXPECT_TRUE(results.size() > 0);
 }
 
-TEST(findWord, findWordInTxtsInDirectoryNotRecursivly, vectorOfResults){
-    FileXml fxml(std::filesystem::current_path().string() + "..\\..\\test_files", "cat");
+TEST(FileXml, findObjectInXmls_notRecursivly){
+    FileXml fxml(std::filesystem::current_path().string() + "\\..\\..\\test_files", "cat");
     
     auto results = fxml.findObject(flagToCollectNotRecursivly);
 
@@ -59,16 +53,16 @@ TEST(findWord, findWordInTxtsInDirectoryNotRecursivly, vectorOfResults){
 /*--------------------------------------------------------------------------------------------------*/
 
 /*-------------------------------- Cannot find word in files ---------------------------------------*/
-TEST(findWord, findWordInTxtsInDirectoryRecursivly, vectorOfResults){
-    FileXml fxml(std::filesystem::current_path().string() + "..\\..\\test_files", "VeeeeryLooooongStriiiiingThatdoesn`tExist");
+TEST(FileXml, noResultBecauseOfNoWordInFile_Recursivly){
+    FileXml fxml(std::filesystem::current_path().string() + "\\..\\..\\test_files", "VeeeeryLooooongStriiiiingThatdoesn`tExist");
     
     auto results = fxml.findObject(flagToCollectRecursivly);
 
     EXPECT_TRUE(results.size() == 0);
 }
 
-TEST(findWord, findWordInTxtsInDirectoryNotRecursivly, vectorOfResults){
-    FileXml fxml(std::filesystem::current_path().string() + "..\\..\\test_files", "VeeeeryLooooongStriiiiingThatdoesn`tExist");
+TEST(findWord, noResultBecauseOfNoWordInFile_notRecursivly){
+    FileXml fxml(std::filesystem::current_path().string() + "\\..\\..\\test_files", "VeeeeryLooooongStriiiiingThatdoesn`tExist");
     
     auto results = fxml.findObject(flagToCollectNotRecursivly);
 

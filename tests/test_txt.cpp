@@ -10,7 +10,7 @@ enum typeOfColecting{
 
 /*--------------------------------- Collect file path from dir -------------------------------------*/
 TEST(FileTxt, collectFilesFromDirectoryRecursivly){
-    FileTxt ftxt(std::filesystem::current_path().string() + "..\\..\\test_files");
+    FileTxt ftxt(std::filesystem::current_path().string() + "\\..\\..\\test_files");
 
     auto files = ftxt.getDirectoryFiles(flagToCollectRecursivly);
 
@@ -18,7 +18,7 @@ TEST(FileTxt, collectFilesFromDirectoryRecursivly){
 }
 
 TEST(FileTxt, collectFilesFromDirectoryNotRecursivly){
-    FileTxt ftxt(std::filesystem::current_path().string() + "..\\..\\test_files");
+    FileTxt ftxt(std::filesystem::current_path().string() + "\\..\\..\\test_files");
 
     auto files = ftxt.getDirectoryFiles(flagToCollectNotRecursivly);
 
@@ -28,7 +28,7 @@ TEST(FileTxt, collectFilesFromDirectoryNotRecursivly){
 
 /*------------------------- Throwing exception because of nonexistent dir --------------------------*/
 TEST(FileTxt, throwsExceptionBecauseOfNotExestentDir){
-    FileTxt ftxt(std::filesystem::current_path().string() + "..\\..\\notExistentDir");
+    FileTxt ftxt(std::filesystem::current_path().string() + "\\..\\..\\notExistentDir");
 
     EXPECT_THROW(ftxt.getDirectoryFiles( /*flag is not necessary */ ), std::filesystem::filesystem_error);
 }
@@ -36,7 +36,7 @@ TEST(FileTxt, throwsExceptionBecauseOfNotExestentDir){
 
 /*----------------------------------- Find word in files -------------------------------------------*/
 TEST(FileTxt, findWordInTxtsInDirectoryRecursivly){
-    FileTxt ftxt(std::filesystem::current_path().string() + "..\\..\\test_files", "cat");
+    FileTxt ftxt(std::filesystem::current_path().string() + "\\..\\..\\test_files", "cat");
     
     auto results = ftxt.findWord(flagToCollectRecursivly);
 
@@ -44,7 +44,7 @@ TEST(FileTxt, findWordInTxtsInDirectoryRecursivly){
 }
 
 TEST(FileTxt, findWordInTxtsInDirectoryNotRecursivly){
-    FileTxt ftxt(std::filesystem::current_path().string() + "..\\..\\test_files", "cat");
+    FileTxt ftxt(std::filesystem::current_path().string() + "\\..\\..\\test_files", "cat");
     
     auto results = ftxt.findWord(flagToCollectNotRecursivly);
 
@@ -54,7 +54,7 @@ TEST(FileTxt, findWordInTxtsInDirectoryNotRecursivly){
 
 /*-------------------------------- Cannot find word in files ---------------------------------------*/
 TEST(FileTxt, noResultBecauseOfNoWordInFile_Recursivly) {
-    FileTxt ftxt(std::filesystem::current_path().string() + "..\\..\\test_files", "VeeeeryLooooongStriiiiingThatdoesn`tExist");
+    FileTxt ftxt(std::filesystem::current_path().string() + "\\..\\..\\test_files", "VeeeeryLooooongStriiiiingThatdoesn`tExist");
     
     auto results = ftxt.findWord(flagToCollectRecursivly);
 
@@ -62,7 +62,7 @@ TEST(FileTxt, noResultBecauseOfNoWordInFile_Recursivly) {
 }
 
 TEST(FileTxt, noResultBecauseOfNoWordInFile_notRecursivly){
-    FileTxt ftxt(std::filesystem::current_path().string() + "..\\..\\test_files", "VeeeeryLooooongStriiiiingThatdoesn`tExist");
+    FileTxt ftxt(std::filesystem::current_path().string() + "\\..\\..\\test_files", "VeeeeryLooooongStriiiiingThatdoesn`tExist");
     
     auto results = ftxt.findWord(flagToCollectNotRecursivly);
 
