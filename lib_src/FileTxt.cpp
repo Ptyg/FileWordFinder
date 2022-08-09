@@ -70,7 +70,7 @@ static void findWordInFileTxt(std::vector<OutResult>& results, const std::filesy
 	try {
 		file.open(currPath.string());
 		while (getline(file, line)) {
-			#if NEW_SEARCH_ALGORITHM
+			#if NEW_SEARCH_ALGORITHMыц
 				isWordInLine = std::regex_search(line, regExpr);
 
 			#else // old search
