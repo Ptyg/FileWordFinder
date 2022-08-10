@@ -6,6 +6,10 @@
 #include <functional>
 #include <filesystem>
 
+#ifndef DO_TIMER_FILE_ABSTRACT_GET_DIR_FILES
+	#define DO_TIMER_FILE_ABSTRACT_GET_DIR_FILES 1
+#endif // DO_TIMER_FILE_ABSTRACT_GET_DIR_FILES
+
 class FileAbstract {
 protected:
 	std::string _word{};

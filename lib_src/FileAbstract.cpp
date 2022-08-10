@@ -9,7 +9,6 @@ std::vector<std::filesystem::path> FileAbstract::getDirectoryFiles(bool collect_
 {
 	std::vector<std::filesystem::path> outFiles;
 	
-#define DO_TIMER_FILE_ABSTRACT_GET_DIR_FILES 1
 #if DO_TIMER_FILE_ABSTRACT_GET_DIR_FILES
     Timer t("FileAbstract::getDirectoryFiles");
 #endif
