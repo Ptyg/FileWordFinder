@@ -6,9 +6,7 @@
 
 struct Log {
     static void console_log(std::string_view msg, 
-                            std::string_view tag = "[INFO]") {
-        std::cout << tag << ' ' << msg << '\n';
-    }
+                            std::string_view tag = "[INFO]");
 };
 
 #endif //LOGGER
