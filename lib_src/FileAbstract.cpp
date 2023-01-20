@@ -1,8 +1,10 @@
 #include "FileAbstract.hpp"
 #include "getNotAllDirectoryFiles.hpp"
 #include "getDirectoryFiles.hpp"
+#include "Log.hpp"
 #include <iostream>
 #include <memory>
+#include <format>
 
 std::filesystem::path FileAbstract::getDirPath() const{
 	return _dirPath;
@@ -44,8 +46,8 @@ std::vector<std::filesystem::path> FileAbstract::collectFiles(const std::functio
 															  		const std::filesystem::path& dir, 
 															  		const std::vector<std::string>& ext)>& func)
 {
-	std::cout << "[INFO]: Collecting files...\n";
+	Log::console_log("Collecting files...");
 	const auto files = func(getDirPath(), { getFileType() });
-	std::cout << "[INFO]: Collecting has been completed. Number of files: " << files.size() << '\n';
+	Log::console_log(std::format("Collecting has been completed. Number of files: {}", files.size()));
 	return files;
 }

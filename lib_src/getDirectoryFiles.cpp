@@ -1,4 +1,5 @@
 #include "getDirectoryFiles.hpp"
+#include "Log.hpp"
 
 #include <iostream>
 
@@ -14,7 +15,7 @@ std::vector<std::filesystem::path> getDirectoryFiles(const std::filesystem::path
 		}
 	}
 	catch (const std::exception& ex){
-		std::cout << "[ERROR]: " << ex.what() << "\n";
+		Log::console_log(ex.what(), "[ERROR]");
 	}
 	return files;
 }

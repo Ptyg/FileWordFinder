@@ -1,6 +1,7 @@
 #include "FileXml.hpp"
 #include "getDirectoryFiles.hpp"
 #include "getNotAllDirectoryFiles.hpp"
+#include "Log.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -146,21 +147,21 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 				}
 			}
 			catch (const std::exception& ex) {
-				std::cout << "[ERROR]: " << ex.what() << "\n";
+				Log::console_log(ex.what(), "[ERROR]");
 				file.close();
 			}
 			file.close();
 		}
 
 		if (0 == counterFile) { 
-			std::cout << "[INFO]: No files with this word"; 
+			Log::console_log("No files with this word");
 		}
 		std::cout << "\n";
 	};
 
 	const auto files = collectFiles(func);
 	
-	std::cout << "[INFO]: Finding word...\n";
+	Log::console_log("Finding word...");
 	doFinding(files, getFindWord());
 	
 	return results;

@@ -1,6 +1,7 @@
 #include "FileTxt.hpp"
 #include "getDirectoryFiles.hpp"
 #include "getNotAllDirectoryFiles.hpp"
+#include "Log.hpp"
 
 #include <iostream>
 #include <memory>
@@ -80,14 +81,14 @@ std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::fi
 				}
 			}
 			catch (const std::exception& ex) {
-				std::cout << "[ERROR]: " << ex.what() << "\n";
+				Log::console_log(ex.what(), "[ERROR]");
 				file.close();
 			}
 			file.close();
 		}
 
-		if (0 == counterFile) { 
-			std::cout << "[INFO]: No files with this word"; 
+		if (0 == counterFile) {
+			Log::console_log("No files with this word");
 		}
 		
 		std::cout << "\n";
@@ -95,7 +96,7 @@ std::vector<OutResult> FileTxt::findWord(const std::function<std::vector<std::fi
 	
 	const auto files = collectFiles(func);
 	
-	std::cout << "[INFO]: Finding word...\n";
+	Log::console_log("Finding word...");
 	doFinding(files, getFindWord());
 
 	return results;
