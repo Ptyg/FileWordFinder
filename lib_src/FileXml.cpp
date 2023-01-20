@@ -57,7 +57,7 @@ FileXml::FileXml(std::string&& findingWord, const std::filesystem::path& path){
 
 std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<std::filesystem::path>(
 														const std::filesystem::path& dir, 
-											  			const std::vector<std::string>& ext)>& func) {
+											  			const std::vector<std::string_view>& ext)>& func) {
 	std::vector<OutResultXml> results;
 	int counterFile = 0;
 

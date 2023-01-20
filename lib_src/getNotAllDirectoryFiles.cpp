@@ -1,10 +1,8 @@
 #include "getNotAllDirectoryFiles.hpp"
 #include "Log.hpp"
 
-#include <iostream>
-
 std::vector<std::filesystem::path> getNotAllDirectoryFiles(const std::filesystem::path& dir, 
-														   const std::vector<std::string>& ext) {
+													  	   const std::vector<std::string_view>& ext) {
 	std::vector<std::filesystem::path> files;
 	try{
 		for (const auto& p : std::filesystem::directory_iterator(dir)) {

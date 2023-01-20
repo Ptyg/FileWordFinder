@@ -20,7 +20,7 @@ public:
 	/* function takes a function that searches files in dir. Example of that func in getDirectoryFiles.cpp*/
 	std::vector<OutResult> findWord(const std::function<std::vector<std::filesystem::path>(
 													const std::filesystem::path& dir, 
-													const std::vector<std::string>& ext)>& func);
+													const std::vector<std::string_view>& ext)>& func);
 };
 
 #endif
