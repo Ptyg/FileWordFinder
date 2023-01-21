@@ -1,11 +1,22 @@
 #include "getDirectoryFiles.hpp"
 #include "Log.hpp"
 
-std::vector<std::filesystem::path> getDirectoryFiles(const std::filesystem::path& dir, 
-													 const std::vector<std::string_view>& ext) {
+/*
+	Iterator:
+		- std::filesystem::recursive_directory_iterator
+		- std::filesystem::directory_iterator
+	path: 
+		- std::string
+		- std::string_view
+	iteratetable_vect:
+		- std::vector<string or string_view> 
+*/
+template<typename iterator, typename path, typename iteratable_vect>
+std::vector<std::filesystem::path> getDirectoryFiles(path&& dir, iteratable_vect&& ext) {
 	std::vector<std::filesystem::path> files;
+		
 	try{
-		for (const auto& p : std::filesystem::recursive_directory_iterator(dir)) {
+		for (const auto& p : iterator(dir)) {
 			if (std::filesystem::is_regular_file(p)) {
 				if (ext.empty() || find(ext.begin(), ext.end(), p.path().extension().string()) != ext.end())
 					files.push_back(p.path());
