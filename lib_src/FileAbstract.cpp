@@ -12,6 +12,6 @@ std::vector<std::filesystem::path> FileAbstract::collectFiles(const std::functio
 	Log::console_log("Collecting files...");
 	const auto files = func(m_dirPath, { m_fileTypes });
 	
-	Log::console_log(std::format("Collecting has been completed. Number of files: {}", files.size()));
+	Log::console_log(std::format("Collecting has been completed. Number of files: {}", std::size(files)));
 	return files;
 }
