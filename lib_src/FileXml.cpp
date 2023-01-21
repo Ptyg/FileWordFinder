@@ -7,52 +7,10 @@
 #include <fstream>
 #include <memory>
 
-FileXml::FileXml() { 
-	setFileType(".xml"); 
-}
-
-FileXml::FileXml(const std::string& findingWord){
-	setFileType(".xml"); 
-	setFindWord(findingWord);
-}
-
-FileXml::FileXml(std::string&& findingWord){
-	setFileType(".xml");
-	setFindWord(std::move(findingWord));
-}
-
-FileXml::FileXml(const std::filesystem::path& path){
-	setFileType(".xml"); 
-	setPath(path);
-}
-
-FileXml::FileXml(std::filesystem::path&& path){
-	setFileType(".xml"); 
-	setPath(std::move(path));
-}
-
-FileXml::FileXml(const std::string& findingWord, const std::filesystem::path& path){
-	setFileType(".xml"); 
-	setFindWord(findingWord);
-	setPath(path);
-}
-
-FileXml::FileXml(const std::string& findingWord, std::filesystem::path&& path){
-	setFileType(".xml"); 
-	setFindWord(findingWord);
-	setPath(std::move(path));
-}
-
-FileXml::FileXml(std::string&& findingWord, std::filesystem::path&& path){
-	setFileType(".xml"); 
-	setFindWord(std::move(findingWord));
-	setPath(std::move(path));
-}
-
-FileXml::FileXml(std::string&& findingWord, const std::filesystem::path& path){
-	setFileType(".xml");
-	setFindWord(std::move(findingWord));
-	setPath(path);
+FileXml::FileXml(std::string_view findingWord, std::string_view path) {
+	m_word = findingWord;
+	m_fileTypes = { ".xml" };
+	m_dirPath = path;
 }
 
 std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<std::filesystem::path>(
@@ -103,7 +61,7 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 		}
 	};
 
-	auto doFinding = [&](const auto& files, const std::string& findingWord) {
+	auto doFinding = [&](const auto& files, std::string_view findingWord) {
 		std::ifstream file;
 		std::string line;
 		std::vector<std::string> objects;
@@ -133,8 +91,10 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 								tag.push_back(line[i]);
 							}
 
-							deleteExtraObjects(objects);
-							results.push_back(OutResultXml(findingWord, currentFile, objects, tag, line, counter));
+							deleteExtraObjects(objects);							
+							results.push_back(OutResultXml(findingWord.data(), currentFile.string(), 
+														   std::move(objects), std::move(tag), 
+														   std::move(line), counter));
 							counterFile++;
 						}
 					}
@@ -162,7 +122,7 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 	const auto files = collectFiles(func);
 	
 	Log::console_log("Finding word...");
-	doFinding(files, getFindWord());
+	doFinding(files, m_word);
 	
 	return results;
 }
