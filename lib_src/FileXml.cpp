@@ -1,6 +1,4 @@
 #include "FileXml.hpp"
-#include "getDirectoryFiles.hpp"
-#include "getNotAllDirectoryFiles.hpp"
 #include "Log.hpp"
 
 #include <iostream>
@@ -13,13 +11,16 @@ FileXml::FileXml(std::string_view findingWord, std::string_view path) {
 	m_dirPath = path;
 }
 
-std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<std::filesystem::path>(
-														const std::filesystem::path& dir, 
-											  			const std::vector<std::string_view>& ext)>& func) {
-	std::vector<OutResultXml> results;
-	int counterFile = 0;
+template<typename iterator>
+std::vector<OutResultXml> FileXml::findObject() {
+	const auto files = getDirectoryFiles<iterator>(m_dirPath, m_fileTypes);
 
-	/*erases spaces before text*/
+	Log::console_log("Finding object...");
+
+	int counterFile = 0;
+	std::vector<OutResultXml> results;
+
+	//erases spaces before text
 	auto spaceBarEraserFromFront = [](std::string& line) {
 		size_t spaceBarCounter = 0, count = 0;
 		while (line[count] == ' ' && count < line.size()) { 
@@ -29,7 +30,7 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 		line.erase(0, spaceBarCounter);
 	};
 
-	/*deleted all extra objects after analysis*/
+	//deleted all extra objects after analysis
 	auto deleteExtraObjects = [](std::vector<std::string>& obj) {
 		constexpr char SLASH = '/';
 
@@ -61,72 +62,59 @@ std::vector<OutResultXml> FileXml::findObject(const std::function<std::vector<st
 		}
 	};
 
-	auto doFinding = [&](const auto& files, std::string_view findingWord) {
-		std::ifstream file;
-		std::string line;
-		std::vector<std::string> objects;
-		std::string tag;
-		constexpr char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
-		int counter = 1;
-	
-		for (const auto& currentFile : files) {
-			try {
-				file.open(currentFile.string());
-				while (getline(file, line)) {
-					spaceBarEraserFromFront(line);
-					
-					size_t firstObjectBracketPos = line.find(FIRST_BRACKET);
-					size_t secondObjectBracketPos = line.find(SECOND_BRACKET);
-					size_t objectWordLengthWithBracket = secondObjectBracketPos - firstObjectBracketPos;
-					
-					if (objectWordLengthWithBracket < line.size() - 1) {
-						if (line.find(findingWord) != std::string::npos) {
-							tag.clear();
-							// loop to designate object
-							for (size_t i = 0; i < line.size(); i++) {
-								if (line[i] == '>') {
-									tag.push_back(line[i]);
-									break;
-								}
-								tag.push_back(line[i]);
-							}
+	std::ifstream file;
+	std::string line, tag;
+	std::vector<std::string> objects;
+	constexpr char FIRST_BRACKET = '<', SECOND_BRACKET = '>';
+	int counter = 1;
 
-							deleteExtraObjects(objects);							
-							results.push_back(OutResultXml(findingWord.data(), currentFile.string(), 
-														   std::move(objects), std::move(tag), 
-														   std::move(line), counter));
-							counterFile++;
+	for (const auto& currentFile : files) {
+		try {
+			file.open(currentFile.string());
+			while (getline(file, line)) {
+				spaceBarEraserFromFront(line);
+				
+				auto firstObjectBracketPos = line.find(FIRST_BRACKET);
+				auto secondObjectBracketPos = line.find(SECOND_BRACKET);
+				auto objectWordLengthWithBracket = secondObjectBracketPos - firstObjectBracketPos;
+				
+				if (objectWordLengthWithBracket < line.size() - 1) {
+					if (line.find(m_word) != std::string::npos) {
+						tag.clear();
+						// loop to designate object
+						for (size_t i = 0; i < line.size(); i++) {
+							if (line[i] == '>') {
+								tag.push_back(line[i]);
+								break;
+							}
+							tag.push_back(line[i]);
 						}
+
+						deleteExtraObjects(objects);							
+						results.push_back(OutResultXml(m_word.data(), currentFile.string(), 
+													   std::move(objects), std::move(tag), 
+													   std::move(line), counter));
+						counterFile++;
 					}
-					else { 
-						objects.push_back(line); 	
-					}
-					counter++;
-					tag.clear();
-					line.clear();
 				}
+				else { 
+					objects.push_back(line); 	
+				}
+				counter++;
+				tag.clear();
+				line.clear();
 			}
-			catch (const std::exception& ex) {
-				Log::console_log(ex.what(), "[ERROR]");
-				file.close();
-			}
+		}
+		catch (const std::exception& ex) {
+			Log::console_log(ex.what(), "[ERROR]");
 			file.close();
 		}
+		file.close();
+	}
 
-		if (0 == counterFile) { 
-			Log::console_log("No files with this word");
-		}
-		std::cout << "\n";
-	};
+	if (0 == counterFile) { 
+		Log::console_log("No files with this word");
+	}
 
-	const auto files = collectFiles(func);
-	
-	Log::console_log("Finding word...");
-	doFinding(files, m_word);
-	
 	return results;
 }
-
-
-
-

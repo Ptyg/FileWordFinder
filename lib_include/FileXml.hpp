@@ -7,12 +7,9 @@
 class FileXml : public FileAbstract {
 public:
 	FileXml(std::string_view findingWord, std::string_view path);
-	~FileXml() = default;
 
-	/* function takes a function that searches files in dir. Example of that func in getDirectoryFiles.cpp*/
-	std::vector<OutResultXml> findObject(const std::function<std::vector<std::filesystem::path>(
-												const std::filesystem::path& dir, 
-												const std::vector<std::string_view>& ext)>& func);
+	template<typename iterator = std::filesystem::directory_iterator>
+	std::vector<OutResultXml> findObject();
 };
 
 #endif
