@@ -7,12 +7,9 @@
 class FileTxt : public FileAbstract {
 public:
 	FileTxt(std::string_view findingWord, std::string_view path);
-	~FileTxt() = default;
 
-	/* function takes a function that searches files in dir. Example of that func in getDirectoryFiles.cpp*/
-	std::vector<OutResult> findWord(const std::function<std::vector<std::filesystem::path>(
-													const std::filesystem::path& dir, 
-													const std::vector<std::string_view>& ext)>& func);
+	template<typename iterator = std::filesystem::directory_iterator>
+	std::vector<OutResult> findWord();
 };
 
 #endif
