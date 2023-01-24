@@ -15,7 +15,7 @@ public:
 	std::vector<OutResultXml> findObject() {
 		const auto files = getDirectoryFiles<iterator>(m_dirPath, m_fileTypes);
 
-		Log::console_log("Finding object...");
+		log::console_log("Finding object...", "[INFO]");
 
 		int counterFile = 0;
 		std::vector<OutResultXml> results;
@@ -106,14 +106,14 @@ public:
 				}
 			}
 			catch (const std::exception& ex) {
-				Log::console_log(ex.what(), "[ERROR]");
+				log::console_log(ex.what(), "[ERROR]");
 				file.close();
 			}
 			file.close();
 		}
 
 		if (0 == counterFile) { 
-			Log::console_log("No files with this word");
+			log::console_log("No files with this word", "[INFO]");
 		}
 
 		return results;
