@@ -4,9 +4,8 @@
 #include <string_view>
 #include <iostream>
 
-struct Log {
-    static void console_log(std::string_view msg, 
-                            std::string_view tag = "[INFO]");
-};
+namespace log {
+    void console_log(std::string_view msg, std::string_view tag);
+}
 
 #endif //LOGGER
