@@ -7,17 +7,22 @@
 #include <iostream>
 #include <cstdio>
 
+void clear_scr() {
+	std::cout << "\x1b[2J"; 
+	std::cout << "\x1b[H";
+}
+
 [[nodiscard]] std::string inputFindingWord(){
 	std::string findingWord;
-	std::cout << "\nEnter word to find: "; 
-	std::getline(std::cin, findingWord);
+	std::cout << "\nEnter word to find: ";
+	std::cin >> findingWord;
 	return findingWord;
 }
 
 [[nodiscard]] std::string inputPath() {
 	std::string dir;
 	std::cout << "\nEnter path to the dir\n(Attention! The path must be written without using Cyrillic characters)\n: ";
-	std::getline(std::cin, dir);
+	std::cin >> dir;	
 	return dir;
 }
 
@@ -25,7 +30,7 @@ template<typename paths = std::vector<std::filesystem::path>>
 void show_paths(paths&& cont) {
 	uint16_t iter = 0;
 	for (const auto& currentFile : cont)
-		std::cout << currentFile << ": " << iter++ << "\n";
+		std::cout << ++iter << ": " << currentFile << '\n';
 }
 
 template<typename results = std::vector<OutResult>>
@@ -106,23 +111,28 @@ void findObject() {
 void userInterfaceTxt() {
 	char ch{};
 	do {
+		clear_scr();
 		std::cout << "01. Show all .txt files including subdirectories\n";
 		std::cout << "02. Show all .txt files without subdirectories\n";
 		std::cout << "03. Word searching including subdirectories\n";
 		std::cout << "04. Word searching without subdirectories\n";
 		std::cout << "05. Exit\n";
-		std::cout << "Please, enter your choice (1-5): "; 
-		ch = std::getchar();
+		std::cout << "Please, enter your choice (1-5): ";
+		std::cin >> ch;
 		
 		switch (ch) {
-		case '1': displayFileTypes<std::filesystem::recursive_directory_iterator,
-								   std::vector<std::string_view>>(inputPath(), { ".txt" }); 
+		case '1': {
+			displayFileTypes<std::filesystem::recursive_directory_iterator>(inputPath(), { ".txt" }); 
 			break;
-		case '2': displayFileTypes(inputPath(), { ".txt" }); break;
+		}
+		case '2': {
+			displayFileTypes(inputPath(), { ".txt" }); 
+			break;
+		}
 		case '3': findWord<std::filesystem::recursive_directory_iterator>(); break;
 		case '4': findWord(); break;
 		case '5': break;
-		default: std::cout << "\a"; break;
+		default: break;
 		}
 	} while (ch != '5');
 }
@@ -130,47 +140,61 @@ void userInterfaceTxt() {
 void userInterfaceXml() {
 	char ch{};
 	do {
+		clear_scr();
 		std::cout << "01. Show all .xml files including subdirectories\n";
 		std::cout << "02. Show all .xml files without subdirectories\n";
 		std::cout << "03. Object(-s) searching including subdirectories\n";
 		std::cout << "04. Object(-s) searching without subdirectories\n";
 		std::cout << "05. Exit\n";
 		std::cout << "Please, enter your choice (1-5): "; 
-		ch = std::getchar();
+		std::cin >> ch;
 
 		switch (ch) {
-		case '1': displayFileTypes<std::filesystem::recursive_directory_iterator,
-								   std::vector<std::string_view>>(inputPath(), { ".xml" }); 
+		case '1': {
+			displayFileTypes<std::filesystem::recursive_directory_iterator>(inputPath(), { ".xml" }); 
 			break;
-		case '2': displayFileTypes(inputPath(), { ".txt" }); break;		
+		}
+		case '2': {
+			displayFileTypes(inputPath(), { ".txt" }); 
+			break;
+		}		
 		case '3': findObject<std::filesystem::recursive_directory_iterator>(); break;
 		case '4': findObject(); break;
 		case '5': break;
-		default: std::cout << "\a"; break;
+		default: break;
 		}
 	} while (ch != '5');
 }
 
 // Start interface
 void userInterface() {
-	char ch{};
+	char ch;
 	do{
+		clear_scr();
 		std::cout << "01. Work with .txt\n";
 		std::cout << "02. Work with .xml\n";
 		std::cout << "03. Exit\n";
 		std::cout << "Please, enter your choice (1-3): "; 
-		ch = std::getchar();
+		std::cin >> ch;
 
 		switch (ch){
 		case '1': userInterfaceTxt(); break;
 		case '2': userInterfaceXml(); break;
 		case '3': break;
-		default: std::cout << "\a"; break;
+		default: break;
 		}
 	} while (ch != '3');
 }
 
 int main(){
+	/*
+		This needs to activate ansi in windows cmd & powershell. 
+		Without it - doesn`t work properly.
+	*/
+	#if _WIN32
+		system("");
+	#endif
+
 	userInterface();
 	return 0;
 }
