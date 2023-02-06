@@ -19,7 +19,7 @@ std::vector<std::filesystem::path> getDirectoryFiles(path&& dir, iteratable_vect
 		}
 	}
 	catch (const std::exception& ex){
-		Log::console_log(ex.what(), "[ERROR]");
+		log::console_log(ex.what(), "[ERROR]");
 	}
 	return files;
 }
