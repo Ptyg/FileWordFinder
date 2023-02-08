@@ -37,11 +37,11 @@ template<typename results = std::vector<OutResult>>
 void show_results(results&& cont) {
 	uint16_t iter = 0;
 	for (const auto& i : cont) {
-		std::cout << ">>>> " << iter++ << " <<<<\n";
+		std::cout << ">>>> " << ++iter << " <<<<\n";
 		std::cout << "Word: " << i.m_findWord << '\n';
 		std::cout << "Path: " << i.m_filePath << '\n';
 		std::cout << "Line: " << i.m_line << '\n';
-		std::cout << "Line number: " << i.m_line << '\n';
+		std::cout << "Line number: " << i.m_lineNumber << '\n';
 
 		if constexpr (std::is_same<results, std::vector<OutResultXml>>::value) {
 			std::cout << "Word object: " << i.m_wordObject << '\n';		
