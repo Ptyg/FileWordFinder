@@ -1,71 +1,166 @@
-# FileWordFinder
+<!-- 
+    Original template: 
+    https://github.com/othneildrew/Best-README-Template/blob/master/README.md
+-->
 
-## What is here?
+<a id="readme-top"></a>
 
-Here is my project which helps to find word in txt files and objects where this word is found in xml files. All you need to do is specify the path to the directory with the files and\or word to find.
+<br />
+<div align="center">
+  <h3 align="center">Word finder</h3>
 
-## Source of ideas
+  <p align="center">
+    Will help you to find word in directory
+    <br />
+    <br />
+    <a href="https://github.com/Ptyg/FileWordFinder">Code</a>
+    |
+    <a href="https://github.com/Ptyg/FileWordFinder/pulls">Request Feature</a>
+  </p>
+</div>
 
-I was training in OOP and needed an idea for some project that might be useful. And to make it more interesting, I added one condition - use all pillars of the OOP.
+<p align="center">
+</p>
 
-So, while I was studying OOP, I needed to find one word in a text file that was among a thousand others and I was too lazy to search for it. From that moment I had an idea for a project that would allow me to search conveniently. And after that, i decided to add functionality in searching objects in xml files. 
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-## Functionality
+## About The Project
 
-So, to work with this programm you need:
-1. Choose file type to work with (txt or xml)
-2. Choose working option (with subdirectories or without it)
-3. Enter a word
+Utility that helps with finding word in directory.
 
-That's all. Working with TXT, we will get a list showing 
-- which file the word is in
-- the path to it
-- the line itself 
-- line number
-  
-Working with XML we will get other list showing 
-- which file the word is in
-- the path to it
-- object path to the word
-- word`s object
-- the line itself
-- line number
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-To get more information, go to the `examples` dir.
+### Built With
 
-## Technical part
+* [![C++][cpp-shield]][cpp-url]
+* [![Cmake][cmake-shield]][cmake-url]
 
-There is a preconfigured console application and you can use it, but if you want to create your own, there is also a preconfigured library(lib_src/lib_include) for that. Part for library compiling marked in CMakeLists.txt with relevant commentary. 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-- Minimum cmake version: 3.13.4
-- Minimum C++ version: 17 
+## Getting Started
 
-To build ready app:
-```
-mkdir build
-cd build
-cmake ..
-cmake --build . --config Release (or Debug)
-```
-## Xml file requirements
+### Prerequisites
 
-All text need to store in one line. Here is example
-```
-///////// correct /////////
-<Book>
-    <Name>TestBook</Name>
-    <Created>2000-01-01</Created>
-</Book>
+You need to have:
 
-///////// incorrect /////////
-<Book>
-    <Name>
-        TestBook
-    </Name>
-    <Created>
-        2000-01-01
-    </Created>
-</Book>
-```
+* Git: https://git-scm.com/download/
+* Cmake: https://cmake.org/download/
 
-I don't think the second is common, but sometimes you need to move very_long_sentence to next line in order to make it readable. So, algorithm will not show correct result in case.
+And next system envs:
+
+* [ _or_ ] PATH - `{ path/to/clang/bin/ }`
+* [ _or_ ] PATH - `{ path/to/msvc/bin/ }`
+* PATH - `{ path/to/cmake/bin }`
+
+### Installation
+
+1. Create an empty directory wherever you want. It`s for repo cloning.
+
+2. Clone the repo.
+
+   ```sh
+   git clone https://github.com/Ptyg/FileWordFinder.git
+   ```
+
+3. Open directory with cloned project in console.
+    
+    3.1 Type ... 
+    ```sh
+    cmake --list-presets
+    ```
+
+    ... to see all available presets. It is gonna looks like ...
+    
+    ```sh
+    "preset_name#1" - preset_display_name#1
+    "preset_name#2" - preset_display_name#2
+    "preset_name#3" - preset_display_name#3 
+    ...
+    ```
+    3.2 Choose a preset and type ...
+    ```sh
+    cmake --preset preset_name#1 (or cmake --preset preset_name#2, etc)
+    ```
+
+    3.3 Wait until project generation is done. Result will be located at `./out/build/{ preset_name }`
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Usage
+
+- After launch, you`ll see a window like this
+
+![start](img/start.JPG)
+
+- For example, i want to work with txt files
+
+![txt](img/txt_choose.JPG)
+
+- And want to list all files in directory. So i need to pass a path
+
+![txt_sub](img/show.JPG)
+
+- And result will be like this
+
+![txt_result](img/file_results.JPG)
+
+- Or, I want to find a word, but can't remember which file it's in. So the result will be
+
+![txt_result_word](img/txt_word_results.JPG)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Contributing
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request.
+
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b { branch_name }`)
+3. Commit your Changes (`git commit -m 'Add an amazing feature'`)
+4. Push to the Branch (`git push origin { branch_name }`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Contact
+
+Gtyp - gtyp_local@proton.me
+
+Project Link: [https://github.com/Ptyg/FileWordFinder](https://github.com/Ptyg/FileWordFinder)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- VARIABLES -->
+[cpp-shield]: https://img.shields.io/static/v1?message=v%2020&color=blue&logo=C%2B%2B&logoColor=blue&label=C%2B%2B
+[cpp-url]: https://en.cppreference.com/w/cpp/20
+
+[cmake-shield]: https://img.shields.io/static/v1?message=v%203.25.1&color=7d8580&logo=cmake&logoColor=7d8580&label=Cmake
+[cmake-url]: https://cmake.org/
